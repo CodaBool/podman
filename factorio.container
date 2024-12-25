@@ -1,0 +1,23 @@
+# factorio.container
+[Container]
+ContainerName=factorio
+Environment=GENERATE_NEW_SAVE=true
+Environment=SAVE_NAME=pierce_the_heavens
+Environment=LOAD_LATEST_SAVE=false
+Image=docker.io/factoriotools/factorio:2.0.28
+PublishPort=34197:34197/udp
+PublishPort=27015:27015/tcp
+EnvironmentFile=%h/.config/containers/systemd/.factorio.env
+Volume=%h/.config/containers/systemd/volumes/factorio:/factorio:Z
+
+[Service]
+Restart=always
+
+# workaround
+# https://github.com/containers/podman/issues/24796 
+ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/factorio ; /usr/bin/sleep 10
+
+[Install]
+# TODO: see if solves boot issue
+#WantedBy=multi-user.target default.target
+WantedBy=default.target

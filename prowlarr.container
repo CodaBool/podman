@@ -1,0 +1,27 @@
+# prowlarr.container
+
+[Unit]
+BindsTo=gluetun.service
+After=gluetun.service
+
+[Container]
+ContainerName=prowlarr
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=America/New_York
+Environment=UMASK=002
+HealthCmd=pgrep Prowlarr > /dev/null || exit 1
+Image=ghcr.io/hotio/prowlarr
+PublishPort=9696:9696
+Volume=%h/.config/containers/systemd/volumes/prowlarr:/config:Z
+Network=container:gluetun
+
+[Service]
+Restart=always
+
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/prowlarr ; /usr/bin/sleep 10
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,20 @@
+[Container]
+ContainerName=plex
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=VERSION=docker
+HealthCmd=nc -z 127.0.0.1 32400 || exit 1
+Image=docker.io/linuxserver/plex
+PublishPort=32400:32400
+Volume=%h/.config/containers/systemd/volumes/plex:/config:Z
+EnvironmentFile=%h/.config/containers/systemd/.plex.env
+
+[Service]
+Restart=always
+
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/plex ; /usr/bin/sleep 10
+
+[Install]
+WantedBy=default.target

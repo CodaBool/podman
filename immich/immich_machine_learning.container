@@ -1,0 +1,21 @@
+[Unit]
+Requires=immich-network.service
+After=immich-network.service
+
+[Container]
+ContainerName=immich_machine_learning
+EnvironmentFile=%h/.config/containers/systemd/immich/.env
+Image=ghcr.io/immich-app/immich-machine-learning:release
+Volume=%h/.config/containers/systemd/volumes/immich_cache:/cache:Z
+Network=immich-network
+
+[Service]
+Restart=always
+
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/immich_cache ; /usr/bin/sleep 10
+
+
+[Install]
+WantedBy=default.target

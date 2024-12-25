@@ -1,0 +1,42 @@
+# gluetun.container
+[Unit]
+Wants=qbit.service prowlarr.service radarr.service sonarr.service
+
+[Container]
+AddCapability=NET_ADMIN
+AddDevice=/dev/net/tun:/dev/net/tun
+ContainerName=gluetun
+Environment=VPN_SERVICE_PROVIDER=protonvpn
+
+Environment=VPN_TYPE=wireguard
+#Environment=WIREGUARD_ENDPOINT_PORT=51820
+EnvironmentFile=%h/.config/containers/systemd/.qbit.env
+Image=docker.io/qmcgaw/gluetun
+PodmanArgs=--privileged
+
+# prowlarr
+PublishPort=9696:9696
+
+# radarr
+PublishPort=7878:7878
+
+# sonarr
+PublishPort=8989:8989
+
+# qbit
+PublishPort=8080:8080
+
+# idk
+PublishPort=39762:39762
+
+#Network=host
+
+[Service]
+Restart=always
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=/usr/bin/sleep 10
+
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,22 @@
+# tunnel.container
+[Container]
+ContainerName=tunnel
+Environment=TUNNEL_METRICS=0.0.0.0:60123
+EnvironmentFile=%h/.config/containers/systemd/.tunnel.env
+Exec=tunnel run
+HealthCmd=["cloudflared","tunnel","--metrics","localhost:60123","ready"]
+Image=docker.io/cloudflare/cloudflared
+
+# TODO: find out if this is needed
+Network=host
+
+[Service]
+Restart=always
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=/usr/bin/sleep 10
+
+[Install]
+# TODO: see if solves boot issue
+#WantedBy=multi-user.target default.target
+WantedBy=default.target

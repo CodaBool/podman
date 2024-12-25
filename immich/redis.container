@@ -1,0 +1,19 @@
+[Unit]
+Requires=immich-network.service
+After=immich-network.service
+
+[Container]
+ContainerName=redis
+HealthCmd=redis-cli ping || exit 1
+Image=docker.io/redis:6.2-alpine
+Network=immich-network
+
+[Service]
+Restart=always
+
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=/usr/bin/sleep 10
+
+[Install]
+WantedBy=default.target

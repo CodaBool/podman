@@ -1,0 +1,16 @@
+[Container]
+ContainerName=flaresolverr
+Environment=TZ=America/New_York
+HealthCmd=curl --fail http://localhost:8191 || exit 1
+Image=ghcr.io/flaresolverr/flaresolverr
+PublishPort=8191:8191
+
+[Service]
+Restart=always
+
+# workaround until https://github.com/containers/podman/issues/24796 is solved
+# solves the container starting before the network is ready
+ExecStartPre=/usr/bin/sleep 10
+
+[Install]
+WantedBy=default.target
