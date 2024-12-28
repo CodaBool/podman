@@ -10,7 +10,7 @@ Environment=VPN_SERVICE_PROVIDER=protonvpn
 
 Environment=VPN_TYPE=wireguard
 #Environment=WIREGUARD_ENDPOINT_PORT=51820
-EnvironmentFile=%h/.config/containers/systemd/.qbit.env
+EnvironmentFile=/hdd/volumes/.qbit.env
 Image=docker.io/qmcgaw/gluetun
 PodmanArgs=--privileged
 

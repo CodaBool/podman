@@ -13,9 +13,9 @@ Image=lscr.io/linuxserver/sonarr
 PublishPort=8989:8989
 
 
-Volume=%h/.config/containers/systemd/volumes/sonarr:/config:Z
-#Volume=/hdd/downloads:/downloads:Z
-#Volume=/hdd/movies:/movies:Z
+Volume=/hdd/volumes/sonarr:/config:Z
+Volume=/hdd/downloads:/data/downloads:Z
+Volume=/hdd/tv:/tv:Z
 
 Network=container:gluetun
 
@@ -24,7 +24,7 @@ Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/sonarr ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 [Install]
 WantedBy=default.target

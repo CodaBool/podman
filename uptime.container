@@ -9,8 +9,7 @@
 ContainerName=uptime
 Image=docker.io/louislam/uptime-kuma
 PublishPort=3001:3001
-Volume=%h/.config/containers/systemd/volumes/uptime:/app/data:Z
-#UserNS=keep-id:uid=1000,gid=1000
+Volume=/hdd/volumes/uptime:/app/data:Z
 
 # enables auto-update when you run some command
 AutoUpdate=registry
@@ -23,7 +22,7 @@ Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/uptime ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 # TODO: see if solves boot issue
 #TimeoutStartSec=900

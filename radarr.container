@@ -13,9 +13,9 @@ Image=lscr.io/linuxserver/radarr
 PublishPort=7878:7878
 
 
-Volume=%h/.config/containers/systemd/volumes/radarr:/config:Z
-#Volume=/hdd/downloads:/downloads:Z
-#Volume=/hdd/movies:/movies:Z
+Volume=/hdd/volumes/radarr:/config:Z
+Volume=/hdd/downloads:/downloads:Z
+Volume=/hdd/movies:/movies:Z
 
 Network=container:gluetun
 
@@ -24,7 +24,7 @@ Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/radarr ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 [Install]
 WantedBy=default.target

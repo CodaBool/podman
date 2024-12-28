@@ -14,9 +14,8 @@ Environment=TORRENTING_PORT=24619
 HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:8080 || exit 1
 Image=lscr.io/linuxserver/qbittorrent
 
-Volume=%h/.config/containers/systemd/volumes/qbit:/config:Z
-#Volume=%h/.config/containers/systemd/qbit/test-downloads:/downloads:Z
-#Volume=/hdd/downloads:/downloads
+Volume=/hdd/volumes/qbit:/config:Z
+Volume=/hdd/downloads:/downloads:Z
 
 Network=container:gluetun
 
@@ -26,7 +25,7 @@ Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/qbit ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 [Install]
 WantedBy=default.target

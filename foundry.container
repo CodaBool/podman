@@ -7,18 +7,18 @@ Environment=CONTAINER_PRESERVE_CONFIG=true
 Environment=FOUNDRY_MINIFY_STATIC_FILES=true
 Environment=FOUNDRY_TELEMETRY=false
 Environment=FOUNDRY_CSS_THEME=scifi
-EnvironmentFile=%h/.config/containers/systemd/.foundry.env
+EnvironmentFile=/hdd/volumes/.foundry.env
 HealthCmd=curl --fail http://localhost:30000 || exit 1
 Image=docker.io/felddy/foundryvtt
 PublishPort=30000:30000
-Volume=%h/.config/containers/systemd/volumes/foundry_1:/data:Z
+Volume=/hdd/volumes/foundry_1:/data:Z
 
 [Service]
 Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/foundry_1 ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 
 [Install]

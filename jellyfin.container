@@ -6,16 +6,16 @@ Environment=TZ=America/New_York
 HealthCmd=curl --fail http://localhost:8096 || exit 1
 Image=lscr.io/linuxserver/jellyfin
 PublishPort=8096:8096
-Volume=%h/.config/containers/systemd/volumes/jellyfin:/config:Z
-#Volume=/hdd/media/movies:/data/movies
-#Volume=/hdd/media/tv:/data/tvshows
+Volume=/hdd/volumes/jellyfin:/config:Z
+Volume=/hdd/movies:/data/movies:Z
+Volume=/hdd/tv:/data/tvshows:Z
 
 [Service]
 Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/jellyfin ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 [Install]
 WantedBy=default.target
