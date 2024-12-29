@@ -1,4 +1,8 @@
 # Podman Self-Host
+<a href="https://www.youtube.com/watch?v=2H5lqPRPNhA">
+  <img src="https://stargazer.vercel.app/pom.gif" style="height:70px;">
+</a>
+
 ```
          .--"--.           
        / -     - \         
@@ -11,6 +15,8 @@
   ~~~~    ~~~|   U      |~~ 
 ```
 > Podman is a (more secure and performant) Docker alternative
+
+
 
 
 ## How does it work?
