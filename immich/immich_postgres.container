@@ -1,13 +1,9 @@
-#[Unit]
-#Requires=immich-network.service
-#After=immich-network.service
-
 [Container]
 ContainerName=immich_postgres
 HostName=database
-#Environment=POSTGRES_PASSWORD=${DB_PASSWORD}
-#Environment=POSTGRES_USER=${DB_USERNAME}
-#Environment=POSTGRES_DB=${DB_DATABASE_NAME}
+Environment=POSTGRES_PASSWORD=${DB_PASSWORD}
+Environment=POSTGRES_USER=${DB_USERNAME}
+Environment=POSTGRES_DB=${DB_DATABASE_NAME}
 Environment=POSTGRES_INITDB_ARGS=--data-checksums
 EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Exec=postgres -c 'shared_preload_libraries=vectors.so' -c 'search_path="$$user", public, vectors' -c 'logging_collector=on' -c 'max_wal_size=2GB' -c 'shared_buffers=512MB' -c 'wal_compression=on'

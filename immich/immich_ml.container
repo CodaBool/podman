@@ -1,7 +1,3 @@
-#[Unit]
-#Requires=immich-network.service
-#After=immich-network.service
-
 [Container]
 ContainerName=immich_machine_learning
 EnvironmentFile=/mnt/hdd/volumes/.immich.env

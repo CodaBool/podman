@@ -1,6 +1,6 @@
-#[Unit]
-#Requires=redis.service database.service
-#After=redis.service database.service
+[Unit]
+Requires=immich_redis.service immich_postgres.service
+After=immich_redis.service immich_postgres.service
 
 [Container]
 ContainerName=immich
