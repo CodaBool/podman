@@ -4,13 +4,15 @@ Wants=qbit.service prowlarr.service radarr.service sonarr.service
 
 [Container]
 AddCapability=NET_ADMIN
-AddDevice=/dev/net/tun:/dev/net/tun
+AddDevice=/dev/net/tun:/dev/net/tun:m
 ContainerName=gluetun
 Environment=VPN_SERVICE_PROVIDER=protonvpn
 Environment=VPN_TYPE=wireguard
 EnvironmentFile=/mnt/hdd/volumes/.gluetun.env
 Image=docker.io/qmcgaw/gluetun
-# PodmanArgs=--privileged
+
+# needed for permission to the tun device
+SecurityLabelDisable=true
 
 # prowlarr
 PublishPort=9696:9696
@@ -23,9 +25,6 @@ PublishPort=8989:8989
 
 # qbit
 PublishPort=8080:8080
-
-# idk
-PublishPort=39762:39762
 
 # auto update
 AutoUpdate=registry

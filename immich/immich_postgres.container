@@ -1,9 +1,10 @@
-[Unit]
-Requires=immich-network.service
-After=immich-network.service
+#[Unit]
+#Requires=immich-network.service
+#After=immich-network.service
 
 [Container]
-ContainerName=database
+ContainerName=immich_postgres
+HostName=database
 #Environment=POSTGRES_PASSWORD=${DB_PASSWORD}
 #Environment=POSTGRES_USER=${DB_USERNAME}
 #Environment=POSTGRES_DB=${DB_DATABASE_NAME}

@@ -32,9 +32,6 @@ Image=docker.io/danielszabo99/microbin
 PublishPort=8081:8080
 Volume=/mnt/hdd/volumes/microbin:/app/microbin_data:Z
 
-# TODO: find out why this works
-Network=podman
-
 # auto update
 AutoUpdate=registry
 

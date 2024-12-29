@@ -1,9 +1,10 @@
-[Unit]
-Requires=immich-network.service
-After=immich-network.service
+#[Unit]
+#Requires=immich-network.service
+#After=immich-network.service
 
 [Container]
-ContainerName=redis
+ContainerName=immich_redis
+HostName=redis
 HealthCmd=redis-cli ping || exit 1
 Image=docker.io/redis:6.2-alpine
 Network=immich-network
