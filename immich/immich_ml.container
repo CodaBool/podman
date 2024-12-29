@@ -1,5 +1,5 @@
 [Container]
-ContainerName=immich_machine_learning
+ContainerName=immich_ml
 EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-machine-learning:release
 
