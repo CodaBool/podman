@@ -8,11 +8,11 @@ ContainerName=database
 #Environment=POSTGRES_USER=${DB_USERNAME}
 #Environment=POSTGRES_DB=${DB_DATABASE_NAME}
 Environment=POSTGRES_INITDB_ARGS=--data-checksums
-EnvironmentFile=/hdd/volumes/.immich.env
+EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Exec=postgres -c 'shared_preload_libraries=vectors.so' -c 'search_path="$$user", public, vectors' -c 'logging_collector=on' -c 'max_wal_size=2GB' -c 'shared_buffers=512MB' -c 'wal_compression=on'
 #HealthCmd=pg_isready || exit 1
 Image=docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0
-Volume=/hdd/volumes/immich_data:/var/lib/postgresql/data:Z
+Volume=/mnt/hdd/volumes/immich_data:/var/lib/postgresql/data:Z
 Network=immich-network
 
 [Service]

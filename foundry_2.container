@@ -1,17 +1,20 @@
 [Container]
-ContainerName=foundry
+ContainerName=foundry_2
 Environment=FOUNDRY_GID=1000
 Environment=FOUNDRY_UID=1000
-Environment=FOUNDRY_VERSION=12.331
+
+# https://foundryvtt.com/releases
+Environment=FOUNDRY_VERSION=11.315
 Environment=CONTAINER_PRESERVE_CONFIG=true
 Environment=FOUNDRY_MINIFY_STATIC_FILES=true
 Environment=FOUNDRY_TELEMETRY=false
 Environment=FOUNDRY_CSS_THEME=scifi
-EnvironmentFile=/hdd/volumes/.foundry.env
+EnvironmentFile=/mnt/hdd/volumes/.foundry.env
 HealthCmd=curl --fail http://localhost:30000 || exit 1
 Image=docker.io/felddy/foundryvtt
-PublishPort=30000:30000
-Volume=/hdd/volumes/foundry_1:/data:Z
+PublishPort=30001:30000
+Volume=/mnt/hdd/volumes/foundry_2:/data:Z
+#PodmanArgs=--priviledged
 
 [Service]
 Restart=always

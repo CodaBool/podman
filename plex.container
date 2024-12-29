@@ -6,9 +6,9 @@ Environment=VERSION=docker
 HealthCmd=nc -z 127.0.0.1 32400 || exit 1
 Image=docker.io/linuxserver/plex
 PublishPort=32400:32400
-Volume=/hdd/volumes/plex:/config:Z
-Volume=/hdd:/data:Z
-EnvironmentFile=/hdd/volumes/.plex.env
+Volume=/mnt/hdd/volumes/plex:/config:Z
+Volume=/mnt/hdd/media:/data:Z
+EnvironmentFile=/mnt/hdd/volumes/.plex.env
 
 [Service]
 Restart=always

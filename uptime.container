@@ -9,14 +9,16 @@
 ContainerName=uptime
 Image=docker.io/louislam/uptime-kuma
 PublishPort=3001:3001
-Volume=/hdd/volumes/uptime:/app/data:Z
+Volume=/mnt/hdd/volumes/uptime:/app/data:Z
+Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:Z,ro
 
 # enables auto-update when you run some command
 AutoUpdate=registry
 
 # allows for uptime to reach other containers
 Network=host
-
+# privileged is needed it seems to read the podman.sock
+PodmanArgs=--privileged
 [Service]
 Restart=always
 

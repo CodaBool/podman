@@ -4,12 +4,16 @@ Environment=PUID=1000
 Environment=PGID=1000
 HealthCmd=nc -z 127.0.0.1 8384 || exit 1
 Image=lscr.io/linuxserver/syncthing
+# web ui
 PublishPort=8384:8384
+# tcp file transfers
 PublishPort=22000:22000/tcp
+# quic file transfers
 PublishPort=22000:22000/udp
+# receive local discovery broadcasts
 PublishPort=21027:21027/udp
-Volume=/hdd/volumes/syncthing:/config:Z
-
+Volume=/mnt/hdd/volumes/syncthing:/config:Z
+Volume=/mnt/hdd/sync:/sync:Z
 [Service]
 Restart=always
 

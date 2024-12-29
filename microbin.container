@@ -26,11 +26,11 @@ Environment=MICROBIN_DISABLE_TELEMETRY=true
 # MICROBIN_ADMIN_PASSWORD=
 # MICROBIN_PUBLIC_PATH=https://
 
-EnvironmentFile=%h/.config/containers/systemd/.microbin.env
+EnvironmentFile=/mnt/hdd/volumes/.microbin.env
 
 Image=docker.io/danielszabo99/microbin
 PublishPort=8081:8080
-Volume=%h/.config/containers/systemd/volumes/microbin:/app/microbin_data:Z
+Volume=/mnt/hdd/volumes/microbin:/app/microbin_data:Z
 
 # TODO: find out why this works
 Network=podman
@@ -40,7 +40,7 @@ Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=mkdir -p %h/.config/containers/systemd/volumes/microbin ; /usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 10
 
 [Install]
 #WantedBy=default.target

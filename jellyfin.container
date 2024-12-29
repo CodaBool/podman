@@ -6,9 +6,9 @@ Environment=TZ=America/New_York
 HealthCmd=curl --fail http://localhost:8096 || exit 1
 Image=lscr.io/linuxserver/jellyfin
 PublishPort=8096:8096
-Volume=/hdd/volumes/jellyfin:/config:Z
-Volume=/hdd/movies:/data/movies:Z
-Volume=/hdd/tv:/data/tvshows:Z
+Volume=/mnt/hdd/volumes/jellyfin:/config:Z
+Volume=/mnt/hdd/media/movies:/data/movies:Z
+Volume=/mnt/hdd/media/tv:/data/tvshows:Z
 
 [Service]
 Restart=always

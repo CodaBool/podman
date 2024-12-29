@@ -4,12 +4,11 @@ After=redis.service database.service
 
 [Container]
 ContainerName=immich
-EnvironmentFile=/hdd/volumes/.immich.env
+EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-server:release
 PublishPort=2283:2283
-Volume=/hdd/volumes/immich_upload:/usr/src/app/upload:Z
+Volume=/mnt/hdd/volumes/immich_upload:/usr/src/app/upload:Z
 Volume=/etc/localtime:/etc/localtime:ro
-
 Network=immich-network
 
 [Service]
@@ -17,7 +16,7 @@ Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=/usr/bin/sleep 10
+ExecStartPre=/usr/bin/sleep 20
 
 
 [Install]
