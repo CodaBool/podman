@@ -9,8 +9,8 @@ Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:Z,ro
 # allows for uptime to reach other containers
 Network=host
 
-# privileged is needed it seems to read the podman.sock
-PodmanArgs=--privileged
+# needed to access podman.sock
+SecurityLabelDisable=true
 
 # auto update
 AutoUpdate=registry
