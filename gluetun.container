@@ -16,7 +16,7 @@ Environment=VPN_TYPE=wireguard
 # WIREGUARD_ADDRESSES= under Interface.Address
 # WIREGUARD_PUBLIC_KEY= under Peer.PublicKey
 # WIREGUARD_ENDPOINT_IP= under Peer.Endpoint
-EnvironmentFile=/mnt/hdd/volumes/.gluetun.env
+EnvironmentFile=/mnt/volumes/.gluetun.env
 Image=docker.io/qmcgaw/gluetun
 HealthCmd=/gluetun-entrypoint healthcheck
 

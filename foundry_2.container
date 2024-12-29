@@ -9,11 +9,11 @@ Environment=CONTAINER_PRESERVE_CONFIG=true
 Environment=FOUNDRY_MINIFY_STATIC_FILES=true
 Environment=FOUNDRY_TELEMETRY=false
 Environment=FOUNDRY_CSS_THEME=scifi
-EnvironmentFile=/mnt/hdd/volumes/.foundry.env
+EnvironmentFile=/mnt/volumes/.foundry.env
 HealthCmd=curl --fail http://localhost:30000 || exit 1
 Image=docker.io/felddy/foundryvtt
 PublishPort=30001:30000
-Volume=/mnt/hdd/volumes/foundry_2:/data:Z
+Volume=/mnt/volumes/foundry_2:/data:Z
 
 # auto update
 AutoUpdate=registry

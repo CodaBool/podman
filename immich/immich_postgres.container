@@ -14,11 +14,11 @@ Environment=POSTGRES_INITDB_ARGS=--data-checksums
 # DB_USERNAME=postgres
 # DB_PASSWORD=
 
-EnvironmentFile=/mnt/hdd/volumes/.immich.env
+EnvironmentFile=/mnt/volumes/.immich.env
 Exec=postgres -c 'shared_preload_libraries=vectors.so' -c 'search_path="$$user", public, vectors' -c 'logging_collector=on' -c 'max_wal_size=2GB' -c 'shared_buffers=512MB' -c 'wal_compression=on'
 HealthCmd=pg_isready -d postgres || exit 1
 Image=docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0
-Volume=/mnt/hdd/volumes/immich_data:/var/lib/postgresql/data:Z
+Volume=/mnt/volumes/immich_data:/var/lib/postgresql/data:Z
 Network=immich-network
 
 # auto update

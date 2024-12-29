@@ -14,9 +14,9 @@ Image=lscr.io/linuxserver/radarr
 PublishPort=7878:7878
 
 
-Volume=/mnt/hdd/volumes/radarr:/config:Z
-Volume=/mnt/hdd/media/downloads:/downloads:Z
-Volume=/mnt/hdd/media/movies:/movies:Z
+Volume=/mnt/volumes/radarr:/config:Z
+Volume=/mnt/media/downloads:/downloads:Z
+Volume=/mnt/media/movies:/movies:Z
 
 Network=container:gluetun
 

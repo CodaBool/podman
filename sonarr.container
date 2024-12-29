@@ -14,9 +14,9 @@ Image=lscr.io/linuxserver/sonarr
 PublishPort=8989:8989
 
 
-Volume=/mnt/hdd/volumes/sonarr:/config:Z
-Volume=/mnt/hdd/media/downloads:/data/downloads:Z
-Volume=/mnt/hdd/media/tv:/tv:Z
+Volume=/mnt/volumes/sonarr:/config:Z
+Volume=/mnt/media/downloads:/data/downloads:Z
+Volume=/mnt/media/tv:/tv:Z
 
 Network=container:gluetun
 

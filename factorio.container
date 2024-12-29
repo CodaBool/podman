@@ -6,8 +6,8 @@ Environment=LOAD_LATEST_SAVE=false
 Image=docker.io/factoriotools/factorio:stable
 PublishPort=34197:34197/udp
 PublishPort=27015:27015/tcp
-EnvironmentFile=/mnt/hdd/volumes/.factorio.env
-Volume=/mnt/hdd/volumes/factorio:/factorio:Z
+EnvironmentFile=/mnt/volumes/.factorio.env
+Volume=/mnt/volumes/factorio:/factorio:Z
 
 # auto update
 AutoUpdate=registry

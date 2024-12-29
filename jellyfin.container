@@ -6,9 +6,9 @@ Environment=TZ=America/New_York
 HealthCmd=curl --fail http://localhost:8096 || exit 1
 Image=lscr.io/linuxserver/jellyfin
 PublishPort=8096:8096
-Volume=/mnt/hdd/volumes/jellyfin:/config:Z
-Volume=/mnt/hdd/media/movies:/data/movies:Z
-Volume=/mnt/hdd/media/tv:/data/tvshows:Z
+Volume=/mnt/volumes/jellyfin:/config:Z
+Volume=/mnt/media/movies:/data/movies:Z
+Volume=/mnt/media/tv:/data/tvshows:Z
 
 # auto update
 AutoUpdate=registry

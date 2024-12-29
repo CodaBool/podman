@@ -10,10 +10,10 @@ ContainerName=immich
 # DB_USERNAME=postgres
 # DB_PASSWORD=
 
-EnvironmentFile=/mnt/hdd/volumes/.immich.env
+EnvironmentFile=/mnt/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-server:release
 PublishPort=2283:2283
-Volume=/mnt/hdd/volumes/immich_upload:/usr/src/app/upload:Z
+Volume=/mnt/volumes/immich_upload:/usr/src/app/upload:Z
 Volume=/etc/localtime:/etc/localtime:ro
 Network=immich-network
 HealthCmd=immich-healthcheck

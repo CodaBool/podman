@@ -20,10 +20,9 @@ When a `.container` file is placed into `/.config/containers/systemd` it automat
 > I have a RAID 1 HDD with this structure
 ```
 └── mnt/
-    ├── hdd/
-    │   └── volumes/
-    │       ├── containerName
-    │       └── .containerName.env
+    ├── volumes/
+    │   ├── containerName
+    │   └── .containerName.env
     ├── media/
     │   ├── movies
     │   └── tv

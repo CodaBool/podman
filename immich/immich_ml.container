@@ -6,11 +6,11 @@ ContainerName=immich_ml
 # DB_USERNAME=postgres
 # DB_PASSWORD=
 
-EnvironmentFile=/mnt/hdd/volumes/.immich.env
+EnvironmentFile=/mnt/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-machine-learning:release
 HealthCmd=python healthcheck.py
 # test leaving this volume out since its stateless
-#Volume=/mnt/hdd/volumes/immich_cache:/cache:Z
+#Volume=/mnt/volumes/immich_cache:/cache:Z
 Network=immich-network
 
 # auto update

@@ -13,7 +13,7 @@ Environment=UMASK=002
 HealthCmd=pgrep Prowlarr > /dev/null || exit 1
 Image=ghcr.io/hotio/prowlarr
 PublishPort=9696:9696
-Volume=/mnt/hdd/volumes/prowlarr:/config:Z
+Volume=/mnt/volumes/prowlarr:/config:Z
 Network=container:gluetun
 
 # auto update
