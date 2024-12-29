@@ -2,7 +2,7 @@
 ContainerName=immich_ml
 EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-machine-learning:release
-
+HealthCmd=python healthcheck.py
 # test leaving this volume out since its stateless
 #Volume=/mnt/hdd/volumes/immich_cache:/cache:Z
 Network=immich-network

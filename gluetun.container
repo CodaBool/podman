@@ -10,7 +10,7 @@ Environment=VPN_SERVICE_PROVIDER=protonvpn
 Environment=VPN_TYPE=wireguard
 EnvironmentFile=/mnt/hdd/volumes/.gluetun.env
 Image=docker.io/qmcgaw/gluetun
-HealthCmd=gluetun-entrypoint healthcheck
+HealthCmd=/gluetun-entrypoint healthcheck
 
 # needed for permission to the tun device
 SecurityLabelDisable=true
