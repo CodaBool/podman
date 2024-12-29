@@ -14,7 +14,8 @@
 
 
 ## How does it work?
-When a `.container` file is placed into `/.config/containers/systemd` it automatically becomes a systemd service 🪄
+When a `.container` file is placed into `/.config/containers/systemd` 
+it automatically becomes a systemd service 🪄
 
 ## Structure
 > I have a RAID 1 HDD with this structure
