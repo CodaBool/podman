@@ -25,3 +25,4 @@ sudo firewall-cmd --reload
 - uptime
 - gluetun
 - immich_ml
+- immich

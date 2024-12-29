@@ -10,6 +10,7 @@ PublishPort=2283:2283
 Volume=/mnt/hdd/volumes/immich_upload:/usr/src/app/upload:Z
 Volume=/etc/localtime:/etc/localtime:ro
 Network=immich-network
+HealthCmd=immich-healthcheck
 
 # auto update
 AutoUpdate=registry
