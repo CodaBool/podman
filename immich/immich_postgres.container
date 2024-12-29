@@ -1,3 +1,7 @@
+[Unit]
+Requires=immich-network.service
+After=immich-network.service
+
 # update this image to match the example for latest image hashes
 # https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml
 

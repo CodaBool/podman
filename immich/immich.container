@@ -1,6 +1,6 @@
 [Unit]
-Requires=immich_redis.service immich_postgres.service
-After=immich_redis.service immich_postgres.service
+Requires=immich_redis.service immich_postgres.service immich-network.service
+After=immich_redis.service immich_postgres.service immich-network.service
 
 [Container]
 ContainerName=immich
@@ -14,7 +14,6 @@ EnvironmentFile=/mnt/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-server:release
 PublishPort=2283:2283
 Volume=/mnt/volumes/immich_upload:/usr/src/app/upload:Z
-Volume=/etc/localtime:/etc/localtime:ro
 Network=immich-network
 HealthCmd=immich-healthcheck
 
