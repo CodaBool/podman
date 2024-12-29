@@ -7,12 +7,10 @@ AddCapability=NET_ADMIN
 AddDevice=/dev/net/tun:/dev/net/tun
 ContainerName=gluetun
 Environment=VPN_SERVICE_PROVIDER=protonvpn
-
 Environment=VPN_TYPE=wireguard
-#Environment=WIREGUARD_ENDPOINT_PORT=51820
 EnvironmentFile=/mnt/hdd/volumes/.gluetun.env
 Image=docker.io/qmcgaw/gluetun
-PodmanArgs=--privileged
+# PodmanArgs=--privileged
 
 # prowlarr
 PublishPort=9696:9696
@@ -28,8 +26,6 @@ PublishPort=8080:8080
 
 # idk
 PublishPort=39762:39762
-
-#Network=host
 
 # auto update
 AutoUpdate=registry

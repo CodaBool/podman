@@ -14,7 +14,6 @@ HealthCmd=curl --fail http://localhost:30000 || exit 1
 Image=docker.io/felddy/foundryvtt
 PublishPort=30001:30000
 Volume=/mnt/hdd/volumes/foundry_2:/data:Z
-#PodmanArgs=--priviledged
 
 # auto update
 AutoUpdate=registry

@@ -6,9 +6,7 @@ EnvironmentFile=/mnt/hdd/volumes/.tunnel.env
 Exec=tunnel run
 HealthCmd=["cloudflared","tunnel","--metrics","localhost:60123","ready"]
 Image=docker.io/cloudflare/cloudflared
-
-# TODO: find out if this is needed
-# Network=host
+Network=host
 
 # auto update
 AutoUpdate=registry
