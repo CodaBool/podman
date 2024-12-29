@@ -1,7 +1,6 @@
 [Container]
 ContainerName=factorio
 Environment=GENERATE_NEW_SAVE=true
-#Environment=SAVE_NAME=_autosave35
 Environment=SAVE_NAME=pierce_the_heavens
 Environment=LOAD_LATEST_SAVE=false
 Image=docker.io/factoriotools/factorio:stable
@@ -10,14 +9,20 @@ PublishPort=27015:27015/tcp
 EnvironmentFile=/mnt/hdd/volumes/.factorio.env
 Volume=/mnt/hdd/volumes/factorio:/factorio:Z
 
+# auto update
+AutoUpdate=registry
+
 [Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
 Restart=always
 
 # workaround
 # https://github.com/containers/podman/issues/24796 
-ExecStartPre=/usr/bin/sleep 10
+# ExecStartPre=/usr/bin/sleep 10
 
 [Install]
-# TODO: see if solves boot issue
-#WantedBy=multi-user.target default.target
+
+# automatic startup
 WantedBy=default.target

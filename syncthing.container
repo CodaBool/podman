@@ -14,12 +14,21 @@ PublishPort=22000:22000/udp
 PublishPort=21027:21027/udp
 Volume=/mnt/hdd/volumes/syncthing:/config:Z
 Volume=/mnt/hdd/sync:/sync:Z
+
+# auto update
+AutoUpdate=registry
+
 [Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
 Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=/usr/bin/sleep 10
+# ExecStartPre=/usr/bin/sleep 10
 
 [Install]
+
+# automatic startup
 WantedBy=default.target

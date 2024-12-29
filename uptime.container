@@ -1,10 +1,3 @@
-#[Unit]
-# see if solves boot issue
-#After=local-fs.target
-
-#After=network-online.target
-#Wants=network-online.target
-
 [Container]
 ContainerName=uptime
 Image=docker.io/louislam/uptime-kuma
@@ -12,24 +5,28 @@ PublishPort=3001:3001
 Volume=/mnt/hdd/volumes/uptime:/app/data:Z
 Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:Z,ro
 
-# enables auto-update when you run some command
-AutoUpdate=registry
-
 # allows for uptime to reach other containers
 Network=host
+
 # privileged is needed it seems to read the podman.sock
 PodmanArgs=--privileged
+
+# auto update
+AutoUpdate=registry
+
 [Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
 Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=/usr/bin/sleep 10
+# ExecStartPre=/usr/bin/sleep 10
 
-# TODO: see if solves boot issue
-#TimeoutStartSec=900
+TimeoutStartSec=900
 
 [Install]
-# TODO: see if solves boot issue
-WantedBy=multi-user.target default.target
-#WantedBy=default.target
+
+# automatic startup
+WantedBy=default.target

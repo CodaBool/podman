@@ -2,6 +2,8 @@
 ContainerName=foundry
 Environment=FOUNDRY_GID=1000
 Environment=FOUNDRY_UID=1000
+
+# https://foundryvtt.com/releases
 Environment=FOUNDRY_VERSION=12.331
 Environment=CONTAINER_PRESERVE_CONFIG=true
 Environment=FOUNDRY_MINIFY_STATIC_FILES=true
@@ -13,13 +15,21 @@ Image=docker.io/felddy/foundryvtt
 PublishPort=30000:30000
 Volume=/mnt/hdd/volumes/foundry_1:/data:Z
 
+# auto update
+AutoUpdate=registry
+
 [Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
 Restart=always
 
 # workaround until https://github.com/containers/podman/issues/24796 is solved
 # solves the container starting before the network is ready
-ExecStartPre=/usr/bin/sleep 10
+# ExecStartPre=/usr/bin/sleep 10
 
 
 [Install]
+
+# automatic startup
 WantedBy=default.target
