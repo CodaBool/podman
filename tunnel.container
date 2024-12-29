@@ -8,7 +8,7 @@ HealthCmd=["cloudflared","tunnel","--metrics","localhost:60123","ready"]
 Image=docker.io/cloudflare/cloudflared
 
 # TODO: find out if this is needed
-Network=host
+# Network=host
 
 # auto update
 AutoUpdate=registry
@@ -18,10 +18,6 @@ AutoUpdate=registry
 # allow time for a new image to download
 TimeoutStartSec=900
 Restart=always
-
-# workaround until https://github.com/containers/podman/issues/24796 is solved
-# solves the container starting before the network is ready
-# ExecStartPre=/usr/bin/sleep 10
 
 [Install]
 

@@ -18,10 +18,6 @@ AutoUpdate=registry
 TimeoutStartSec=900
 Restart=always
 
-# workaround
-# https://github.com/containers/podman/issues/24796 
-# ExecStartPre=/usr/bin/sleep 10
-
 [Install]
 
 # automatic startup

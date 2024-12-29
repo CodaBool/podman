@@ -20,12 +20,6 @@ AutoUpdate=registry
 TimeoutStartSec=900
 Restart=always
 
-# workaround until https://github.com/containers/podman/issues/24796 is solved
-# solves the container starting before the network is ready
-# ExecStartPre=/usr/bin/sleep 10
-
-TimeoutStartSec=900
-
 [Install]
 
 # automatic startup
