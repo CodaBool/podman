@@ -38,10 +38,12 @@ it automatically becomes a systemd service 🪄
 1. add `AutoUpdate=registry` to your `.Container`
 2. `sudo systemctl enable --now podman-auto-update.timer`
 
-## Automatic run on boot
+## ~~Automatic run on boot~~
+> 🤔 not sure if this is __really__ necessary
+
 `loginctl enable-linger $USER`
 
-## Validation
+## Quadlet Validation
 `/usr/libexec/podman/quadlet --user --dryrun`
 
 ## Expose Podman socket
