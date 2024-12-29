@@ -1,5 +1,11 @@
 [Container]
 ContainerName=immich_ml
+
+# example .env file
+# DB_DATABASE_NAME=postgres
+# DB_USERNAME=postgres
+# DB_PASSWORD=
+
 EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-machine-learning:release
 HealthCmd=python healthcheck.py

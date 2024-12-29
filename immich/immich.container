@@ -4,6 +4,12 @@ After=immich_redis.service immich_postgres.service
 
 [Container]
 ContainerName=immich
+
+# example .env file
+# DB_DATABASE_NAME=postgres
+# DB_USERNAME=postgres
+# DB_PASSWORD=
+
 EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-server:release
 PublishPort=2283:2283

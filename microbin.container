@@ -1,6 +1,9 @@
 # bin.container
 [Container]
 ContainerName=microbin
+
+      # additional as well as more details can be found at this url
+      # https://raw.githubusercontent.com/szabodanika/microbin/master/.env
 Environment="MICROBIN_FOOTER_TEXT=Codabool's pastebin"
 Environment=MICROBIN_EDITABLE=true
 Environment=MICROBIN_HIDE_LOGO=true
@@ -21,11 +24,20 @@ Environment=MICROBIN_MAX_FILE_SIZE_ENCRYPTED_MB=256
 Environment=MICROBIN_MAX_FILE_SIZE_UNENCRYPTED=2048
 Environment=MICROBIN_DISABLE_TELEMETRY=true
 
+# image does not have curl or wget or nc. making it difficult to healthcheck
+# I submitted an issue to resolve this here:
+# https://github.com/szabodanika/microbin/issues/240
+
 # The following env vars are secret so set them within a .env file
 # MICROBIN_ADMIN_USERNAME=
 # MICROBIN_ADMIN_PASSWORD=
 # MICROBIN_PUBLIC_PATH=https://
 
+
+# The following env vars are secret so set them within a .env file
+# MICROBIN_ADMIN_USERNAME=
+# MICROBIN_ADMIN_PASSWORD=
+# MICROBIN_PUBLIC_PATH=https://
 EnvironmentFile=/mnt/hdd/volumes/.microbin.env
 
 Image=docker.io/danielszabo99/microbin

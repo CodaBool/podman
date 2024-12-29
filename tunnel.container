@@ -2,6 +2,10 @@
 [Container]
 ContainerName=tunnel
 Environment=TUNNEL_METRICS=0.0.0.0:60123
+
+# env has
+# TUNNEL_TOKEN=
+
 EnvironmentFile=/mnt/hdd/volumes/.tunnel.env
 Exec=tunnel run
 HealthCmd=["cloudflared","tunnel","--metrics","localhost:60123","ready"]

@@ -1,3 +1,6 @@
+# update this image to match the example for latest image hashes
+# https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml
+
 [Container]
 ContainerName=immich_redis
 HostName=redis

@@ -1,3 +1,6 @@
+# update this image to match the example for latest image hashes
+# https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml
+
 [Container]
 ContainerName=immich_postgres
 HostName=database
@@ -5,6 +8,12 @@ Environment=POSTGRES_PASSWORD=${DB_PASSWORD}
 Environment=POSTGRES_USER=${DB_USERNAME}
 Environment=POSTGRES_DB=${DB_DATABASE_NAME}
 Environment=POSTGRES_INITDB_ARGS=--data-checksums
+
+# example .env file
+# DB_DATABASE_NAME=postgres
+# DB_USERNAME=postgres
+# DB_PASSWORD=
+
 EnvironmentFile=/mnt/hdd/volumes/.immich.env
 Exec=postgres -c 'shared_preload_libraries=vectors.so' -c 'search_path="$$user", public, vectors' -c 'logging_collector=on' -c 'max_wal_size=2GB' -c 'shared_buffers=512MB' -c 'wal_compression=on'
 HealthCmd=pg_isready -d postgres || exit 1

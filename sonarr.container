@@ -9,6 +9,7 @@ Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=America/New_York
 HealthCmd=curl --fail http://localhost:8989 || exit 1
+# https://hub.docker.com/r/linuxserver/sonarr
 Image=lscr.io/linuxserver/sonarr
 PublishPort=8989:8989
 
@@ -32,3 +33,6 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
+
+# add trackers
+# https://github.com/CodaBool/docker-public/blob/main/sonarr/readme.md

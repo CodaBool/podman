@@ -9,6 +9,7 @@ Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=America/New_York
 HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:7878 || exit 1
+# https://hub.docker.com/r/linuxserver/radarr
 Image=lscr.io/linuxserver/radarr
 PublishPort=7878:7878
 
@@ -32,3 +33,6 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
+
+# add trackers
+# https://github.com/CodaBool/docker-public/blob/main/radarr/readme.md

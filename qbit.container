@@ -32,3 +32,15 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
+
+# setup
+# 1. set options > advanced to tun0 
+# 2. update password (initial password is in qbit logs)
+# 3. can use ipleak.net to check if leaking
+
+
+# read my previous notes for some goodies
+# - add additional trackers
+# - block malicious files
+# - torrent search
+# https://github.com/CodaBool/docker-public/blob/main/qbit/readme.md

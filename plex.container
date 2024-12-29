@@ -8,6 +8,10 @@ Image=docker.io/linuxserver/plex
 PublishPort=32400:32400
 Volume=/mnt/hdd/volumes/plex:/config:Z
 Volume=/mnt/hdd/media:/data:Z
+
+# The following env vars are secret so set them within a .env file
+# - PLEX_CLAIM=
+# - ADVERTISE_IP=http://LOCAL_IP_HERE:32400/
 EnvironmentFile=/mnt/hdd/volumes/.plex.env
 
 # auto update

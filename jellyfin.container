@@ -23,3 +23,13 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
+
+
+# create these two folders inside the mounted media folder
+# - tv
+# - movies
+
+# the docs mention these are optional ports to open
+# - 8920:8920
+# - 7359:7359/udp
+# - 1900:1900/udp

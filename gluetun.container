@@ -6,8 +6,16 @@ Wants=qbit.service prowlarr.service radarr.service sonarr.service
 AddCapability=NET_ADMIN
 AddDevice=/dev/net/tun:/dev/net/tun:m
 ContainerName=gluetun
+
+# https://github.com/qdm12/gluetun-wiki/blob/main/setup/providers/protonvpn.md
+# wiregaurd is more performant
 Environment=VPN_SERVICE_PROVIDER=protonvpn
 Environment=VPN_TYPE=wireguard
+
+# WIREGUARD_PRIVATE_KEY= under Interface.PrivateKey
+# WIREGUARD_ADDRESSES= under Interface.Address
+# WIREGUARD_PUBLIC_KEY= under Peer.PublicKey
+# WIREGUARD_ENDPOINT_IP= under Peer.Endpoint
 EnvironmentFile=/mnt/hdd/volumes/.gluetun.env
 Image=docker.io/qmcgaw/gluetun
 HealthCmd=/gluetun-entrypoint healthcheck
