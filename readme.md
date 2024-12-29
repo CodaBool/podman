@@ -42,3 +42,6 @@ For extra security I use Cloudflare Tunnels as well as a WAF
 
 ## Container Validation
 `/usr/libexec/podman/quadlet --user --dryrun`
+
+## Expose Podman socket
+`systemctl enable --now podman.socket`
