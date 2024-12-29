@@ -1,0 +1,71 @@
+# https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
+
+[customizations.installer.kickstart]
+contents = """
+text --non-interactive
+lang en_US.UTF-8
+keyboard us
+timezone --utc America/New_York
+
+# prevent data loss, restrict to one SSD
+# value can be obtained from lsblk (name changes if drives are moved)
+ignoredisk --only-use=sdc
+
+# use `mkpasswd -m yescrypt` to hash a password
+rootpw $y$j9T$TLmZI4s0kzyHp5I29M1Mn0$aZqMs5x6tnuWCQGw3aDG1IPx5dMHUgEboSItwdkbXk1 --iscrypted
+user --name=codabool --password=$y$j9T$TLmZI4s0kzyHp5I29M1Mn0$aZqMs5x6tnuWCQGw3aDG1IPx5dMHUgEboSItwdkbXk1 --groups wheel --iscrypted
+
+# add a public ssh key
+# initial generation can be done with
+# ssh-keygen -C "codabool@pm.me"
+sshkey --username=codabool "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMfUsfu77V5hCYDnZT/nNc0FH++NfbFrMPMLA5vd3voT codabool@pm.me"
+
+# dangerously wipe drive, use with care
+zerombr
+clearpart --all --initlabel
+autopart --noswap
+
+# set a static IP
+network --bootproto=static --device=enp2s0 --ip=192.168.0.25 --gateway=192.168.0.1 --nameserver=192.168.0.1 --netmask=255.255.255.0 --activate --onboot=yes
+
+# perform actions as chroot
+# package installation should be done in the Dockerfile
+%post
+
+# write mount entry
+# use `sudo fdisk -l` to get UUID
+echo "UUID=9ad9e322-be33-4f0c-8c7b-eb5a5fb6bb3b /mnt ext4 defaults 0 0" >> /etc/fstab
+
+# setup podman
+mkdir -p /home/codabool/.config/containers/systemd
+cd /home/codabool/.config/containers/systemd
+git clone https://github.com/codabool/podman .
+chown -R 1000:1000 /home/codabool/.config
+
+# I could not find a way to activate linger from chroot
+# but it doesn't seem to be needed for me
+#   `loginctl enable-linger codabool`
+
+# daily updates to containers with AutoUpdate=registry
+systemctl enable --now podman-auto-update.timer
+
+# expose readable socket for Kuma Uptime to read
+# didn't seem to work
+systemctl --user -M codabool@ enable --now podman.socket
+
+# give the machine a name manually
+# unfortunately using `hostnamectl set-hostname` does not work for me
+echo "mom" > /etc/hostname
+
+
+%end
+reboot
+"""
+
+# only thing not working
+# - nvidia drivers
+# - enabled a podman socket from user (does work for root but then uptime can't read it)
+
+# how to check
+# - nvidia-smi
+# - systemctl --user status podman.socket

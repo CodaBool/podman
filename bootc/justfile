@@ -1,0 +1,37 @@
+build:
+  docker build -t fedora:latest .
+
+run: build
+  docker run --rm --name fedora fedora tail -f /dev/null
+
+exec:
+  docker exec -it fedora bash
+
+stop:
+  docker rm -f fedora
+
+# bootc-image-builder always pulls from podman cache
+# but podman run never seems to build correctly
+# so I'm using a combination of both
+# TODO: test why some commands need Docker vs Podman
+gen-iso:
+  sed -n 's#^https://[^:]*:\([^@]*\)@github\.com#\1#p' ~/.git-credentials | sudo docker login ghcr.io -u codabool --password-stdin
+  sudo docker build --no-cache -t fedora-bootc .
+  sudo docker tag fedora-bootc ghcr.io/codabool/fedora-bootc:latest
+  sudo docker push ghcr.io/codabool/fedora-bootc:latest
+  sudo docker pull ghcr.io/codabool/fedora-bootc:latest
+  sudo podman pull ghcr.io/codabool/fedora-bootc:latest
+  sudo rm -rf output
+  sudo docker run \
+  --rm \
+  -it \
+  --privileged \
+  --security-opt label=type:unconfined_t \
+  -v ./output:/output \
+  -v /var/lib/containers/storage:/var/lib/containers/storage \
+  -v ./config.toml:/config.toml \
+  quay.io/centos-bootc/bootc-image-builder \
+  --rootfs btrfs \
+  --type anaconda-iso \
+  --local \
+  ghcr.io/codabool/fedora-bootc:latest
