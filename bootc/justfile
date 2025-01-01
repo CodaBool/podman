@@ -15,12 +15,12 @@ stop:
 # so I'm using a combination of both
 # TODO: test why some commands need Docker vs Podman
 gen-iso:
-  sed -n 's#^https://[^:]*:\([^@]*\)@github\.com#\1#p' ~/.git-credentials | sudo docker login ghcr.io -u codabool --password-stdin
-  sudo docker build --no-cache -t fedora-bootc .
-  sudo docker tag fedora-bootc ghcr.io/codabool/fedora-bootc:latest
-  sudo docker push ghcr.io/codabool/fedora-bootc:latest
-  sudo docker pull ghcr.io/codabool/fedora-bootc:latest
-  sudo podman pull ghcr.io/codabool/fedora-bootc:latest
+  #sed -n 's#^https://[^:]*:\([^@]*\)@github\.com#\1#p' ~/.git-credentials | sudo docker login ghcr.io -u codabool --password-stdin
+  #sudo docker build --no-cache -t fedora-bootc .
+  #sudo docker tag fedora-bootc ghcr.io/codabool/fedora-bootc:latest
+  #sudo docker push ghcr.io/codabool/fedora-bootc:latest
+  #sudo docker pull ghcr.io/codabool/fedora-bootc:latest
+  #sudo podman pull ghcr.io/codabool/fedora-bootc:latest
   sudo rm -rf output
   sudo docker run \
   --rm \

@@ -1,4 +1,8 @@
 # Podman Self-Host
+<a href="https://www.youtube.com/watch?v=2H5lqPRPNhA">
+  <img src="https://stargazer.vercel.app/pom.gif" style="height:70px;">
+</a>
+
 ```
          .--"--.           
        / -     - \         
@@ -11,7 +15,6 @@
   ~~~~    ~~~|   U      |~~ 
 ```
 > Podman is a (more secure and performant) Docker alternative
-
 
 ## How does it work?
 When a `.container` file is placed into `/.config/containers/systemd` 
@@ -35,13 +38,18 @@ it automatically becomes a systemd service 🪄
 - CloudFlare WAF blocking non-US traffic
 
 ## Automatic Updates
+> effectively runs `podman auto-update` daily and then `podman image prune -f`. If the container fails to start after auto-update, then it will automatically be rolled back
+
 1. add `AutoUpdate=registry` to your `.Container`
-2. `sudo systemctl enable --now podman-auto-update.timer`
+2. `sudo systemctl enable --now podman-auto-update.timer` (for root)
+3. `systemctl --user enable --now podman-auto-update.timer` (for rootless)
 
 ## Automatic run on boot
+> 🤔 not sure if this is __really__ necessary
+
 `loginctl enable-linger $USER`
 
-## Validation
+## Quadlet Validation
 `/usr/libexec/podman/quadlet --user --dryrun`
 
 ## Expose Podman socket
