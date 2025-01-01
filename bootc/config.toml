@@ -8,8 +8,8 @@ keyboard us
 timezone --utc America/New_York
 
 # prevent data loss, restrict to one SSD
-# value can be obtained from lsblk (name changes if drives are moved)
-ignoredisk --only-use=sdb
+# use `ls -l /dev/disk/by-id` to find a drive's ID
+ignoredisk --only-use=/dev/disk/by-id/nvme-Sabrent_Rocket_Q_CD8E07031F9E02553696
 
 # use `mkpasswd -m yescrypt` to hash a password
 rootpw $y$j9T$TLmZI4s0kzyHp5I29M1Mn0$aZqMs5x6tnuWCQGw3aDG1IPx5dMHUgEboSItwdkbXk1 --iscrypted
@@ -34,7 +34,7 @@ network --bootproto=static --device=2c:f0:5d:92:b3:51 --ip=192.168.0.25 --gatewa
 %post
 
 # write mount entry
-# use `sudo fdisk -l` to get UUID
+# use `sudo fdisk -l` to get partition UUID
 echo "UUID=9ad9e322-be33-4f0c-8c7b-eb5a5fb6bb3b /mnt ext4 defaults 0 0" >> /etc/fstab
 
 # setup podman
@@ -43,17 +43,14 @@ cd /home/codabool/.config/containers/systemd
 git clone https://github.com/codabool/podman .
 chown -R 1000:1000 /home/codabool/.config
 
-# enable linger
+# enable linger, which allows services to start before login
 # `loginctl enable-linger codabool` did not work for me
+mkdir -p /var/lib/systemd/linger
 touch /var/lib/systemd/linger/codabool
-chmod 0644 /var/lib/systemd/linger/codabool
-loginctl enable-linger codabool
 
 # daily updates to containers with AutoUpdate=registry
-# do this for rootless and root
+# this should be done for rootless and root (rootless happens later)
 systemctl enable podman-auto-update.timer
-#systemctl --user enable --now podman-auto-update.timer
-systemctl --user -M codabool@ enable podman-auto-update.timer
 
 # Symlink the socket unit from system's user-unit dir to default.target.wants
 # which will effectively enable the service
@@ -70,3 +67,7 @@ echo "mom" > /etc/hostname
 %end
 reboot
 """
+
+
+# Dev notes
+# - use /dev/disk/by-id/ata-ADATA_SU670_2L272L127DLC for testing
