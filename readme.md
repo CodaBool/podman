@@ -44,7 +44,11 @@ it automatically becomes a systemd service 🪄
 2. `sudo systemctl enable --now podman-auto-update.timer` (for root)
 3. `systemctl --user enable --now podman-auto-update.timer` (for rootless)
 
+<<<<<<< HEAD
 ## Automatic run on boot
+=======
+## ~~Automatic run on boot~~
+>>>>>>> 99792bfdd8921a78980ffed6e2b16ae7ef9419a9
 > 🤔 not sure if this is __really__ necessary
 
 `loginctl enable-linger $USER`
