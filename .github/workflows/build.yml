@@ -1,0 +1,25 @@
+
+# on:
+#   schedule:
+#     - cron: "0 0 * * 0" # weekly on Sunday
+on: push
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+    steps:
+      # https://github.com/marketplace/actions/checkout
+      - uses: actions/checkout@v4
+      - uses: centos-workstation
+        with:
+          # Configuration file for the image builder.
+          config-file: ./bootc/config.toml
+          # Image (registry with tag) used in the artifact.
+          image: ghcr.io/codabool/fedora-bootc:latest
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bootc-iso
+          path: ./outputs/buildiso/install.iso
