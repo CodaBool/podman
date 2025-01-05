@@ -13,12 +13,13 @@ jobs:
     steps:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
-      - uses: centos-workstation
+      - uses: centos-workstation/bootc-image-builder-action@main
         with:
           # Configuration file for the image builder.
           config-file: ./bootc/config.toml
           # Image (registry with tag) used in the artifact.
           image: ghcr.io/codabool/fedora-bootc:latest
+      # https://github.com/marketplace/actions/upload-artifacts
       - uses: actions/upload-artifact@v4
         with:
           name: bootc-iso
