@@ -1,3 +1,5 @@
+# would like to do weekly checks but releases are too large
+# just run on local pushes instead
 # on:
 #   schedule:
 #     - cron: "0 0 * * 0" # weekly on Sunday
@@ -5,9 +7,9 @@ on: push
 jobs:
   release:
     runs-on: ubuntu-latest
-    # required for github release
     permissions:
-      contents: write
+      contents: write # required for github release
+      packages: write
     steps:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
@@ -39,7 +41,7 @@ jobs:
           echo "DATE=$DATE" >> $GITHUB_ENV
           echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
           echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
-        # https://github.com/ublue-os/bootc-image-builder-action
+      # https://github.com/ublue-os/bootc-image-builder-action
       - uses: centos-workstation/bootc-image-builder-action@main
         with:
           # Configuration file for the image builder.
@@ -47,18 +49,24 @@ jobs:
           # Image (registry with tag) used in the artifact.
           image: ghcr.io/codabool/fedora-bootc:latest
       # https://github.com/marketplace/actions/gh-release
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: ./output/bootiso/install.iso
-          make_latest: true
-          tag_name: ${{ env.DISTRO_VERSION }}
-          name: "Fedora ${{ env.DISTRO_VERSION }}"
-          body: |
-            Fedora Distro: ${{ env.DISTRO_VERSION }}
-            Linux Kernel: ${{ env.LINUX_KERNAL }}
-            Date Created: ${{ env.DATE }}
-            
-            This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
+
+      # ===================================
+      # !! releases can only be 2Gb max !!
+      # and Fedora bootc comes out to 2.4Gb
+      # ===================================
+
+      # - uses: softprops/action-gh-release@v2
+      #   with:
+      #     files: ./output/bootiso/install.iso
+      #     make_latest: true
+      #     tag_name: ${{ env.DISTRO_VERSION }}
+      #     name: "Fedora ${{ env.DISTRO_VERSION }}"
+      #     body: |
+      #       Fedora Distro: ${{ env.DISTRO_VERSION }}
+      #       Linux Kernel: ${{ env.LINUX_KERNAL }}
+      #       Date Created: ${{ env.DATE }}
+
+      #       This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
       # https://github.com/marketplace/actions/upload-a-build-artifact
       - uses: actions/upload-artifact@v4
         with:
