@@ -5,10 +5,10 @@ on: push
 jobs:
   release:
     runs-on: ubuntu-latest
+    # We'll need 'contents: write' to create releases and upload assets
     permissions:
-      contents: read
-      packages: read
-      id-token: write
+      contents: write
+      packages: write
     steps:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
@@ -20,10 +20,18 @@ jobs:
           LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
           DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
-          #[[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && exit 1
-          [[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && echo "Older than 8 days" || echo "Not older"
+          echo "fedora-bootc image is $(( ( $(date +%s) - $(date -d "$CREATED" +%s) ) / 86400 )) days old"
+          [[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && exit 1
+
+          # Convert CREATED to a simplified format (YYYY-MM-DD)
+          CREATED_SIMPLE=$(echo $CREATED | cut -d'T' -f1)
 
           echo "creating new iso with: kernal $LINUX_KERNAL | distro $DISTRO_VERSION"
+
+          # Set output variables for use in later steps
+          echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
+          echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
+          echo "CREATED_SIMPLE=$CREATED_SIMPLE" >> $GITHUB_ENV
         # https://github.com/ublue-os/bootc-image-builder-action
       - uses: centos-workstation/bootc-image-builder-action@main
         with:
@@ -31,13 +39,9 @@ jobs:
           config-file: ./bootc/config.toml
           # Image (registry with tag) used in the artifact.
           image: ghcr.io/codabool/fedora-bootc:latest
-      - name: Check if a new image has been pushed in the last 8 days
-        run: |
-          ls
-          ls output
-          ls bootc
-          ls output/bootiso
       # https://github.com/marketplace/actions/upload-a-build-artifact
       - uses: actions/upload-artifact@v4
         with:
           path: ./output/bootiso/install.iso
+          name: "${{ env.DISTRO_VERSION }}-${{ env.LINUX_KERNAL }}-${{ env.CREATED_SIMPLE }}"
+          overwrite: true
