@@ -56,3 +56,4 @@ it automatically becomes a systemd service 🪄
 > written to `/run/user/1000/podman/podman.sock`
 
 `systemctl --user enable --now podman.socket`
+
