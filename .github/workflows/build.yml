@@ -55,18 +55,21 @@ jobs:
       # and Fedora bootc comes out to 2.4Gb
       # ===================================
 
-      # - uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: ./output/bootiso/install.iso
-      #     make_latest: true
-      #     tag_name: ${{ env.DISTRO_VERSION }}
-      #     name: "Fedora ${{ env.DISTRO_VERSION }}"
-      #     body: |
-      #       Fedora Distro: ${{ env.DISTRO_VERSION }}
-      #       Linux Kernel: ${{ env.LINUX_KERNAL }}
-      #       Date Created: ${{ env.DATE }}
+      - uses: softprops/action-gh-release@v2
+        id: artifact
+        with:
+          # files: ./output/bootiso/install.iso
+          make_latest: true
+          tag_name: ${{ env.DISTRO_VERSION }}
+          name: "Fedora ${{ env.DISTRO_VERSION }}"
+          body: |
+            Fedora Distro: ${{ env.DISTRO_VERSION }}
+            Linux Kernel: ${{ env.LINUX_KERNAL }}
+            Date Created: ${{ env.DATE }}
 
-      #       This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
+            ISO Download Link: ${{ steps.artifact.outputs.artifact-url }}
+
+            This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
       # https://github.com/marketplace/actions/upload-a-build-artifact
       - uses: actions/upload-artifact@v4
         with:
