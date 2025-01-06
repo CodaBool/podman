@@ -34,9 +34,10 @@ jobs:
       - name: Check if a new image has been pushed in the last 8 days
         run: |
           ls
-          ls outputs
-          ls outputs/bootiso
+          ls output
+          ls bootc
+          ls output/bootiso
       # https://github.com/marketplace/actions/upload-a-build-artifact
       - uses: actions/upload-artifact@v4
         with:
-          path: ./outputs/bootiso/install.iso
+          path: ./output/bootiso/install.iso
