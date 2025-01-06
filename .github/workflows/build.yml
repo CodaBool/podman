@@ -5,10 +5,9 @@ on: push
 jobs:
   release:
     runs-on: ubuntu-latest
-    # We'll need 'contents: write' to create releases and upload assets
+    # required for github release
     permissions:
       contents: write
-      packages: write
     steps:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
@@ -23,15 +22,23 @@ jobs:
           echo "fedora-bootc image is $(( ( $(date +%s) - $(date -d "$CREATED" +%s) ) / 86400 )) days old"
           [[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && exit 1
 
-          # Convert CREATED to a simplified format (YYYY-MM-DD)
-          CREATED_SIMPLE=$(echo $CREATED | cut -d'T' -f1)
+          # Truncate creation date to format YYYY-MM-DD
+          DATE=$(echo $CREATED | cut -d'T' -f1)
 
-          echo "creating new iso with: kernal $LINUX_KERNAL | distro $DISTRO_VERSION"
+          # Truncate DISTRO_VERSION to the jsut major version
+          DISTRO=$(echo $DISTRO_VERSION | cut -d'.' -f1)
+
+          # Truncate LINUX_KERNAL to "major.minor" version
+          LINUX=$(echo $LINUX_KERNAL | cut -d'-' -f1 | cut -d'.' -f1,2)
+
+          echo "creating new iso with: kernal $LINUX | distro $DISTRO"
 
           # Set output variables for use in later steps
+          echo "DISTRO=$DISTRO" >> $GITHUB_ENV
+          echo "LINUX=$LINUX" >> $GITHUB_ENV
+          echo "DATE=$DATE" >> $GITHUB_ENV
           echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
           echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
-          echo "CREATED_SIMPLE=$CREATED_SIMPLE" >> $GITHUB_ENV
         # https://github.com/ublue-os/bootc-image-builder-action
       - uses: centos-workstation/bootc-image-builder-action@main
         with:
@@ -39,9 +46,22 @@ jobs:
           config-file: ./bootc/config.toml
           # Image (registry with tag) used in the artifact.
           image: ghcr.io/codabool/fedora-bootc:latest
+      # https://github.com/marketplace/actions/gh-release
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: ./output/bootiso/install.iso
+          make_latest: true
+          tag_name: ${{ env.DISTRO_VERSION }}
+          name: "Fedora ${{ env.DISTRO_VERSION }}"
+          body: |
+            Fedora Distro: ${{ env.DISTRO_VERSION }}
+            Linux Kernel: ${{ env.LINUX_KERNAL }}
+            Date Created: ${{ env.DATE }}
+            
+            This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
       # https://github.com/marketplace/actions/upload-a-build-artifact
       - uses: actions/upload-artifact@v4
         with:
           path: ./output/bootiso/install.iso
-          name: "${{ env.DISTRO_VERSION }}-${{ env.LINUX_KERNAL }}-${{ env.CREATED_SIMPLE }}"
+          name: "${{ env.DISTRO }}-${{ env.LINUX }}-${{ env.DATE }}"
           overwrite: true
