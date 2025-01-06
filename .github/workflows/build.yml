@@ -1,4 +1,3 @@
-
 # on:
 #   schedule:
 #     - cron: "0 0 * * 0" # weekly on Sunday
@@ -13,14 +12,31 @@ jobs:
     steps:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
+      - uses: docker/setup-docker-action@v4
+      - name: Check if a new image has been pushed in the last 8 days
+        run: |
+          IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
+          CREATED=$(echo $IMAGE | jq -r .created)
+          LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
+          DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
+
+          #[[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && exit 1
+          [[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && echo "Older than 8 days" || echo "Not older"
+
+          echo "creating new iso with: kernal $LINUX_KERNAL | distro $DISTRO_VERSION"
+        # https://github.com/ublue-os/bootc-image-builder-action
       - uses: centos-workstation/bootc-image-builder-action@main
         with:
           # Configuration file for the image builder.
           config-file: ./bootc/config.toml
           # Image (registry with tag) used in the artifact.
           image: ghcr.io/codabool/fedora-bootc:latest
-      # https://github.com/marketplace/actions/upload-artifacts
+      - name: Check if a new image has been pushed in the last 8 days
+        run: |
+          ls
+          ls outputs
+          ls outputs/bootiso
+      # https://github.com/marketplace/actions/upload-a-build-artifact
       - uses: actions/upload-artifact@v4
         with:
-          name: bootc-iso
-          path: ./outputs/buildiso/install.iso
+          path: ./outputs/bootiso/install.iso
