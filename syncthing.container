@@ -15,6 +15,9 @@ PublishPort=21027:21027/udp
 Volume=/mnt/volumes/syncthing:/config:Z
 Volume=/mnt/sync:/sync:Z
 
+# TODO: find out why this is needed
+PodmanArgs=--privileged
+
 # auto update
 AutoUpdate=registry
 
