@@ -12,8 +12,40 @@ jobs:
       packages: write
     steps:
       # https://github.com/marketplace/actions/checkout
+      - name: Check if a new image has been pushed in the last 8 days
+        run: |
+          # get the latest stable version of Fedora
+          # WARN: this does assume that you are running the current major version of Fedora
+          LATEST_STABLE=$(curl -s https://builds.coreos.fedoraproject.org/streams/stable.json | jq -r '.architectures.x86_64.artifacts.metal.release')
+
+          # get the latest release tag from the codabool/podman repository
+          CURRENT_VERSION=$(curl -s https://api.github.com/repos/codabool/podman/releases/latest | jq -r '.tag_name')
+
+          # WARN: assumes fedora will always use a date based minor version scheme
+          function get_unix_time() {
+            minor_version=$(echo "$1" | cut -d '.' -f2)
+            unix_time=$(date -d "${minor_version:0:4}-${minor_version:4:2}-${minor_version:6:2}" '+%s')
+            echo "$unix_time"
+          }
+
+          latest_unix="$(get_unix_time $LATEST_STABLE)"
+          current_unix="$(get_unix_time $CURRENT_VERSION)"
+
+          echo "latest Fedora: $LATEST_STABLE"
+          echo "current Fedora: $CURRENT_VERSION"
+
+          if [ "$latest_unix" -eq "$current_unix" ]; then
+            echo "The latest stable version matches the current version. Nothing to do."
+            exit 0
+          fi
       - uses: actions/checkout@v4
       - uses: docker/setup-docker-action@v4
+      - name: Build and push the bootc image
+        run: |
+          cd bootc
+          docker build -t ghcr.io/codabool/fedora-bootc:latest .
+          echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
+          docker push ghcr.io/codabool/fedora-bootc:latest
       - name: Check if a new image has been pushed in the last 8 days
         run: |
           IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
@@ -73,6 +105,6 @@ jobs:
             Linux Kernel: ${{ env.LINUX_KERNAL }}
             Date Created: ${{ env.DATE }}
 
-            ISO Download Link: ${{ steps.artifact.outputs.artifact-url }}
+            [ISO Download Link](${{ steps.artifact.outputs.artifact-url }})
 
             This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
