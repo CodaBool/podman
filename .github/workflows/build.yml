@@ -1,11 +1,11 @@
-# would like to do weekly checks but releases are too large
-# just run on local pushes instead
 # on:
 #   schedule:
-#     - cron: "0 0 * * 0" # weekly on Sunday
+#     - cron: "0 0 * * *" # daily
 on: push
 jobs:
   release:
+    # skip ci if the commit message contains "[no ci]"
+    if: "! contains(github.event.commits[0].message, '[no ci]')"
     runs-on: ubuntu-latest
     permissions:
       contents: write # required for github release
@@ -46,23 +46,16 @@ jobs:
           docker build -t ghcr.io/codabool/fedora-bootc:latest .
           echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
           docker push ghcr.io/codabool/fedora-bootc:latest
-      - name: Check if a new image has been pushed in the last 8 days
+      - name: Gather info for release
         run: |
           IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
           CREATED=$(echo $IMAGE | jq -r .created)
           LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
           DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
-          echo "fedora-bootc image is $(( ( $(date +%s) - $(date -d "$CREATED" +%s) ) / 86400 )) days old"
-          [[ $(( $(date +%s) - $(date -d "$CREATED" +%s) )) -gt $((8*86400)) ]] && exit 1
-
-          # Truncate creation date to format YYYY-MM-DD
+          # Create short versions of variables
           DATE=$(echo $CREATED | cut -d'T' -f1)
-
-          # Truncate DISTRO_VERSION to the jsut major version
           DISTRO=$(echo $DISTRO_VERSION | cut -d'.' -f1)
-
-          # Truncate LINUX_KERNAL to "major.minor" version
           LINUX=$(echo $LINUX_KERNAL | cut -d'-' -f1 | cut -d'.' -f1,2)
 
           echo "creating new iso with: kernal $LINUX | distro $DISTRO"
@@ -92,6 +85,7 @@ jobs:
       # ===================================
       # !! releases can only be 2Gb max !!
       # and Fedora bootc comes out to 2.4Gb
+      #  just link to the artifact instead
       # ===================================
 
       - uses: softprops/action-gh-release@v2

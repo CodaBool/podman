@@ -15,6 +15,9 @@ Image=docker.io/felddy/foundryvtt
 PublishPort=30000:30000
 Volume=/mnt/volumes/foundry_1:/data:Z
 
+# TODO: find out why this is needed
+PodmanArgs=--privileged
+
 # auto update
 AutoUpdate=registry
 
