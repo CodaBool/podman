@@ -1,8 +1,8 @@
 [Container]
 ContainerName=backup
 
-# set to hourly just to test
-Environment=BACKUP_CRON_EXPRESSION="0 0 * * *"
+# default is daily but let's see what costs are like for a bit
+Environment=BACKUP_CRON_EXPRESSION="0 10 * * *"
 Environment=AWS_S3_BUCKET_NAME=codabool-backups
 Environment=AWS_STORAGE_CLASS=GLACIER
 Environment=BACKUP_RETENTION_DAYS=7
