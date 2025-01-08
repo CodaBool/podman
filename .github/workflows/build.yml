@@ -48,6 +48,13 @@ jobs:
           config-file: ./bootc/config.toml
           # Image (registry with tag) used in the artifact.
           image: ghcr.io/codabool/fedora-bootc:latest
+      # https://github.com/marketplace/actions/upload-a-build-artifact
+      - uses: actions/upload-artifact@v4
+        id: artifact
+        with:
+          path: ./output/bootiso/install.iso
+          name: "${{ env.DISTRO }}-${{ env.LINUX }}-${{ env.DATE }}"
+          overwrite: true
       # https://github.com/marketplace/actions/gh-release
 
       # ===================================
@@ -70,9 +77,3 @@ jobs:
             ISO Download Link: ${{ steps.artifact.outputs.artifact-url }}
 
             This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
-      # https://github.com/marketplace/actions/upload-a-build-artifact
-      - uses: actions/upload-artifact@v4
-        with:
-          path: ./output/bootiso/install.iso
-          name: "${{ env.DISTRO }}-${{ env.LINUX }}-${{ env.DATE }}"
-          overwrite: true

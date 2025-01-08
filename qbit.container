@@ -22,6 +22,9 @@ Network=container:gluetun
 # auto update
 AutoUpdate=registry
 
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
 [Service]
 
 # allow time for a new image to download
@@ -34,7 +37,7 @@ Restart=always
 WantedBy=default.target
 
 # setup
-# 1. set options > advanced to tun0 
+# 1. set options > advanced to tun0
 # 2. update password (initial password is in qbit logs)
 # 3. can use ipleak.net to check if leaking
 

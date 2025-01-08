@@ -1,0 +1,29 @@
+[Container]
+ContainerName=backup
+
+# set to hourly just to test
+Environment=BACKUP_CRON_EXPRESSION="0 0 * * *"
+Environment=AWS_S3_BUCKET_NAME=codabool-backups
+Environment=AWS_STORAGE_CLASS=GLACIER
+Environment=BACKUP_RETENTION_DAYS=7
+Environment=NOTIFICATION_LEVEL=info
+EnvironmentFile=/mnt/volumes/.backup.env
+
+Image=docker.io/offen/docker-volume-backup
+
+Volume=/mnt/volumes:/backup/volumes:ro,Z
+Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,Z
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
