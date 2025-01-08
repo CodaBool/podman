@@ -1,11 +1,11 @@
-# on:
-#   schedule:
-#     - cron: "0 0 * * *" # daily
-on: push
+on:
+  schedule:
+    - cron: "0 0 * * *" # daily
+# on: push
 jobs:
   release:
-    # skip ci if the commit message contains "[no ci]"
-    if: "! contains(github.event.commits[0].message, '[no ci]')"
+    # for when set to on: push | skips ci if the commit message contains "[no ci]"
+    # if: "! contains(github.event.commits[0].message, '[no ci]')"
     runs-on: ubuntu-latest
     permissions:
       contents: write # required for github release
