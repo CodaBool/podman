@@ -14,7 +14,7 @@ jobs:
       # https://github.com/marketplace/actions/checkout
       - uses: actions/checkout@v4
       - uses: docker/setup-docker-action@v4
-      - name: Check if a new image has been pushed in the last 8 days
+      - name: Check for a new Fedora image
         run: |
           # get the latest stable version of Fedora 41
           LATEST_STABLE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:41 --format "{{json .Image}}" | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
@@ -95,18 +95,16 @@ jobs:
       # # and Fedora bootc comes out to 2.4Gb
       # #  just link to the artifact instead
       # # ===================================
-
-      # - uses: softprops/action-gh-release@v2
-      #   with:
-      #     # files: ./output/bootiso/install.iso
-      #     make_latest: true
-      #     tag_name: ${{ env.DISTRO_VERSION }}
-      #     name: "Fedora ${{ env.DISTRO_VERSION }}"
-      #     body: |
-      #       Fedora Distro: ${{ env.DISTRO_VERSION }}
-      #       Linux Kernel: ${{ env.LINUX_KERNAL }}
-      #       Date Created: ${{ env.DATE }}
-
-      #       [ISO Download Link](${{ steps.artifact.outputs.artifact-url }})
-
-      #       This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
+      # [ISO Download Link]({{ steps.artifact.outputs.artifact-url }})
+      # This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
+      - uses: softprops/action-gh-release@v2
+        with:
+          # files: ./output/bootiso/install.iso
+          make_latest: true
+          tag_name: ${{ env.DISTRO_VERSION }}
+          name: "Fedora ${{ env.DISTRO_VERSION }}"
+          body: |
+            Fedora Distro: ${{ env.DISTRO_VERSION }}
+            Linux Kernel: ${{ env.LINUX_KERNAL }}
+            Date Created: ${{ env.DATE }}
+            [Image](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
