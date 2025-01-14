@@ -14,8 +14,6 @@ Image=docker.io/offen/docker-volume-backup
 Volume=/mnt/volumes:/backup/volumes:ro,z
 Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,z
 
-#PodmanArgs=--privileged
-
 # auto update
 AutoUpdate=registry
 

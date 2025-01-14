@@ -18,8 +18,6 @@ Volume=/mnt/volumes/sonarr:/config:Z
 Volume=/mnt/media/downloads:/downloads:z
 Volume=/mnt/media/tv:/tv:z
 
-#SecurityLabelDisable=true
-
 Network=container:gluetun
 
 # auto update
