@@ -15,7 +15,7 @@ Image=ghcr.io/hotio/prowlarr
 PublishPort=9696:9696
 Volume=/mnt/volumes/prowlarr:/config:Z
 Network=container:gluetun
-
+PodmanArgs=--privileged
 # auto update
 AutoUpdate=registry
 

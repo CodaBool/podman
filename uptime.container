@@ -4,7 +4,7 @@ Image=docker.io/louislam/uptime-kuma
 PublishPort=3001:3001
 HealthCmd=curl --fail http://localhost:3001 || exit 1
 Volume=/mnt/volumes/uptime:/app/data:Z
-Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:Z,ro
+Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:z,ro
 
 # allows for uptime to reach other containers
 Network=host
