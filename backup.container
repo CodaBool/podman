@@ -11,8 +11,8 @@ EnvironmentFile=/mnt/volumes/.backup.env
 
 Image=docker.io/offen/docker-volume-backup
 
-Volume=/mnt/volumes:/backup/volumes:ro,Z
-Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,Z
+Volume=/mnt/volumes:/backup/volumes:ro,z
+Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,z
 
 # auto update
 AutoUpdate=registry

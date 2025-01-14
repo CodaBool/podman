@@ -1,15 +1,10 @@
-# prowlarr.container
-
 [Unit]
 BindsTo=gluetun.service
 After=gluetun.service
 
 [Container]
 ContainerName=prowlarr
-Environment=PUID=1000
-Environment=PGID=1000
 Environment=TZ=America/New_York
-Environment=UMASK=002
 HealthCmd=pgrep Prowlarr > /dev/null || exit 1
 Image=ghcr.io/hotio/prowlarr
 PublishPort=9696:9696

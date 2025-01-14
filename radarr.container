@@ -12,11 +12,11 @@ HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:7878 || exit 1
 # https://hub.docker.com/r/linuxserver/radarr
 Image=lscr.io/linuxserver/radarr
 PublishPort=7878:7878
-
+UserNS=keep-id:uid=1000,gid=1000
 
 Volume=/mnt/volumes/radarr:/config:Z
-Volume=/mnt/media/downloads:/downloads:Z
-Volume=/mnt/media/movies:/movies:Z
+Volume=/mnt/media/downloads:/downloads:z
+Volume=/mnt/media/movies:/movies:z
 
 Network=container:gluetun
 

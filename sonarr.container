@@ -12,11 +12,11 @@ HealthCmd=curl --fail http://localhost:8989 || exit 1
 # https://hub.docker.com/r/linuxserver/sonarr
 Image=lscr.io/linuxserver/sonarr
 PublishPort=8989:8989
-
+UserNS=keep-id:uid=1000,gid=1000
 
 Volume=/mnt/volumes/sonarr:/config:Z
-Volume=/mnt/media/downloads:/data/downloads:Z
-Volume=/mnt/media/tv:/tv:Z
+Volume=/mnt/media/downloads:/downloads:z
+Volume=/mnt/media/tv:/tv:z
 
 Network=container:gluetun
 
