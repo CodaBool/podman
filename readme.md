@@ -29,7 +29,8 @@ it automatically becomes a systemd service 🪄
     │   └── .container_name.env
     ├── media/
     │   ├── movies
-    │   └── tv
+    |   ├── tv
+    │   └── downloads
     └── sync
 ```
 
