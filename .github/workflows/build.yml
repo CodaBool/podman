@@ -12,16 +12,20 @@ jobs:
       packages: write
     steps:
       # https://github.com/marketplace/actions/checkout
+      - uses: actions/checkout@v4
+      - uses: docker/setup-docker-action@v4
       - name: Check if a new image has been pushed in the last 8 days
         run: |
-          # get the latest stable version of Fedora
-          # WARN: this does assume that you are running the current major version of Fedora
-          LATEST_STABLE=$(curl -s https://builds.coreos.fedoraproject.org/streams/stable.json | jq -r '.architectures.x86_64.artifacts.metal.release')
+          # get the latest stable version of Fedora 41
+          LATEST_STABLE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:41 --format "{{json .Image}}" | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
 
-          # get the latest release tag from the codabool/podman repository
-          CURRENT_VERSION=$(curl -s https://api.github.com/repos/codabool/podman/releases/latest | jq -r '.tag_name')
+          # ~~get the latest release tag from the codabool/podman repository~~
+          # CURRENT_VERSION=$(curl -s https://api.github.com/repos/codabool/podman/releases/latest | jq -r '.tag_name')
+          # Query the docker image instead to remove middle man
+          CURRENT_VERSION=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}" | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
-          # WARN: assumes fedora will always use a date based minor version scheme
+
+          # WARN: if this code is used for a non-Fedora distro, use a semver compare tool instead
           function get_unix_time() {
             minor_version=$(echo "$1" | cut -d '.' -f2)
             unix_time=$(date -d "${minor_version:0:4}-${minor_version:4:2}-${minor_version:6:2}" '+%s')
@@ -38,67 +42,71 @@ jobs:
             echo "The latest stable version matches the current version. Nothing to do."
             exit 0
           fi
-      - uses: actions/checkout@v4
-      - uses: docker/setup-docker-action@v4
       - name: Build and push the bootc image
         run: |
           cd bootc
           docker build -t ghcr.io/codabool/fedora-bootc:latest .
           echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
           docker push ghcr.io/codabool/fedora-bootc:latest
-      - name: Gather info for release
-        run: |
-          IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
-          CREATED=$(echo $IMAGE | jq -r .created)
-          LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
-          DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
-          # Create short versions of variables
-          DATE=$(echo $CREATED | cut -d'T' -f1)
-          DISTRO=$(echo $DISTRO_VERSION | cut -d'.' -f1)
-          LINUX=$(echo $LINUX_KERNAL | cut -d'-' -f1 | cut -d'.' -f1,2)
 
-          echo "creating new iso with: kernal $LINUX | distro $DISTRO"
+      # There is currently issues with bootc-image-builder
+      # it often breaks due to upstream 503 errors
+      # once things get more stable I'll enable auto ISO building
+      
+      # - name: Gather info for release
+      #   run: |
+      #     IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
+      #     CREATED=$(echo $IMAGE | jq -r .created)
+      #     LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
+      #     DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
-          # Set output variables for use in later steps
-          echo "DISTRO=$DISTRO" >> $GITHUB_ENV
-          echo "LINUX=$LINUX" >> $GITHUB_ENV
-          echo "DATE=$DATE" >> $GITHUB_ENV
-          echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
-          echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
-      # https://github.com/ublue-os/bootc-image-builder-action
-      - uses: centos-workstation/bootc-image-builder-action@main
-        with:
-          # Configuration file for the image builder.
-          config-file: ./bootc/config.toml
-          # Image (registry with tag) used in the artifact.
-          image: ghcr.io/codabool/fedora-bootc:latest
-      # https://github.com/marketplace/actions/upload-a-build-artifact
-      - uses: actions/upload-artifact@v4
-        id: artifact
-        with:
-          path: ./output/bootiso/install.iso
-          name: "${{ env.DISTRO }}-${{ env.LINUX }}-${{ env.DATE }}"
-          overwrite: true
-      # https://github.com/marketplace/actions/gh-release
+      #     # Create short versions of variables
+      #     DATE=$(echo $CREATED | cut -d'T' -f1)
+      #     DISTRO=$(echo $DISTRO_VERSION | cut -d'.' -f1)
+      #     LINUX=$(echo $LINUX_KERNAL | cut -d'-' -f1 | cut -d'.' -f1,2)
 
-      # ===================================
-      # !! releases can only be 2Gb max !!
-      # and Fedora bootc comes out to 2.4Gb
-      #  just link to the artifact instead
-      # ===================================
+      #     echo "creating new iso with: kernal $LINUX | distro $DISTRO"
 
-      - uses: softprops/action-gh-release@v2
-        with:
-          # files: ./output/bootiso/install.iso
-          make_latest: true
-          tag_name: ${{ env.DISTRO_VERSION }}
-          name: "Fedora ${{ env.DISTRO_VERSION }}"
-          body: |
-            Fedora Distro: ${{ env.DISTRO_VERSION }}
-            Linux Kernel: ${{ env.LINUX_KERNAL }}
-            Date Created: ${{ env.DATE }}
+      #     # Set output variables for use in later steps
+      #     echo "DISTRO=$DISTRO" >> $GITHUB_ENV
+      #     echo "LINUX=$LINUX" >> $GITHUB_ENV
+      #     echo "DATE=$DATE" >> $GITHUB_ENV
+      #     echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
+      #     echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
+      # # https://github.com/ublue-os/bootc-image-builder-action
+      # - uses: centos-workstation/bootc-image-builder-action@main
+      #   with:
+      #     # Configuration file for the image builder.
+      #     config-file: ./bootc/config.toml
+      #     # Image (registry with tag) used in the artifact.
+      #     image: ghcr.io/codabool/fedora-bootc:latest
+      # # https://github.com/marketplace/actions/upload-a-build-artifact
+      # - uses: actions/upload-artifact@v4
+      #   id: artifact
+      #   with:
+      #     path: ./output/bootiso/install.iso
+      #     name: "${{ env.DISTRO }}-${{ env.LINUX }}-${{ env.DATE }}"
+      #     overwrite: true
+      # # https://github.com/marketplace/actions/gh-release
 
-            [ISO Download Link](${{ steps.artifact.outputs.artifact-url }})
+      # # ===================================
+      # # !! releases can only be 2Gb max !!
+      # # and Fedora bootc comes out to 2.4Gb
+      # #  just link to the artifact instead
+      # # ===================================
 
-            This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
+      # - uses: softprops/action-gh-release@v2
+      #   with:
+      #     # files: ./output/bootiso/install.iso
+      #     make_latest: true
+      #     tag_name: ${{ env.DISTRO_VERSION }}
+      #     name: "Fedora ${{ env.DISTRO_VERSION }}"
+      #     body: |
+      #       Fedora Distro: ${{ env.DISTRO_VERSION }}
+      #       Linux Kernel: ${{ env.LINUX_KERNAL }}
+      #       Date Created: ${{ env.DATE }}
+
+      #       [ISO Download Link](${{ steps.artifact.outputs.artifact-url }})
+
+      #       This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
