@@ -17,13 +17,13 @@ jobs:
       - name: Check for a new Fedora image
         run: |
           # get the latest stable version of Fedora 41
-          LATEST_STABLE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:41 --format "{{json .Image}}" | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
+          IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
+          LATEST_STABLE=$(echo $IMAGE | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
 
           # ~~get the latest release tag from the codabool/podman repository~~
           # CURRENT_VERSION=$(curl -s https://api.github.com/repos/codabool/podman/releases/latest | jq -r '.tag_name')
           # Query the docker image instead to remove middle man
-          CURRENT_VERSION=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}" | jq -r '.config.Labels.["org.opencontainers.image.version"]')
-
+          CURRENT_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
           # WARN: if this code is used for a non-Fedora distro, use a semver compare tool instead
           function get_unix_time() {
@@ -42,6 +42,14 @@ jobs:
             echo "The latest stable version matches the current version. Nothing to do."
             exit 0
           fi
+
+          # set env vars for release
+          LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
+          DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
+          DATE=$(echo $IMAGE | jq -r .created | cut -d'T' -f1)
+          echo "DATE=$DATE" >> $GITHUB_ENV
+          echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
+          echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
       - name: Build and push the bootc image
         run: |
           cd bootc
@@ -86,7 +94,7 @@ jobs:
       #   id: artifact
       #   with:
       #     path: ./output/bootiso/install.iso
-      #     name: "${{ env.DISTRO }}-${{ env.LINUX }}-${{ env.DATE }}"
+      #     name: "{{ env.DISTRO }}-{{ env.LINUX }}-{{ env.DATE }}"
       #     overwrite: true
       # # https://github.com/marketplace/actions/gh-release
 
