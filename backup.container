@@ -6,13 +6,19 @@ Environment=BACKUP_CRON_EXPRESSION="0 10 * * *"
 Environment=AWS_S3_BUCKET_NAME=codabool-backups
 Environment=AWS_STORAGE_CLASS=GLACIER
 Environment=BACKUP_RETENTION_DAYS=7
-Environment=NOTIFICATION_LEVEL=info
+#Environment=NOTIFICATION_LEVEL=info
 EnvironmentFile=/mnt/volumes/.backup.env
+
+# ensure no file permission blocks
+# AddCapability=CAP_DAC_READ_SEARCH
+# just giving full perm to simplify permission web
+PodmanArgs=--privileged
 
 Image=docker.io/offen/docker-volume-backup
 
 Volume=/mnt/volumes:/backup/volumes:ro,z
 Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,z
+
 
 # auto update
 AutoUpdate=registry
