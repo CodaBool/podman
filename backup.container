@@ -1,12 +1,17 @@
 [Container]
 ContainerName=backup
 
-# default is daily but let's see what costs are like for a bit
-Environment=BACKUP_CRON_EXPRESSION="0 10 * * *"
+# daily is working but I want to try weekly
+# Environment=BACKUP_CRON_EXPRESSION="0 10 * * *"
+# try to move to weekly
+Environment=BACKUP_CRON_EXPRESSION="0 10 1 * *"
+
 Environment=AWS_S3_BUCKET_NAME=codabool-backups
 Environment=AWS_STORAGE_CLASS=GLACIER
-Environment=BACKUP_RETENTION_DAYS=7
-#Environment=NOTIFICATION_LEVEL=info
+
+# should result in 6 backups
+Environment=BACKUP_RETENTION_DAYS=42
+
 EnvironmentFile=/mnt/volumes/.backup.env
 
 # ensure no file permission blocks
@@ -18,7 +23,6 @@ Image=docker.io/offen/docker-volume-backup
 
 Volume=/mnt/volumes:/backup/volumes:ro,z
 Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,z
-
 
 # auto update
 AutoUpdate=registry
