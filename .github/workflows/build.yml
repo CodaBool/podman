@@ -56,7 +56,8 @@ jobs:
           docker build -t ghcr.io/codabool/fedora-bootc:latest .
           echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
           docker push ghcr.io/codabool/fedora-bootc:latest
-
+          SHA=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Manifest.Digest}}" | tr -d '"')
+          echo "SHA=$SHA" >> $GITHUB_ENV
 
       # There is currently issues with bootc-image-builder
       # it often breaks due to upstream 503 errors
@@ -115,4 +116,5 @@ jobs:
             Fedora Distro: ${{ env.DISTRO_VERSION }}
             Linux Kernel: ${{ env.LINUX_KERNAL }}
             Date Created: ${{ env.DATE }}
+            sha256: ${{ env.SHA }} ([previous versions](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions))
             [Image](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
