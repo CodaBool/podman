@@ -1,6 +1,7 @@
 [Container]
 ContainerName=uptime
-Image=docker.io/louislam/uptime-kuma
+Image=docker.io/louislam/uptime-kuma:beta
+#Image=docker.io/louislam/uptime-kuma
 PublishPort=3001:3001
 HealthCmd=curl --fail http://localhost:3001 || exit 1
 Volume=/mnt/volumes/uptime:/app/data:Z
