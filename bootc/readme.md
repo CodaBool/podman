@@ -25,6 +25,8 @@ Meaning more changes happen in the build step
 
 - All directories except for `/etc` and `var` are mounted read only
   - files under these 2 paths are preserved across updates
+  - `/var/home/` is a symlink to `/home` so `/home` is effectively preserved as well
+  - changes to `/etc` should be performed during deployment using Anaconda/kickstart or within the Containerfile
 - System can self-update when a new image is available
 - Supports roll backs
 - Easy factory resets
