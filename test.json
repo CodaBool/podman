@@ -1,0 +1,360 @@
+{
+  "created": "2025-01-22T21:12:06.651159128Z",
+  "architecture": "amd64",
+  "os": "linux",
+  "config": {
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    "Cmd": [
+      "/sbin/init"
+    ],
+    "Labels": {
+      "containers.bootc": "1",
+      "org.opencontainers.image.version": "41.20250122.0",
+      "ostree.bootable": "true",
+      "ostree.commit": "91ddbb99793aa216d0dbf68926efd3fcf686a25bd00b70f24d2b4d7cad7d495f",
+      "ostree.final-diffid": "sha256:12787d84fa137cd5649a9005efe98ec9d05ea46245fdc50aecb7dd007f2035b1",
+      "ostree.linux": "6.12.9-200.fc41.x86_64",
+      "rpmostree.inputhash": "4bbce0fb42682dac9e95aaf991a38228f5f586d296491fd98dec5dfb5aa4144e"
+    }
+  },
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:33f70d43bb9547ce1bf8af07f1e665034ef5ff554af2221e8e6bf419953951e8",
+      "sha256:f291aa794ca20b99334bd5c7fd342a377df5fbd06d2489949fea180aa94a3193",
+      "sha256:5952d86cb86a178d88800148ebc4c71c8595e7f8cf2baff3a8b7419f2d99b5f2",
+      "sha256:fe97eb04e408cd0eab675409ce27e50d84137dbebd979d71353a6a63b3498789",
+      "sha256:83babf0165c37c225cfcc81c608bfc1195af4c850458402b4c277d2e8301f945",
+      "sha256:7479ddf2a4747e2938316a3d9641ba65642fd2455ff27d2a5a3fd8294e7cbada",
+      "sha256:8a51686e9a2ffb6e77c5d7803a648bd181ae696479e50a40ee714760ce0f9347",
+      "sha256:221a17e21dd9925fa3199df00a1bbf065f7f71e6f25a556a9a6ad5cca6fec50b",
+      "sha256:a6dcef0e354c7cc6f4b68c8a0a23f6f192c4fb07d9bb5033ec0cfa6f0399fe74",
+      "sha256:ff7aed7c63ebd07e1be11370bad9b803e3607128e3539b0fccfba2f777f37aaf",
+      "sha256:5944a8fc2c7483be6560626d6f7ee202c5cf41aea0922b801c4f6516f93ed80f",
+      "sha256:e7018e481721573fa3eb6da4f1668bc1f16b190aeebdc5960fddaf2d6501434e",
+      "sha256:d65b5e38dad718b20e93365d183c4b7cfe7a1db96bbe64673336d18949ec03c4",
+      "sha256:dc01ea0cc4e189ebcee2433a71460fe932bdc4336f1a58d870900c15ce845f91",
+      "sha256:442fd754e94234909cf6989fe6ca58ec79bf989bd6b0dc54874f23fe6247a890",
+      "sha256:38b3799ba2c17460bd38dd4774f2c063070b0adb36d8be19a055364b051be27b",
+      "sha256:8da44d506c67683fa9cf5af2f97af8e0508c0970c43ad0f35093e48df0d669a5",
+      "sha256:f021a5f4337c9fccf12849b83e4ebb97d68e0adcf779d276879a30aa8103f262",
+      "sha256:5bd5781de66829b7241c5da63aaaaa32f9eaa8c19b6ff9329f54ee5ffd3d808b",
+      "sha256:f27078e54453a154e1e2db1b6e39e01327247b4349862234288859c12c0ce950",
+      "sha256:a86e1c328c42d14cebb96be0db3e52476bcc9b3e5b6e70ff389e5f0dde2be43d",
+      "sha256:5f2e3d3bebc8a2964abfd302bf8b835a6a5ddc3da7f7afd87e169aa070da87d4",
+      "sha256:82a2835ed84b947f4f57741e881475ab9106673391c9ab9f39e7c9792ac25b11",
+      "sha256:a77ef8fc79c6b32abd0449952e30501a2b18bec55b66b8b4ed33eb40849e90b3",
+      "sha256:1e191c0218886699740e24bb274b63b0be1e3d3be3cdf979f712d33219dc2565",
+      "sha256:e596d71317a52e159de1be873819217153c508166d31a3e5051d0a4ab09bfb94",
+      "sha256:a8d6c1467082b1497a12905f3d9994bf2e93e627beb394e372c453e270eb1273",
+      "sha256:1d1caee734e578282837509c6336ec484bb582caa7591d072860f102b01d7c8b",
+      "sha256:0925d587afa280598d101b5c11493247253a21510dc0ff1b2768b514b42581af",
+      "sha256:91d47e90460cbb9b09bbc2a164cb08d44941debf75189c84d3035d87cf869f0d",
+      "sha256:8b929e68e8e28eedd61d73345564328f39020ee3f6a59c0b2ac3e5c0cef16651",
+      "sha256:34a6cc1d14ffc422515a3d9d40fbb283aff4df2024c629a1f5ab6a8dac0ecb4e",
+      "sha256:1898fc875751583aba127295eea8a6d75cfe3b135c489106c8a596394e09cd1f",
+      "sha256:20f97e1a5b4cc501dbafc02b8ff75b4bfb04bec8b74a54818baae74b8baa835e",
+      "sha256:3ad10adb895c4fbd33698819f279fe10378151e9c395f5b1010594e7d6a9e4cb",
+      "sha256:83c93631da1be4e3a6ba7e59c01e164ea303e712d1dff86b4b7552b1190aaaaf",
+      "sha256:a58970a0dbb4f100058daefb661952094ccc28409ad2b2e5978d35d62b82007e",
+      "sha256:d9b0f05c0929bb86a3b2f14d960f9c62f23e848d73e30197c77ecead05206996",
+      "sha256:a91d941a95462e194046aa4b9dffc4a685e5d24b918df7ff791bc02a4d316687",
+      "sha256:d73081511cc215d264b40f2a9158c7f6a1f6d1d4261402e8d9eaa25e412f79f7",
+      "sha256:a9f258c28391305cf1d1cd6c5ba8b68ff6a40864fcbf7acfd9ad152e4542ce96",
+      "sha256:168e4aa3b214f1678392e5e6458a4a82d8886152275f6988fe4543b6c5607e54",
+      "sha256:69d70886416f3f7b700915c48e21e11ddbfc9689d3a5e1ae52502d348f06a2cd",
+      "sha256:c3e8e9cb93ea376b0c690daebd506bd606fb22f533f917ef30b877afc41e3587",
+      "sha256:b95826cb85d3f113877eebe3133c5780d39e678c4c9a145f68395cf01606bc88",
+      "sha256:947ec37b261dd4625f14d3e90af9af1186afd503dd827e01c0f2af17f894c9e2",
+      "sha256:4440a6a51bc8803e7e64aa523e324beb12784ec2d618a82d2511bbc00c3883bf",
+      "sha256:f40ac102d2acc441e6c03826221932b5c7b1be2c5366275efc0a9f64b7ede068",
+      "sha256:84e81f8d2c980b3bed01da74ca72bfa0983da223f4c355af6474eda60948d3b9",
+      "sha256:4769e641a88ec5f20498c04f8cbe26d7492ec8bd73cb6febe882e3fe0afc4f1d",
+      "sha256:8bc6bbb9c3fef2c0acf87227d298695d7c532ce063348ab8e5acb5b31ab764d8",
+      "sha256:2ee70010b86639c6488bc22911f1110481f3fb4cbbbf1a1913e6d9763034c149",
+      "sha256:3183f587799d741ae3eb71509c92bede5bca55223602f92725afd5ba9c18a398",
+      "sha256:81a1edf4b101cf002bb135a1611f7fb1698df1f7ad4b88c41f306edee0f3fa9f",
+      "sha256:2e95c272cc4030de89947abe32168f03c1ad596461b3b3648a90bf678e6dae6b",
+      "sha256:4d4e82bf2547ede13733287f1b1ae9a8db448a400161db28f1932960ce529b86",
+      "sha256:90fc05bded43a00fd1d7008defb879075a14bdaa3b8a2c3276e93322ec067b42",
+      "sha256:08c28267e22488b8267e756af9f80b0611672d5c75adc6299b149913a7b93b85",
+      "sha256:77a4a288a86ca943e927cce8c6536ac1988ae42ba750cce36cda0467bce24770",
+      "sha256:7ff7e092018c64fec8110be376457eb41c93dc98cc5f6257ac21c3751bc27ca2",
+      "sha256:9f14b8d2e825c79ddb94c04a143d256528baabc40cf6c3242ea9e605bfbad113",
+      "sha256:0da3258163227093308699fec61a4bb3c41c82e8036ed14b20b7fc6e21b86c43",
+      "sha256:9bdc27385360b7f84483e2efd987bbaa546f26b53e59378c2219a0cfe06d2da8",
+      "sha256:7e436451c832092d95aca90b3644db9b1b432eee565f5b219d505112ed8eb9fa",
+      "sha256:12787d84fa137cd5649a9005efe98ec9d05ea46245fdc50aecb7dd007f2035b1",
+      "sha256:59d5db2346eff05e5934a64f14fc631f508b3ef8c1688869926655e4c1591569"
+    ]
+  },
+  "history": [
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "ostree export of commit 91ddbb99793aa216d0dbf68926efd3fcf686a25bd00b70f24d2b4d7cad7d495f"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "python3-botocore-1.35.93-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "kernel-modules-6.12.9-200.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "podman-5:5.3.1-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "kernel-modules-core-6.12.9-200.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "python3-libs-3.13.1-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "linux-firmware-20241210-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "nvidia-gpu-firmware-20241210-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "libicu-74.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "rpm-4.20.0-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "atheros-firmware-20241210-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-mips-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "kernel-core-6.12.9-200.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "skopeo-1:1.17.0-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "binutils-2.43.1-5.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "amd-gpu-firmware-20241210-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "mt7xxx-firmware-20241210-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "samba-client-libs-2:4.21.3-3.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "systemd-256.11-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "rpm-ostree-2024.9-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "glib2-2.82.2-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "bootc-1.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-ppc-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-xtensa-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-aarch64-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "systemd-udev-256.11-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-sparc-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "coreutils-common-9.5-11.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "toolbox-0.1.1-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "netavark-2:1.13.1-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "NetworkManager-libnm-1:1.50.0-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-riscv-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "file-libs-5.45-7.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-arm-2:9.1.2-2.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "brcmfmac-firmware-20241210-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "gnupg2-2.4.5-3.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "cracklib-dicts-2.9.11-6.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "166 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "glibc-gconv-extra-2.40-17.fc41.x86_64 and glibc-2.40-17.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "glibc-common-2.40-17.fc41.x86_64 and systemd-pam-256.11-1.fc41.x86_64 and systemd-resolved-256.11-1.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "systemd-libs-256.11-1.fc41.x86_64 and python3-boto3-1.35.93-1.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "qemu-user-static-hexagon-2:9.1.2-2.fc41.x86_64 and grub2-tools-1:2.12-15.fc41.x86_64 and grub2-common-1:2.12-15.fc41.noarch"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "10 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "6 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "libqmi-1.34.0-6.fc41.x86_64 and xkeyboard-config-2.42-2.fc41.noarch and bash-5.2.32-1.fc41.x86_64 and microcode_ctl-2:2.1-67.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "11 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "pam-1.6.1-7.fc41.x86_64 and iptables-libs-1.8.10-15.fc41.x86_64 and gettext-libs-0.22.5-6.fc41.x86_64"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "22 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "22 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "22 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "22 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "16 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "22 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "22 components"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "initramfs (kernel 6.12.9-200.fc41.x86_64) and rpmostree-unpackaged-content"
+    },
+    {
+      "created": "2025-01-22T12:10:03Z",
+      "created_by": "Reserved for new packages"
+    },
+    {
+      "created": "2025-01-22T21:12:06.651159128Z",
+      "created_by": "RUN /bin/sh -c dnf update -y \u0026\u0026 dnf install -y git \u0026\u0026 dnf clean all # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    }
+  ]
+}
