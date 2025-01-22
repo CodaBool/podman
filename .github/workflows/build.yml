@@ -116,5 +116,7 @@ jobs:
             Fedora Distro: ${{ env.DISTRO_VERSION }}
             Linux Kernel: ${{ env.LINUX_KERNAL }}
             Date Created: ${{ env.DATE }}
-            sha256: ${{ env.SHA }} ([previous versions](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions))
-            [Image](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
+
+            ([${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions))
+
+            [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
