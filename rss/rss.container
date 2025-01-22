@@ -1,0 +1,31 @@
+[Unit]
+Requires=rss_db.service rss-network.service
+After=rss_db.service rss-network.service
+
+[Container]
+ContainerName=rss
+HealthCmd=/usr/bin/miniflux -healthcheck auto
+Image=docker.io/miniflux/miniflux
+PublishPort=8085:8080/tcp
+EnvironmentFile=/mnt/volumes/.rss.env
+# default 60
+Environment=POLLING_FREQUENCY=10
+Environment=RUN_MIGRATIONS=1
+Network=rss-network
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
