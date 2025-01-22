@@ -1,7 +1,7 @@
-on:
-  schedule:
-    - cron: "0 21 * * *" # daily
-# on: push
+# on:
+#   schedule:
+#     - cron: "0 21 * * *" # daily
+on: push
 jobs:
   release:
     # for when set to on: push | skips ci if the commit message contains "[no ci]"
@@ -20,6 +20,7 @@ jobs:
           IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
           LATEST_STABLE=$(echo $IMAGE | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
 
+          echo $IMAGE
           # ~~get the latest release tag from the codabool/podman repository~~
           # CURRENT_VERSION=$(curl -s https://api.github.com/repos/codabool/podman/releases/latest | jq -r '.tag_name')
           # Query the docker image instead to remove middle man
@@ -50,19 +51,19 @@ jobs:
           echo "DATE=$DATE" >> $GITHUB_ENV
           echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
           echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
-      - name: Build and push the bootc image
-        run: |
-          cd bootc
-          docker build -t ghcr.io/codabool/fedora-bootc:latest .
-          echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
-          docker push ghcr.io/codabool/fedora-bootc:latest
-          SHA=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Manifest.Digest}}" | tr -d '"')
-          echo "SHA=$SHA" >> $GITHUB_ENV
+      # - name: Build and push the bootc image
+      #   run: |
+      #     cd bootc
+      #     docker build -t ghcr.io/codabool/fedora-bootc:latest .
+      #     echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
+      #     docker push ghcr.io/codabool/fedora-bootc:latest
+      #     SHA=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Manifest.Digest}}" | tr -d '"')
+      #     echo "SHA=$SHA" >> $GITHUB_ENV
 
       # There is currently issues with bootc-image-builder
       # it often breaks due to upstream 503 errors
       # once things get more stable I'll enable auto ISO building
-      
+
       # - name: Gather info for release
       #   run: |
       #     IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
@@ -106,17 +107,17 @@ jobs:
       # # ===================================
       # [ISO Download Link]({{ steps.artifact.outputs.artifact-url }})
       # This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
-      - uses: softprops/action-gh-release@v2
-        with:
-          # files: ./output/bootiso/install.iso
-          make_latest: true
-          tag_name: ${{ env.DISTRO_VERSION }}
-          name: "Fedora ${{ env.DISTRO_VERSION }}"
-          body: |
-            Fedora Distro: ${{ env.DISTRO_VERSION }}
-            Linux Kernel: ${{ env.LINUX_KERNAL }}
-            Date Created: ${{ env.DATE }}
+      # - uses: softprops/action-gh-release@v2
+      #   with:
+      #     # files: ./output/bootiso/install.iso
+      #     make_latest: true
+      #     tag_name: ${{ env.DISTRO_VERSION }}
+      #     name: "Fedora ${{ env.DISTRO_VERSION }}"
+      #     body: |
+      #       Fedora Distro: ${{ env.DISTRO_VERSION }}
+      #       Linux Kernel: ${{ env.LINUX_KERNAL }}
+      #       Date Created: ${{ env.DATE }}
 
-            ([${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions))
+      #       ([${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions))
 
-            [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
+      #       [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
