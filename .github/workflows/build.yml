@@ -17,12 +17,10 @@ jobs:
       - name: Check for a new Fedora image
         run: |
           # get the latest stable version of Fedora 41
-          IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
-          LATEST_STABLE=$(echo $IMAGE | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
+          IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc --format "{{json .Image}}")
+          REMOTE_IMAGE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:41 --format "{{json .Image}}")
+          LATEST_STABLE=$(echo $REMOTE_IMAGE | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
 
-          # ~~get the latest release tag from the codabool/podman repository~~
-          # CURRENT_VERSION=$(curl -s https://api.github.com/repos/codabool/podman/releases/latest | jq -r '.tag_name')
-          # Query the docker image instead to remove middle man
           CURRENT_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
 
           # WARN: if this code is used for a non-Fedora distro, use a semver compare tool instead
@@ -44,9 +42,9 @@ jobs:
           fi
 
           # set env vars for release
-          LINUX_KERNAL=$(echo $IMAGE | jq -r '.config.Labels.["ostree.linux"]')
-          DISTRO_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
-          DATE=$(echo $IMAGE | jq -r .created | cut -d'T' -f1)
+          LINUX_KERNAL=$(echo $REMOTE_IMAGE | jq -r '.config.Labels.["ostree.linux"]')
+          DISTRO_VERSION=$(echo $REMOTE_IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
+          DATE=$(echo $REMOTE_IMAGE | jq -r .created | cut -d'T' -f1)
           echo "DATE=$DATE" >> $GITHUB_ENV
           echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
           echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
@@ -62,7 +60,7 @@ jobs:
       # There is currently issues with bootc-image-builder
       # it often breaks due to upstream 503 errors
       # once things get more stable I'll enable auto ISO building
-      
+
       # - name: Gather info for release
       #   run: |
       #     IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Image}}")
@@ -117,6 +115,8 @@ jobs:
             Linux Kernel: ${{ env.LINUX_KERNAL }}
             Date Created: ${{ env.DATE }}
 
-            ([${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions))
+            [actions](https://github.com/CodaBool/podman/actions)
+
+            [${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions)
 
             [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
