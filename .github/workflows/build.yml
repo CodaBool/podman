@@ -42,9 +42,9 @@ jobs:
           fi
 
           # set env vars for release
-          LINUX_KERNAL=$(echo $REMOTE_IMAGE | jq -r '.config.Labels.["ostree.linux"]')
-          DISTRO_VERSION=$(echo $REMOTE_IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
-          DATE=$(echo $REMOTE_IMAGE | jq -r .created | cut -d'T' -f1)
+          LINUX_KERNAL=$(echo $REMOTE_IMAGE | jq -r '.["linux/amd64"].config.Labels.["ostree.linux"]')
+          DISTRO_VERSION=$(echo $REMOTE_IMAGE | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
+          DATE=$(echo $REMOTE_IMAGE | jq -r '.["linux/amd64"].created' | cut -d'T' -f1)
           echo "DATE=$DATE" >> $GITHUB_ENV
           echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
           echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
