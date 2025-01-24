@@ -9,8 +9,8 @@ Image=docker.io/miniflux/miniflux
 PublishPort=8085:8080/tcp
 EnvironmentFile=/mnt/volumes/.rss.env
 # default 60
-Environment=POLLING_FREQUENCY=10
-Environment=RUN_MIGRATIONS=1
+#Environment=POLLING_FREQUENCY=10
+#Environment=RUN_MIGRATIONS=1
 Network=rss-network
 
 # auto update
@@ -20,6 +20,9 @@ AutoUpdate=registry
 Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
+
+# miniflux will startup before postgres is ready
+ExecStartPre=/bin/sleep 70
 
 # allow time for a new image to download
 TimeoutStartSec=900
