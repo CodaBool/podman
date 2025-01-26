@@ -1,5 +1,5 @@
 [Unit]
-Wants=qbit.service prowlarr.service radarr.service sonarr.service
+Wants=qbit.service prowlarr.service radarr.service sonarr.service flaresolverr.service
 
 [Container]
 AddCapability=NET_ADMIN
@@ -34,6 +34,9 @@ SecurityLabelDisable=true
 
 # prowlarr
 PublishPort=9696:9696
+
+# flaresolverr
+PublishPort=8191:8191
 
 # radarr
 PublishPort=7878:7878

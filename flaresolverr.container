@@ -3,7 +3,8 @@ ContainerName=flaresolverr
 Environment=TZ=America/New_York
 HealthCmd=curl --fail http://localhost:8191 || exit 1
 Image=ghcr.io/flaresolverr/flaresolverr
-PublishPort=8191:8191
+
+Network=container:gluetun
 
 # auto update
 AutoUpdate=registry
