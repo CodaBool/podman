@@ -1,7 +1,7 @@
-# on:
-#   schedule:
-#     - cron: "0 21 * * *" # daily
-on: push
+on:
+  schedule:
+    - cron: "0 21 * * *" # daily
+# on: push
 jobs:
   release:
     # for when set to on: push | skips ci if the commit message contains "[no ci]"
@@ -39,7 +39,7 @@ jobs:
 
           if [ "$latest_unix" -eq "$current_unix" ]; then
             echo "The latest stable version matches the current version. Nothing to do."
-            # echo "exit=true" >> $GITHUB_OUTPUT
+            echo "exit=true" >> $GITHUB_OUTPUT
             exit 0
           fi
 
@@ -107,20 +107,20 @@ jobs:
       # # ===================================
       # [ISO Download Link]({{ steps.artifact.outputs.artifact-url }})
       # This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
-      # - uses: softprops/action-gh-release@v2
-      #   if: steps.check.outputs.exit != 'true'
-      #   with:
-      #     # files: ./output/bootiso/install.iso
-      #     make_latest: true
-      #     tag_name: ${{ env.DISTRO_VERSION }}
-      #     name: "Fedora ${{ env.DISTRO_VERSION }}"
-      #     body: |
-      #       Fedora Distro: ${{ env.DISTRO_VERSION }}
-      #       Linux Kernel: ${{ env.LINUX_KERNAL }}
-      #       Date Created: ${{ env.DATE }}
+      - uses: softprops/action-gh-release@v2
+        if: steps.check.outputs.exit != 'true'
+        with:
+          # files: ./output/bootiso/install.iso
+          make_latest: true
+          tag_name: ${{ env.DISTRO_VERSION }}
+          name: "Fedora ${{ env.DISTRO_VERSION }}"
+          body: |
+            Fedora Distro: ${{ env.DISTRO_VERSION }}
+            Linux Kernel: ${{ env.LINUX_KERNAL }}
+            Date Created: ${{ env.DATE }}
 
-      #       [actions](https://github.com/CodaBool/podman/actions)
+            [actions](https://github.com/CodaBool/podman/actions)
 
-      #       [${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions)
+            [${{ env.SHA }}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions)
 
-      #       [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
+            [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
