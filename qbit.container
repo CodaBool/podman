@@ -1,8 +1,6 @@
-# qbit.container
 [Unit]
 BindsTo=gluetun.service
 After=gluetun.service
-
 
 [Container]
 ContainerName=qbit
@@ -10,7 +8,7 @@ Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=America/New_York
 Environment=WEBUI_PORT=8080
-Environment=TORRENTING_PORT=24619
+Environment=TORRENTING_PORT=6881
 UserNS=keep-id:uid=1000,gid=1000
 HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:8080 || exit 1
 Image=lscr.io/linuxserver/qbittorrent
@@ -48,3 +46,12 @@ WantedBy=default.target
 # - block malicious files
 # - torrent search
 # https://github.com/CodaBool/docker-public/blob/main/qbit/readme.md
+
+# I have added support for port forwarding
+# this improves performance
+# I followed guide from gluetun and protonvpn
+# this uses a bash script in the port.container
+# to run API commands and write to the /tmp/gluetun/forwarded_port file
+
+# gluetun offers a CLI to test port forwarding here
+# https://github.com/qdm12/gluetun-wiki/blob/main/setup/advanced/vpn-port-forwarding.md#test-it

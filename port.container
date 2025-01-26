@@ -1,0 +1,20 @@
+[Container]
+ContainerName=port
+# get QBITTORRENT_PASS from an .env file
+EnvironmentFile=/mnt/volumes/.gluetun.env
+Image=docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+Volume=/mnt/volumes/gluetun:/tmp/gluetun:z
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

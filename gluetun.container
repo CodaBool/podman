@@ -1,4 +1,3 @@
-# gluetun.container
 [Unit]
 Wants=qbit.service prowlarr.service radarr.service sonarr.service
 
@@ -8,17 +7,27 @@ AddDevice=/dev/net/tun:/dev/net/tun:m
 ContainerName=gluetun
 
 # https://github.com/qdm12/gluetun-wiki/blob/main/setup/providers/protonvpn.md
-# wiregaurd is more performant
 Environment=VPN_SERVICE_PROVIDER=protonvpn
-Environment=VPN_TYPE=wireguard
+Environment=VPN_PORT_FORWARDING=on
 
+# wiregaurd is more performant but could not get port forwarding working with it
+# Environment=VPN_TYPE=wireguard
 # WIREGUARD_PRIVATE_KEY= under Interface.PrivateKey
 # WIREGUARD_ADDRESSES= under Interface.Address
 # WIREGUARD_PUBLIC_KEY= under Peer.PublicKey
 # WIREGUARD_ENDPOINT_IP= under Peer.Endpoint
+
+# Environment=OPENVPN_USER=kept in .env (add "+pmp" as suffix for port forward)
+# Environment=OPENVPN_PASSWORD=kept in .env
+Environment=VPN_TYPE=openvpn
+Environment=SERVER_COUNTRIES="United States"
+Environment=SERVER_CITIES="Miami"
+
 EnvironmentFile=/mnt/volumes/.gluetun.env
+
 Image=docker.io/qmcgaw/gluetun
 HealthCmd=/gluetun-entrypoint healthcheck
+Volume=/mnt/volumes/gluetun:/tmp/gluetun:z
 
 # needed for permission to the tun device
 SecurityLabelDisable=true
@@ -33,7 +42,10 @@ PublishPort=7878:7878
 PublishPort=8989:8989
 
 # qbit
-PublishPort=8080:8080
+PublishPort=8080:8080/tcp
+PublishPort=8080:8080/udp
+PublishPort=6881:6881/tcp
+PublishPort=6881:6881/udp
 
 # auto update
 AutoUpdate=registry
