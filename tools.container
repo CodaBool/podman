@@ -1,0 +1,20 @@
+[Container]
+ContainerName=tools
+HealthCmd=curl --fail http://localhost || exit 1
+Image=docker.io/corentinth/it-tools
+
+PublishPort=8082:80
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
