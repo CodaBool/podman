@@ -1,0 +1,24 @@
+[Container]
+ContainerName=handbrake
+Image=ghcr.io/thenickoftime/handbrake-web-server
+PublishPort=9999:9999
+UserNS=keep-id:uid=1000,gid=1000
+Volume=/mnt/volumes/handbrake-config:/data:Z
+Volume=/mnt/volumes/handbrake-video:/video:z
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

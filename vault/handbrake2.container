@@ -1,0 +1,24 @@
+[Container]
+ContainerName=handbrake2
+Image=docker.io/jlesage/handbrake
+PublishPort=5800:5800
+Volume=/mnt/volumes/handbrake-config-2:/config:Z
+Volume=/mnt/volumes/handbrake-watch:/watch:Z
+Volume=/mnt/volumes/handbrake-output:/output:Z
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

@@ -1,0 +1,29 @@
+[Unit]
+Requires=handbrake.service
+After=handbrake.service
+
+[Container]
+ContainerName=handbrake-worker
+Environment=WORKER_ID=handbrake-worker
+Environment=SERVER_URL=http://handbrake
+Environment=SERVER_PORT=9999
+Image=ghcr.io/thenickoftime/handbrake-web-worker
+Volume=/mnt/volumes/handbrake-video:/video:z
+Network=container:handbrake
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
