@@ -1,0 +1,29 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=rsspuppet
+Environment=SCREEN_WIDTH=1920
+Environment=SCREEN_HEIGHT=1024
+Environment=SCREEN_DEPTH=16
+Environment=MAX_CONCURRENT_CHROME_PROCESSES=10
+Image=docker.io/dgtlmoon/sockpuppetbrowser
+Network=rss-network
+# TODO: find a Least Privileged for this
+PodmanArgs=--privileged
+#AddCapability=
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

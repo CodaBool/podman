@@ -1,0 +1,41 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=rsshub
+# defaults to 5 * 60
+Environment=CACHE_EXPIRE=300
+#Environment=ALLOW_ORIGIN=*
+#Environment=MINIFLUX_INSTANCE=
+#Environment=MINIFLUX_TOKEN=
+#Environment=TWITTER_USERNAME=
+#Environment=TWITTER_PASSWORD=
+#Environment=YOUTUBE_CLIENT_ID=
+#Environment=YOUTUBE_CLIENT_SECRET=
+#Environment=YOUTUBE_REFRESH_TOKEN=
+# can provide openai token to summarize articles
+
+
+# The following env vars are secret so set them within a .env file
+# - YOUTUBE_KEY=
+EnvironmentFile=/mnt/volumes/.rsshub.env
+
+HealthCmd=curl --fail http://localhost:1200/healthz
+Image=docker.io/diygod/rsshub:chromium-bundled
+PublishPort=1200:1200
+Network=rss-network
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

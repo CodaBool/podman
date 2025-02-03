@@ -1,0 +1,30 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=changedetect
+Environment=PLAYWRIGHT_DRIVER_URL=ws://rsspuppet:3000
+# /?stealth=1&--disable-web-security=true
+Environment=TZ=America/New_York
+Image=ghcr.io/dgtlmoon/changedetection.io
+PublishPort=5000:5000
+Volume=/mnt/volumes/changedetect:/datastore:Z
+Network=rss-network
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
