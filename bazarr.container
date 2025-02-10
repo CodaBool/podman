@@ -1,0 +1,37 @@
+[Unit]
+BindsTo=gluetun.service
+After=gluetun.service
+
+[Container]
+ContainerName=bazarr
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=America/New_York
+#HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:7878 || exit 1
+# https://hub.docker.com/r/linuxserver/bazarr
+Image=lscr.io/linuxserver/bazarr
+PublishPort=6767:6767
+UserNS=keep-id:uid=1000,gid=1000
+
+Volume=/mnt/volumes/bazarr:/config:Z
+Volume=/mnt/media/tv:/tv:z
+Volume=/mnt/media/movies:/movies:z
+
+Network=container:gluetun
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

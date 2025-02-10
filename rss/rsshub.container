@@ -16,7 +16,6 @@ Environment=CACHE_EXPIRE=300
 #Environment=YOUTUBE_REFRESH_TOKEN=
 # can provide openai token to summarize articles
 
-
 # The following env vars are secret so set them within a .env file
 # - YOUTUBE_KEY=
 EnvironmentFile=/mnt/volumes/.rsshub.env

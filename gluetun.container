@@ -1,5 +1,5 @@
 [Unit]
-Wants=qbit.service prowlarr.service radarr.service sonarr.service flaresolverr.service
+Wants=qbit.service prowlarr.service radarr.service sonarr.service flaresolverr.service bazarr.service
 
 [Container]
 AddCapability=NET_ADMIN
@@ -43,6 +43,9 @@ PublishPort=7878:7878
 
 # sonarr
 PublishPort=8989:8989
+
+# bazarr
+PublishPort=6767:6767
 
 # qbit
 PublishPort=8080:8080/tcp
