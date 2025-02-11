@@ -7,7 +7,6 @@ ContainerName=bazarr
 Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=America/New_York
-#HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:7878 || exit 1
 # https://hub.docker.com/r/linuxserver/bazarr
 Image=lscr.io/linuxserver/bazarr
 PublishPort=6767:6767
