@@ -59,5 +59,5 @@ it automatically becomes a systemd service 🪄
 `systemctl --user enable --now podman.socket`
 
 ## Stats
-- GPU: `podman run --rm -it --privileged docker.io/joonas/radeontop`
+- GPU (AMD): `podman run --rm -it --privileged docker.io/joonas/radeontop`
 - CPU & Memory: `podman stats CONTAINER_NAME`
