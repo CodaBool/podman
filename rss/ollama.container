@@ -1,0 +1,32 @@
+[Container]
+ContainerName=ollama
+# AMD
+Image=docker.io/ollama/ollama:rocm
+Volume=/mnt/volumes/ollama:/root/.ollama:Z
+# AMD
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
+PublishPort=11434:11434/tcp
+Network=rss-network
+HostName=ollama
+
+# AMD
+Environment=HIP_VISIBLE_DEVICES=0
+Environment=OLLAMA_KEEP_ALIVE=1m
+Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:7b
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

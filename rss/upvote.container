@@ -1,0 +1,33 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=upvote
+HealthCmd=wget --no-verbose --tries=1 --spider http://localhost || exit 1
+Image=ghcr.io/johnwarne/upvote-rss
+PublishPort=8675:80/tcp
+
+# share env with other containers
+EnvironmentFile=/mnt/volumes/.rss.env
+Network=rss-network
+HostName=upvote
+# preserve cache since LLM generation is expensive
+Volume=/mnt/volumes/upvote:/app/cache:Z
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
