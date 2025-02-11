@@ -15,6 +15,12 @@ Environment=HIP_VISIBLE_DEVICES=0
 Environment=OLLAMA_KEEP_ALIVE=1m
 Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:7b
 
+# in bytes limit VRAM
+# Environment=OLLAMA_MAX_VRAM=
+
+# env vars can be found here:
+# https://github.com/ollama/ollama/blob/main/envconfig/config.go
+
 # auto update
 AutoUpdate=registry
 
