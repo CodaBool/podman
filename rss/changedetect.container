@@ -6,6 +6,7 @@ After=rss-network.service
 ContainerName=changedetect
 Environment=PLAYWRIGHT_DRIVER_URL=ws://rsspuppet:3000
 # /?stealth=1&--disable-web-security=true
+#HealthCmd=python -c "import requests; exit(0) if requests.get('http://localhost:5000').status_code == 200 else exit(1)"
 Environment=TZ=America/New_York
 Image=ghcr.io/dgtlmoon/changedetection.io
 PublishPort=5000:5000
