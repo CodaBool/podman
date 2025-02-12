@@ -1,0 +1,31 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=rssbridge
+Image=docker.io/rssbridge/rss-bridge
+PublishPort=8088:80/tcp
+Network=rss-network
+
+Volume=/mnt/volumes/rssbridge:/config:Z
+
+# add Reddit API key & postgres URI
+#EnvironmentFile=/mnt/volumes/.rss.env
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

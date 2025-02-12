@@ -26,12 +26,8 @@ Environment=POLLING_FREQUENCY=5
 # debug
 #Environment=LOG_LEVEL=debug
 
-
 # auto update
 AutoUpdate=registry
-
-# selector for backup container to stop with
-Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
 

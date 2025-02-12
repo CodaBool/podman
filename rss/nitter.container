@@ -1,0 +1,34 @@
+[Unit]
+Requires=rss-network.service nitter-redis.service
+After=rss-network.service nitter-redis.service
+
+[Container]
+ContainerName=nitter
+Image=ghcr.io/sekai-soft/nitter-self-contained
+PublishPort=8089:8080/tcp
+Network=rss-network
+Volume=/mnt/volumes/twitter-credentials.json:/nitter-data/twitter-credentials.json:Z,ro
+Environment=REDIS_HOST=nitter-redis
+Environment=DISABLE_NGINX=1
+Environment=TWITTER_CREDENTIALS_FILE=/nitter-data/twitter-credentials.json
+Environment=NITTER_ACCOUNTS_FILE=/nitter-data/guest_accounts.json
+Environment=INSTANCE_HOSTNAME=192.168.0.25:8089
+Environment=INSTANCE_TITLE=_
+Environment=INSTANCE_BASE64_MEDIA=1
+# defaults to 10 minutes
+Environment=INSTANCE_RSS_MINUTES=10
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
+

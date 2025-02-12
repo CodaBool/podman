@@ -1,0 +1,25 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=nitter-redis
+HostName=nitter-redis
+# follow whatever is present on the github
+# https://github.com/sekai-soft/guide-nitter-self-hosting/blob/master/docker-compose.yml
+Image=docker.io/redis:6-alpine
+Network=rss-network
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
