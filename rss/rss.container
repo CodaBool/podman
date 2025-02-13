@@ -24,14 +24,14 @@ Environment=BATCH_SIZE=10
 Environment=POLLING_FREQUENCY=5
 
 # debug
-#Environment=LOG_LEVEL=debug
+Environment=LOG_LEVEL=debug
 
 # auto update
 AutoUpdate=registry
 
 [Service]
 
-# miniflux will startup before postgres is ready
+# postgres lies about being ready
 ExecStartPre=/bin/sleep 70
 
 # allow time for a new image to download

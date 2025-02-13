@@ -16,7 +16,8 @@ Environment=INSTANCE_HOSTNAME=192.168.0.25:8089
 Environment=INSTANCE_TITLE=_
 Environment=INSTANCE_BASE64_MEDIA=1
 # defaults to 10 minutes
-Environment=INSTANCE_RSS_MINUTES=10
+Environment=INSTANCE_RSS_MINUTES=240
+
 
 # auto update
 AutoUpdate=registry

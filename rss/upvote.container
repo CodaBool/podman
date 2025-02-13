@@ -15,6 +15,10 @@ HostName=upvote
 # preserve cache since LLM generation is expensive
 Volume=/mnt/volumes/upvote:/app/cache:Z
 
+# default 60
+# allow extra time for LLM generation
+Environment=MAX_EXECUTION_TIME=9999
+
 # auto update
 AutoUpdate=registry
 
