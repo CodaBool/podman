@@ -12,14 +12,26 @@ HostName=ollama
 
 # AMD
 Environment=HIP_VISIBLE_DEVICES=0
+
+# default is 5m
 Environment=OLLAMA_KEEP_ALIVE=1m
+
+# default is unlimited
+Environment=OLLAMA_MAX_LOADED_MODELS=1
 Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:7b
+
 
 # in bytes limit VRAM
 # Environment=OLLAMA_MAX_VRAM=
 
+# someone said this can reduce memory usage
+# Environment=OLLAMA_KV_CACHE_TYPE=q4_0
+
 # env vars can be found here:
 # https://github.com/ollama/ollama/blob/main/envconfig/config.go
+
+# might be relevant for AMD linux
+# https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/quick-start.html
 
 # auto update
 AutoUpdate=registry

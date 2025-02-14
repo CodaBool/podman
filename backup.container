@@ -1,9 +1,7 @@
 [Container]
 ContainerName=backup
 
-# daily is working but I want to try weekly
-# Environment=BACKUP_CRON_EXPRESSION="0 10 * * *"
-# try to move to weekly
+# weekly
 Environment=BACKUP_CRON_EXPRESSION="0 10 1 * *"
 
 Environment=AWS_S3_BUCKET_NAME=codabool-backups
