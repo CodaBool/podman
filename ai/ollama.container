@@ -1,3 +1,7 @@
+[Unit]
+BindsTo=librechat.service
+After=librechat.service
+
 [Container]
 ContainerName=ollama
 # AMD
@@ -7,8 +11,7 @@ Volume=/mnt/volumes/ollama:/root/.ollama:Z
 AddDevice=/dev/kfd
 AddDevice=/dev/dri
 PublishPort=11434:11434/tcp
-Network=rss-network
-HostName=ollama
+Network=container:librechat
 
 # AMD
 Environment=HIP_VISIBLE_DEVICES=0
@@ -17,7 +20,7 @@ Environment=HIP_VISIBLE_DEVICES=0
 Environment=OLLAMA_KEEP_ALIVE=1m
 
 # default is unlimited
-Environment=OLLAMA_MAX_LOADED_MODELS=1
+Environment=OLLAMA_MAX_LOADED_MODELS=3
 Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:7b
 
 

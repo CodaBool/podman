@@ -1,30 +1,23 @@
 [Container]
 ContainerName=librechat
 Image=ghcr.io/danny-avila/librechat
-#UserNS=keep-id:uid=1000,gid=1000
 PublishPort=3080:3080/tcp
 
-#MONGO_URI
-#UID=1000
-#GID=1000
+# ollama
+PublishPort=11434:11434/tcp
+
 #ENDPOINTS=openAI
 #OPENAI_API_KEY
 #OPENAI_MODELS
 #PLUGIN_MODELS=
 
-# required, use https://www.librechat.ai/toolkit/creds_generator
-CREDS_KEY=
-CREDS_IV=
-
-#APP_TITLE=
-#CUSTOM_FOOTER=[custom link](https://www.librechat.ai)
-
-
+Environment=RAG_API_URL=http://localhost:8000
+Environment=MONGO_URI=mongodb://localhost:27017/LibreChat
+Environment=MEILI_HOST=http://localhost:7700
+Environment=ALLOW_REGISTRATION=true
+# several secrets required, use generator https://www.librechat.ai/toolkit/creds_generator
 EnvironmentFile=/mnt/volumes/.librechat.env
-#Volume=/mnt/volumes/images:/app/client/public/images:Z
-#Volume=/mnt/volumes/logs:/app/api/logs:Z
-Volume=%h/.config/containers/systemd/ai/librechat.yaml:/app/librechat.yaml:Z
-#Network=container:gluetun
+Volume=/home/codabool/.config/containers/systemd/ai/librechat.yaml:/app/librechat.yaml:Z
 
 # auto update
 AutoUpdate=registry

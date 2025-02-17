@@ -1,10 +1,16 @@
+[Unit]
+BindsTo=librechat.service
+After=librechat.service
+
 [Container]
 ContainerName=mongo
-Image=docker.io/mongo
+HostName=mongo
+Image=docker.io/library/mongo
 #UserNS=keep-id:uid=1000,gid=1000
 Volume=/mnt/volumes/mongo:/data/db:Z
-#Network=container:gluetun
+Network=container:librechat
 Exec=mongod --noauth
+PublishPort=27017:27017
 
 # auto update
 AutoUpdate=registry

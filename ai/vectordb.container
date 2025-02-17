@@ -1,14 +1,19 @@
 [Container]
 ContainerName=vectordb
+
+# I think ankane suggested to use pgvector/pgvector instead
+# not sure what the compatibility is between these
+#Image=docker.io/pgvector/pgvector:pg17
 Image=docker.io/ankane/pgvector
-UserNS=keep-id:uid=1000,gid=1000
 
 Environment=POSTGRES_DB=mydatabase
 Environment=POSTGRES_USER=myuser
-Environment=POSTGRES_PASSWORD=mypassword
+EnvironmentFile=/mnt/volumes/.librechat.env
+#Environment=POSTGRES_PASSWORD=USE_ENV_FILE
 
-Volume=/mnt/volumes/vectordb:/var/lib/postgresql/data:Z
-#Network=container:gluetun
+#Volume=/mnt/volumes/vectordb:/var/lib/postgresql/data:Z
+Network=container:librechat
+#HostName=db
 
 # auto update
 AutoUpdate=registry
@@ -17,6 +22,8 @@ AutoUpdate=registry
 Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
+# allow time for librechat to start
+ExecStartPre=/bin/sleep 10
 
 # allow time for a new image to download
 TimeoutStartSec=900
