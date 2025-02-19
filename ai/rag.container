@@ -1,3 +1,7 @@
+[Unit]
+Requires=vectordb.service
+After=vectordb.service
+
 [Container]
 ContainerName=rag
 Image=ghcr.io/danny-avila/librechat-rag-api-dev-lite
