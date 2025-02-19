@@ -11,6 +11,8 @@ Network=rss-network
 
 # add Reddit API key & postgres URI
 EnvironmentFile=/mnt/volumes/.rss.env
+# write the latest Windows Chrome user agent to a file using a timer
+EnvironmentFile=/mnt/volumes/user_agent.toml
 Environment=RUN_MIGRATIONS=1
 
 # allow for LLM to generate
@@ -32,7 +34,7 @@ AutoUpdate=registry
 [Service]
 
 # postgres lies about being ready
-ExecStartPre=/bin/sleep 70
+ExecStartPre=/bin/sleep 30
 
 # allow time for a new image to download
 TimeoutStartSec=900
