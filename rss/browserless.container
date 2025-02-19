@@ -1,0 +1,36 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=browserless
+
+# https://docs.browserless.io/baas/docker/config
+# default 30000 (in ms)
+#Environment=TIMEOUT=10000
+# default 5
+#Environment=QUEUED=5
+# default 5
+#Environment=CONCURRENT=10
+Environment=TOKEN=INSECURE
+
+Image=ghcr.io/browserless/chromium
+Network=rss-network
+HostName=browserless
+# TODO: find a Least Privileged for this
+#PodmanArgs=--privileged
+#AddCapability=
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
