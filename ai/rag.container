@@ -1,28 +1,18 @@
 [Unit]
-Requires=vectordb.service
-After=vectordb.service
+Requires=vectordb.service ai-network.service
+After=vectordb.service ai-network.service
 
 [Container]
 ContainerName=rag
 Image=ghcr.io/danny-avila/librechat-rag-api-dev-lite
-Network=container:librechat
+Network=ai-network
 
 # set OPENAI_API_KEY & POSTGRES_PASSWORD
 EnvironmentFile=/mnt/volumes/.librechat.env
 
-#Environment=USER_AGENT=
-# default mydatabase
-#Environment=POSTGRES_DB=mydatabase
-# default myuser
-#Environment=POSTGRES_USER=myuser
-# default mypassword
-#Environment=POSTGRES_PASSWORD=USE_ENV_FILE
-# default db
-Environment=DB_HOST=localhost
-# default http://ollama:11434
-Environment=OLLAMA_BASE_URL=http://localhost:11434
 # default mongodb://127.0.0.1:27018/LibreChat
-Environment=ATLAS_MONGO_DB_URI=mongodb://localhost:27018/LibreChat
+Environment=ATLAS_MONGO_DB_URI=mongodb://mongo:27018/LibreChat
+PublishPort=8000:8000/tcp
 
 # auto update
 AutoUpdate=registry

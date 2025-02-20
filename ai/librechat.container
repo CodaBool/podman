@@ -1,23 +1,25 @@
+[Unit]
+Requires=ai-network.service
+After=ai-network.service
+
 [Container]
 ContainerName=librechat
 Image=ghcr.io/danny-avila/librechat
 PublishPort=3080:3080/tcp
-
-# ollama
-PublishPort=11434:11434/tcp
 
 #ENDPOINTS=openAI
 #OPENAI_API_KEY
 #OPENAI_MODELS
 #PLUGIN_MODELS=
 
-Environment=RAG_API_URL=http://localhost:8000
-Environment=MONGO_URI=mongodb://localhost:27017/LibreChat
-Environment=MEILI_HOST=http://localhost:7700
+Environment=RAG_API_URL=http://rag:8000
+Environment=MONGO_URI=mongodb://mongo:27017/LibreChat
+Environment=MEILI_HOST=http://meili:7700
 Environment=ALLOW_REGISTRATION=true
 # several secrets required, use generator https://www.librechat.ai/toolkit/creds_generator
 EnvironmentFile=/mnt/volumes/.librechat.env
 Volume=/home/codabool/.config/containers/systemd/ai/librechat.yaml:/app/librechat.yaml:Z
+Network=ai-network
 
 # auto update
 AutoUpdate=registry

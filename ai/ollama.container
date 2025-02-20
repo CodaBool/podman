@@ -1,6 +1,6 @@
 [Unit]
-BindsTo=librechat.service
-After=librechat.service
+Requires=ai-network.service rss-network.service
+After=ai-network.service rss-network.service
 
 [Container]
 ContainerName=ollama
@@ -11,7 +11,10 @@ Volume=/mnt/volumes/ollama:/root/.ollama:Z
 AddDevice=/dev/kfd
 AddDevice=/dev/dri
 PublishPort=11434:11434/tcp
-Network=container:librechat
+
+# used by both librechat & upvote-rss
+Network=ai-network
+Network=rss-network
 
 # AMD
 Environment=HIP_VISIBLE_DEVICES=0

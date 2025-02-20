@@ -1,3 +1,7 @@
+[Unit]
+Requires=ai-network.service
+After=ai-network.service
+
 [Container]
 ContainerName=vectordb
 
@@ -12,8 +16,8 @@ EnvironmentFile=/mnt/volumes/.librechat.env
 #Environment=POSTGRES_PASSWORD=USE_ENV_FILE
 
 #Volume=/mnt/volumes/vectordb:/var/lib/postgresql/data:Z
-Network=container:librechat
-#HostName=db
+Network=ai-network
+HostName=db
 
 # auto update
 AutoUpdate=registry
@@ -22,8 +26,6 @@ AutoUpdate=registry
 Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
-# allow time for librechat to start
-ExecStartPre=/bin/sleep 5
 
 # allow time for a new image to download
 TimeoutStartSec=900
