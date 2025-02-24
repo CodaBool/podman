@@ -61,3 +61,12 @@ it automatically becomes a systemd service 🪄
 ## Stats
 - GPU (AMD): `podman run --rm -it --privileged docker.io/joonas/radeontop`
 - CPU & Memory: `podman stats CONTAINER_NAME`
+
+## Permission Debug
+`ausearch -i -m avc`, shows what SELinux policy is blocking. If empty then your problem is not SELinux related.
+
+You can temporarily run a container with SELinux disabled `--security-opt=label=disable` or `PodmanArgs=--privileged`
+
+`ps` outside the container can show what UID the container runs as, then confirm that this user is able to access your files.
+
+You can also use `strace -p <pid> --decode-fds=all` on the process to observe exactly which system call is returning an error to the application.
