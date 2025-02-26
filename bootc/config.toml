@@ -48,17 +48,12 @@ chown -R 1000:1000 /home/codabool/.config
 mkdir -p /var/lib/systemd/linger
 touch /var/lib/systemd/linger/codabool
 
-# daily updates to containers with AutoUpdate=registry
-# this should be done for rootless and root (rootless happens later)
-systemctl enable podman-auto-update.timer
-
 # Symlink the socket unit from system's user-unit dir to default.target.wants
 # which will effectively enable the service
 # `systemctl --user -M codabool@ enable --now podman.socket` did not work for me
 mkdir -p /home/codabool/.config/systemd/user/default.target.wants
 chmod 0755 /home/codabool/.config/systemd/user
 ln -sf /usr/lib/systemd/user/podman.socket /home/codabool/.config/systemd/user/default.target.wants/podman.socket
-ln -sf /usr/lib/systemd/user/podman-auto-update.timer /home/codabool/.config/systemd/user/default.target.wants/podman-auto-update.timer
 
 # give the machine a name manually
 # `hostnamectl set-hostname` does not work for me
@@ -71,3 +66,10 @@ reboot
 
 # Dev notes
 # - use /dev/disk/by-id/ata-ADATA_SU670_2L272L127DLC for testing
+#
+#
+# I've removed lines for this update timer. Since it fires at a time I don't like
+# TODO: find a way to write a systemd or edit the one provided
+# will provide daily updates to containers with AutoUpdate=registry
+#   systemctl enable podman-auto-update.timer
+#   ln -sf /usr/lib/systemd/user/podman-auto-update.timer /home/codabool/.config/systemd/user/default.target.wants/podman-auto-update.timer
