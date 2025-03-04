@@ -1,3 +1,7 @@
+[Unit]
+BindsTo=gluetun.service
+After=gluetun.service
+
 [Container]
 ContainerName=flaresolverr
 Environment=TZ=America/New_York
@@ -10,6 +14,7 @@ Network=container:gluetun
 AutoUpdate=registry
 
 [Service]
+#ExecStartPre=sleep 15
 
 # allow time for a new image to download
 TimeoutStartSec=900
