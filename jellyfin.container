@@ -10,6 +10,11 @@ Volume=/mnt/volumes/jellyfin:/config:Z
 Volume=/mnt/media/movies:/data/movies:z
 Volume=/mnt/media/tv:/data/tvshows:z
 
+PodmanArgs=--privileged
+SecurityLabelDisable=true
+AddDevice=/dev/dri/:/dev/dri/
+Environment=LIBVA_DRIVER_NAME=radeonsi
+
 # auto update
 AutoUpdate=registry
 

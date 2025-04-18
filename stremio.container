@@ -1,0 +1,30 @@
+# technically don't need VPN with debrid
+[Unit]
+BindsTo=gluetun.service
+After=gluetun.service
+
+[Container]
+ContainerName=stremio
+
+Environment=NO_CORS=1
+Environment=CASTING_DISABLED=1
+Environment=SERVER_URL=http://192.168.0.25:11470/
+#HealthCmd=curl --fail http://localhost:30000 || exit 1
+Image=docker.io/stremio/server
+
+# technically don't need VPN with debrid
+Network=container:gluetun
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

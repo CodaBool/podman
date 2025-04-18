@@ -7,10 +7,10 @@ ContainerName=qbit
 Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=America/New_York
-Environment=WEBUI_PORT=8080
+Environment=WEBUI_PORT=8079
 Environment=TORRENTING_PORT=6881
 UserNS=keep-id:uid=1000,gid=1000
-HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:8080 || exit 1
+HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:8079 || exit 1
 Image=lscr.io/linuxserver/qbittorrent
 
 Volume=/mnt/volumes/qbit:/config:Z

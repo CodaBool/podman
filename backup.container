@@ -2,10 +2,13 @@
 ContainerName=backup
 
 # weekly
+#Environment=BACKUP_CRON_EXPRESSION="0 * * * *"
 Environment=BACKUP_CRON_EXPRESSION="0 10 1 * *"
 
 Environment=AWS_S3_BUCKET_NAME=codabool-backups
 Environment=AWS_STORAGE_CLASS=GLACIER
+# exclude ollama volume
+Environment=BACKUP_EXCLUDE_REGEXP=^ollama(/|$)
 
 # should result in 6 backups
 Environment=BACKUP_RETENTION_DAYS=42

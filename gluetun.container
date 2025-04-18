@@ -1,5 +1,5 @@
 [Unit]
-Wants=qbit.service prowlarr.service radarr.service sonarr.service flaresolverr.service bazarr.service
+Wants=qbit.service prowlarr.service radarr.service sonarr.service flaresolverr.service bazarr.service stremio.service
 
 [Container]
 AddCapability=NET_ADMIN
@@ -48,10 +48,13 @@ PublishPort=8989:8989
 PublishPort=6767:6767
 
 # qbit
-PublishPort=8080:8080/tcp
-PublishPort=8080:8080/udp
+PublishPort=8079:8079
 PublishPort=6881:6881/tcp
 PublishPort=6881:6881/udp
+
+# stremio
+PublishPort=12470:12470/tcp
+PublishPort=11470:11470/tcp
 
 # auto update
 AutoUpdate=registry
