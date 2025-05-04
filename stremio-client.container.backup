@@ -1,0 +1,21 @@
+# this image actually starts a server as well
+# but I don't publish port for that
+
+[Container]
+ContainerName=stremio-client
+Image=docker.io/tsaridas/stremio-docker
+PublishPort=13470:8080/tcp
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
