@@ -7,6 +7,11 @@ run: build
 exec:
   docker exec -it fedora bash
 
+# assuming you are logged in
+upload:
+  docker build -t ghcr.io/codabool/fedora-bootc:latest .
+  docker push ghcr.io/codabool/fedora-bootc:latest
+
 stop:
   docker rm -f fedora
 

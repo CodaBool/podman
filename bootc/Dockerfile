@@ -1,5 +1,5 @@
-FROM quay.io/fedora/fedora-bootc:41
+FROM quay.io/fedora/fedora-bootc:42
 
-# I had driver issues and but switching to AMD solved those
+# I had driver issues but switching to AMD resolved it
 
 RUN dnf update -y && dnf install -y git && dnf clean all
