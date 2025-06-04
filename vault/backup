@@ -1,0 +1,42 @@
+[Container]
+ContainerName=backup
+
+# weekly
+#Environment=BACKUP_CRON_EXPRESSION="0 * * * *"
+Environment=BACKUP_CRON_EXPRESSION="0 10 1 * *"
+
+Environment=AWS_S3_BUCKET_NAME=codabool-backups
+Environment=AWS_STORAGE_CLASS=GLACIER
+# exclude ollama volume
+#Environment=BACKUP_EXCLUDE_REGEXP=^ollama(/|$)
+Environment=BACKUP_EXCLUDE_REGEXP='^(ollama|immich_upload)(/|$)'
+
+
+# should result in 6 backups
+Environment=BACKUP_RETENTION_DAYS=42
+
+EnvironmentFile=/mnt/volumes/.backup.env
+
+# ensure no file permission blocks
+# AddCapability=CAP_DAC_READ_SEARCH
+# just giving full perm to simplify permission web
+PodmanArgs=--privileged
+
+Image=docker.io/offen/docker-volume-backup
+
+Volume=/mnt/volumes:/backup/volumes:ro,z
+Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,z
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

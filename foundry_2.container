@@ -6,7 +6,7 @@ Environment=FOUNDRY_GID=1000
 Environment=FOUNDRY_UID=1000
 
 # https://foundryvtt.com/releases
-Environment=FOUNDRY_VERSION=11.315
+Environment=FOUNDRY_VERSION=12.331
 Environment=CONTAINER_PRESERVE_CONFIG=true
 Environment=FOUNDRY_MINIFY_STATIC_FILES=true
 Environment=FOUNDRY_TELEMETRY=false

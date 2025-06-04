@@ -1,29 +1,20 @@
 [Container]
 ContainerName=backup
 
-# weekly
-#Environment=BACKUP_CRON_EXPRESSION="0 * * * *"
-Environment=BACKUP_CRON_EXPRESSION="0 10 1 * *"
+# dangerously reset permissions to allow for backups w/o error
+# sudo find . -type d -exec chmod 775 {} + && find . -type f -exec sudo chmod 775 {} +
 
-Environment=AWS_S3_BUCKET_NAME=codabool-backups
-Environment=AWS_STORAGE_CLASS=GLACIER
-# exclude ollama volume
-Environment=BACKUP_EXCLUDE_REGEXP=^ollama(/|$)
+# to run manually use this oneliner
+# podman run --rm --env-file /mnt/volumes/.backup.env -e S3_BUCKET_URL=s3://codabool-backups/ -e TARGET="" -v ./volumes:/data:z,ro ghcr.io/codabool/backup-to-s3 /dobackup.sh
 
-# should result in 6 backups
-Environment=BACKUP_RETENTION_DAYS=42
-
+Environment=CRON_SCHEDULE="0 10 * * 1"
+Environment=S3_BUCKET_URL=s3://codabool-backups/
+Environment=TARGET="data/.*.env data/*.toml data/*.conf data/*.md data/*.json data/bazarr data/changedetect data/factorio data/flaresolverr data/foundry_1 data/foundry_2 data/prowlarr data/qbit data/radarr data/rss data/rssbridge data/sonarr data/uptime data/upvote"
 EnvironmentFile=/mnt/volumes/.backup.env
 
-# ensure no file permission blocks
-# AddCapability=CAP_DAC_READ_SEARCH
-# just giving full perm to simplify permission web
-PodmanArgs=--privileged
+Image=ghcr.io/codabool/backup-to-s3
 
-Image=docker.io/offen/docker-volume-backup
-
-Volume=/mnt/volumes:/backup/volumes:ro,z
-Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro,z
+Volume=/mnt/volumes:/data:ro,z
 
 # auto update
 AutoUpdate=registry
