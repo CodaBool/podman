@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: "0 21 * * 1" # daily
+    - cron: "0 21 * * 1" # weekly
 # on: push
 jobs:
   release:
