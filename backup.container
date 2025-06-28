@@ -10,9 +10,10 @@ ContainerName=backup
 # to run manually use this oneliner
 # podman run --rm --env-file /mnt/volumes/.backup.env -e S3_BUCKET_URL=s3://codabool-backups/ -e TARGET="" -v ./volumes:/data:z,ro ghcr.io/codabool/backup-to-s3 /dobackup.sh
 
-Environment=CRON_SCHEDULE="0 10 * * 1"
+#Environment=CRON_SCHEDULE="0 * * * *"
+Environment=CRON_SCHEDULE="0 18 * * *"
 Environment=S3_BUCKET_URL=s3://codabool-backups/
-Environment=TARGET="data/.*.env data/*.toml data/*.conf data/*.md data/*.json data/bazarr data/changedetect data/factorio data/flaresolverr data/foundry_1 data/foundry_2 data/prowlarr data/qbit data/radarr data/rss data/rssbridge data/sonarr data/uptime data/upvote"
+Environment=TARGET="/data/.*.env /data/*.toml /data/*.conf /data/*.md /data/*.json /data/bazarr /data/changedetect /data/flaresolverr /data/foundry_1 /data/foundry_2 /data/prowlarr /data/qbit /data/radarr /data/rss /data/rssbridge /data/sonarr /data/uptime /data/upvote"
 EnvironmentFile=/mnt/volumes/.backup.env
 
 Image=ghcr.io/codabool/backup-to-s3
