@@ -1,16 +1,20 @@
 [Container]
-ContainerName=foundry_1
+ContainerName=foundry_1_13
+
 # https://foundryvtt.com/releases
-Environment=FOUNDRY_VERSION=13.350
+Environment=FOUNDRY_VERSION=13.346
 Environment=CONTAINER_PRESERVE_CONFIG=true
 Environment=FOUNDRY_MINIFY_STATIC_FILES=true
 Environment=FOUNDRY_TELEMETRY=false
 Environment=FOUNDRY_CSS_THEME=scifi
 EnvironmentFile=/mnt/volumes/.foundry.env
 HealthCmd=curl --fail http://localhost:30000 || exit 1
-Image=docker.io/felddy/foundryvtt:13.350
-PublishPort=30000:30000
-Volume=/mnt/volumes/foundry_1:/data:Z
+Image=docker.io/felddy/foundryvtt:13
+PublishPort=30003:30000
+
+# for some reason I am required to do a chmod on this for it 
+# to come up, after that permissions can be tightened
+Volume=/mnt/volumes/foundry_1_13:/data:Z
 
 # auto update
 AutoUpdate=registry

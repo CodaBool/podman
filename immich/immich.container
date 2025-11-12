@@ -11,7 +11,9 @@ ContainerName=immich
 # DB_PASSWORD=
 
 EnvironmentFile=/mnt/volumes/.immich.env
-Image=ghcr.io/immich-app/immich-server:release
+#Image=ghcr.io/immich-app/immich-server:release
+Image=ghcr.io/immich-app/immich-server:v2.2.3
+#Image=ghcr.io/immich-app/immich-server:v2.0.1
 PublishPort=2283:2283
 Volume=/mnt/volumes/immich_upload:/usr/src/app/upload:Z
 Network=immich-network
