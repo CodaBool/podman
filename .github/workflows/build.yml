@@ -18,9 +18,9 @@ jobs:
       - name: Check for a new Fedora image
         id: check
         run: |
-          # get the latest stable version of Fedora 42
+          # get the latest stable version of Fedora 43
           IMAGE=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc --format "{{json .Image}}")
-          REMOTE_IMAGE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:42 --format "{{json .Image}}")
+          REMOTE_IMAGE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:43 --format "{{json .Image}}")
           LATEST_STABLE=$(echo $REMOTE_IMAGE | jq -r '.["linux/amd64"].config.Labels.["org.opencontainers.image.version"]')
 
           CURRENT_VERSION=$(echo $IMAGE | jq -r '.config.Labels.["org.opencontainers.image.version"]')
