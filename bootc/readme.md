@@ -43,3 +43,43 @@ Meaning more changes happen in the build step
 - [kickstart](https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html)
 - [bootc-image-builder](https://github.com/osbuild/bootc-image-builder)
 - [bootc docs](https://containers.github.io/bootc)
+
+---
+
+# bashrc
+
+```sh
+alias large="find . -type f -size +50M -exec du -h {} \; | sort -n"
+alias size="du -sh -- *"
+alias c="cd /home/codabool/.config/containers/systemd/ && ls -lah"
+alias v="cd /mnt/volumes/ && ls -lah"
+alias r="podman restart $@"
+alias s="podman stop $@"
+alias f="podman logs -f $@"
+alias e="podman logs $@"
+
+p() {
+    local DRY=false
+    if [[ "$1" == "--dry" ]]; then
+        DRY=true
+    fi
+
+    local TARGET="../$(basename "$PWD")"
+
+    local CHOWN_CMD="sudo chown -R 1000:1000 \"$TARGET\""
+    local CHMOD_CMD="sudo chmod -R 755 \"$TARGET\""
+
+    if [[ "$DRY" == true ]]; then
+        echo "[Dry Run] Would execute:"
+        echo "  $CHOWN_CMD"
+        echo "  $CHMOD_CMD"
+    else
+        echo "Executing:"
+        echo "  $CHOWN_CMD"
+        eval "$CHOWN_CMD"
+
+        echo "  $CHMOD_CMD"
+        eval "$CHMOD_CMD"
+    fi
+}
+```
