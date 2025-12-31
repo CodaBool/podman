@@ -88,20 +88,20 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rsspuppet:latest
 │   ├── rsshub:chromium-bundled
 │   ├── rssbridge:latest
-│   ├── rss_db:18
+│   ├── rss_db:18 [last checked 2025-12]
 │   ├── rss:latest
 │   ├── nitter:latest (broken)
-│   ├── nitter-redis:6-alpine
+│   ├── nitter-redis:6-alpine [last checked 2025-12]
 │   ├── changedetect:latest
 │   └── browserless:latest
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release
-│   ├── immich_postgres:14-vectorchord0.4.3-pgvectors0.2.0
-│   └── immich_redis:9
+│   ├── immich_postgres:14-vectorchord0.4.3-pgvectors0.2.0 [last checked 2025-12]
+│   └── immich_redis:9 [last checked 2025-12]
 └── ai/
     ├── librechat:latest
-    ├── meili:v1.12.3
+    ├── meili:v1.12.3 [last checked 2025-12]
     ├── mongo:latest
     ├── ollama:rocm
     ├── rag:latest
