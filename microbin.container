@@ -1,4 +1,6 @@
-# bin.container
+# TODO: find another file bin service like filebin
+# this one is now unmaintained
+
 [Container]
 ContainerName=microbin
 
