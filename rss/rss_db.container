@@ -6,8 +6,13 @@ After=rss-network.service
 ContainerName=rss_db
 HealthCmd=pg_isready
 HealthStartPeriod=30s
-Image=docker.io/postgres:17-alpine
-Volume=/mnt/volumes/rss:/var/lib/postgresql/data:Z
+
+# follow the docs docker-compose
+# https://miniflux.app/docs/docker.html#docker-compose
+# for major versions, you need to do migration commands
+# here was my last migration chat https://chatgpt.com/c/6955a5c3-b304-8326-9f2e-f09ef3899052
+Image=docker.io/postgres:18
+Volume=/mnt/volumes/rss:/var/lib/postgresql:Z
 EnvironmentFile=/mnt/volumes/.rss.env
 Network=rss-network
 

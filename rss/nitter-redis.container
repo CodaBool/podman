@@ -6,7 +6,7 @@ After=rss-network.service
 ContainerName=nitter-redis
 HostName=nitter-redis
 # follow whatever is present on the github
-# https://github.com/sekai-soft/guide-nitter-self-hosting/blob/master/docker-compose.yml
+# https://github.com/zedeus/nitter/blob/master/docker-compose.yml
 Image=docker.io/redis:6-alpine
 Network=rss-network
 

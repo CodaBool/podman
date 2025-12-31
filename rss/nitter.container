@@ -4,7 +4,9 @@ After=rss-network.service nitter-redis.service
 
 [Container]
 ContainerName=nitter
-Image=ghcr.io/sekai-soft/nitter-self-contained
+#Image=docker.io/zedeus/nitter
+Image=ghcr.io/sekai-soft/nitter-pitchforked
+#Image=ghcr.io/sekai-soft/nitter-self-contained
 PublishPort=8089:8080/tcp
 Network=rss-network
 Volume=/mnt/volumes/twitter-credentials.json:/nitter-data/twitter-credentials.json:Z,ro
@@ -17,7 +19,7 @@ Environment=INSTANCE_TITLE=_
 Environment=INSTANCE_BASE64_MEDIA=1
 # defaults to 10 minutes
 Environment=INSTANCE_RSS_MINUTES=240
-
+#HealthCmd=wget -nv --tries=1 --spider http://127.0.0.1:8080/Jack/status/20 || exit 1
 
 # auto update
 AutoUpdate=registry
