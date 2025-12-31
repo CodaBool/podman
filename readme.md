@@ -70,3 +70,40 @@ You can temporarily run a container with SELinux disabled `--security-opt=label=
 `ps` outside the container can show what UID the container runs as, then confirm that this user is able to access your files.
 
 You can also use `strace -p <pid> --decode-fds=all` on the process to observe exactly which system call is returning an error to the application.
+
+
+# Services
+
+```md
+├── uptime:latest
+├── tunnel:latest
+├── tools:latest
+├── microbin:latest (unmaintained)
+├── jellyfin:latest
+├── foundry_2:latest
+├── foundry_1:13
+├── backup:latest (custom image, pushed weekly) [https://github.com/CodaBool/container-s3-cron-backup]
+├── rss/
+│   ├── upvote:latest
+│   ├── rsspuppet:latest
+│   ├── rsshub:chromium-bundled
+│   ├── rssbridge:latest
+│   ├── rss_db:18
+│   ├── rss:latest
+│   ├── nitter:latest (broken)
+│   ├── nitter-redis:6-alpine
+│   ├── changedetect:latest
+│   └── browserless:latest
+├── immich/
+│   ├── immich:release
+│   ├── immich_ml:release
+│   ├── immich_postgres:14-vectorchord0.4.3-pgvectors0.2.0
+│   └── immich_redis:9
+└── ai/
+    ├── librechat:latest
+    ├── meili:v1.12.3
+    ├── mongo:latest
+    ├── ollama:rocm
+    ├── rag:latest
+    └── vectordb:latest
+```
