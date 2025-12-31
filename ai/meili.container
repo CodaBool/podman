@@ -6,6 +6,8 @@ After=ai-network.service
 ContainerName=meili
 # pull this tag from the github
 # https://github.com/danny-avila/LibreChat/blob/main/deploy-compose.yml
+# a migration is needed to go from v1.12.3 to v1.31.0
+#Image=docker.io/getmeili/meilisearch
 Image=docker.io/getmeili/meilisearch:v1.12.3
 
 # required, use https://www.librechat.ai/toolkit/creds_generator
