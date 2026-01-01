@@ -78,7 +78,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── uptime:latest
 ├── tunnel:latest
 ├── tools:latest
-├── microbin:latest (unmaintained)
+├── pastebin:latest
 ├── jellyfin:latest
 ├── foundry_2:latest
 ├── foundry_1:13

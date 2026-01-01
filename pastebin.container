@@ -1,0 +1,19 @@
+[Container]
+ContainerName=pastebin
+Image=docker.io/corentinth/enclosed
+PublishPort=8081:8787
+Volume=/mnt/volumes/pastebin:/app/.data:Z
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
