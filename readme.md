@@ -90,7 +90,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rssbridge:latest
 │   ├── rss_db:18 [last checked 2025-12]
 │   ├── rss:latest
-│   ├── nitter:latest (broken)
+│   ├── nitter:latest
 │   ├── nitter-redis:6-alpine [last checked 2025-12]
 │   ├── changedetect:latest
 │   └── browserless:latest
