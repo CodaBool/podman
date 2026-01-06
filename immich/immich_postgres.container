@@ -12,19 +12,18 @@ Environment=POSTGRES_PASSWORD=${DB_PASSWORD}
 Environment=POSTGRES_USER=${DB_USERNAME}
 Environment=POSTGRES_DB=${DB_DATABASE_NAME}
 Environment=POSTGRES_INITDB_ARGS=--data-checksums
-
 # example .env file
 # DB_DATABASE_NAME=postgres
 # DB_USERNAME=postgres
 # DB_PASSWORD=
 
 EnvironmentFile=/mnt/volumes/.immich.env
-Exec=postgres -c 'shared_preload_libraries=vectors.so' -c 'search_path="$$user", public, vectors' -c 'logging_collector=on' -c 'max_wal_size=2GB' -c 'shared_buffers=512MB' -c 'wal_compression=on'
+# this isn't in the docker-compose but seems to be required
+Exec=postgres -c 'shared_preload_libraries=vchord.so,vectors.so'
 HealthCmd=pg_isready -d postgres || exit 1
 
 # https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml
 Image=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
-#Image=docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0
 Volume=/mnt/volumes/immich_data:/var/lib/postgresql/data:Z
 Network=immich-network
 
