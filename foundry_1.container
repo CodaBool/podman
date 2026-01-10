@@ -10,7 +10,7 @@ EnvironmentFile=/mnt/volumes/.foundry.env
 HealthCmd=curl --fail http://localhost:30000 || exit 1
 Image=docker.io/felddy/foundryvtt:13
 PublishPort=30000:30000
-Volume=/mnt/volumes/foundry_1:/data:Z
+Volume=/mnt/volumes/foundry_1:/data:z
 
 # auto update
 AutoUpdate=registry

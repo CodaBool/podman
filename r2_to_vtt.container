@@ -1,0 +1,28 @@
+[Container]
+ContainerName=r2_to_vtt
+
+# daily
+Environment=CRON_SCHEDULE="0 10 * * *"
+
+# notes to sync to known journal page uuids
+Environment=R2_MAP="vtt/main.md=JournalEntry.qmkgJyYvg71ZzLTv.JournalEntryPage.cz1pyuSxogMvrkCO"
+EnvironmentFile=/mnt/volumes/.r2_to_vtt.env
+
+# repo
+# https://github.com/CodaBool/r2-to-vtt
+Image=ghcr.io/codabool/r2-to-vtt
+Volume=/mnt/volumes/foundry_1/Data/worlds/redthread/data/journal:/app/journal:z
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
