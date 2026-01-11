@@ -5,7 +5,12 @@ After=rss_db.service rss-network.service
 [Container]
 ContainerName=rss
 HealthCmd=/usr/bin/miniflux -healthcheck auto
+
+# I have forked to remove some CSP headers
+# which block out reddit m3u8 streams
+#Image=ghcr.io/miniflux/miniflux
 Image=ghcr.io/codabool/miniflux
+
 PublishPort=8085:8080/tcp
 Network=rss-network
 
@@ -15,6 +20,9 @@ EnvironmentFile=/mnt/volumes/.rss.env
 EnvironmentFile=/mnt/volumes/user_agent.toml
 Environment=RUN_MIGRATIONS=1
 Environment=POLLING_PARSING_ERROR_LIMIT=0
+Environment=MEDIA_PROXY_MODE=http-only
+Environment=MEDIA_PROXY_ALLOW_PRIVATE_NETWORKS=1
+#Environment=MEDIA_PROXY_RESOURCE_TYPES=
 
 # allow for LLM to generate
 Environment=HTTP_CLIENT_TIMEOUT=9999
@@ -35,7 +43,7 @@ AutoUpdate=registry
 [Service]
 
 # postgres lies about being ready
-ExecStartPre=/bin/sleep 30
+ExecStartPre=/bin/sleep 12
 
 # allow time for a new image to download
 TimeoutStartSec=900
