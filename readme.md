@@ -92,7 +92,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rsshub:chromium-bundled
 │   ├── rssbridge:latest
 │   ├── rss_db:18 [last checked 2025-12]
-│   ├── rss:latest (custom image, pushed weekly) [https://github.com/CodaBool/miniflux-fork]
+│   ├── rss:latest (custom image, pushed weekly) [https://github.com/CodaBool/miniflux]
 │   ├── nitter:latest
 │   ├── nitter-redis:6-alpine [last checked 2025-12]
 │   ├── changedetect:latest
