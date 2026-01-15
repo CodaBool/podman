@@ -91,20 +91,20 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rsspuppet:latest
 │   ├── rsshub:chromium-bundled
 │   ├── rssbridge:latest
-│   ├── rss_db:18 [last checked 2025-12]
+│   ├── rss_db:18 [last checked 2026-01] [https://miniflux.app/docs/docker.html#docker-compose]
 │   ├── rss:latest (custom image, pushed weekly) [https://github.com/CodaBool/miniflux]
 │   ├── nitter:latest
-│   ├── nitter-redis:6-alpine [last checked 2025-12]
+│   ├── nitter-redis:6-alpine [last checked 2026-01] [https://github.com/zedeus/nitter/blob/master/docker-compose.yml]
 │   ├── changedetect:latest
 │   └── browserless:latest
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release
-│   ├── immich_postgres:14-vectorchord0.4.3-pgvectors0.2.0 [last checked 2025-12]
-│   └── immich_redis:9 [last checked 2025-12]
+│   ├── immich_postgres:14-vectorchord0.4.3-pgvectors0.2.0 [last checked 2026-01] [https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml]
+│   └── immich_redis:9 [last checked 2026-01] [https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml]
 └── ai/
     ├── librechat:latest
-    ├── meili:v1.12.3 [last checked 2025-12]
+    ├── meili:v1.12.3 [last checked 2026-01] [https://github.com/danny-avila/LibreChat/blob/main/deploy-compose.yml]
     ├── mongo:latest
     ├── ollama:rocm
     ├── rag:latest
