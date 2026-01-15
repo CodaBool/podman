@@ -60,7 +60,9 @@ it automatically becomes a systemd service 🪄
 
 ## Stats
 - GPU (AMD): `podman run --rm -it --privileged docker.io/joonas/radeontop`
-- CPU & Memory: `podman stats CONTAINER_NAME`
+- CPU & Memory
+  - `podman stats CONTAINER_NAME`
+  - `podman stats`
 
 ## Permission Debug
 `ausearch -i -m avc`, shows what SELinux policy is blocking. If empty then your problem is not SELinux related.
