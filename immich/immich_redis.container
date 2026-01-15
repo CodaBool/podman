@@ -13,8 +13,8 @@ Image=docker.io/valkey/valkey:9@sha256:546304417feac0874c3dd576e0952c6bb8f06bb40
 #Image=docker.io/redis:6.2-alpine
 Network=immich-network
 
-# auto update
-AutoUpdate=registry
+# do not auto update for a sha pinned tag
+# AutoUpdate=registry
 
 [Service]
 
