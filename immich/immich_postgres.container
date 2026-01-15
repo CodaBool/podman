@@ -27,8 +27,8 @@ Image=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf6
 Volume=/mnt/volumes/immich_data:/var/lib/postgresql/data:Z
 Network=immich-network
 
-# auto update
-AutoUpdate=registry
+# since this uses a pinned version, do not auto update
+# AutoUpdate=registry
 
 # selector for backup container to stop with
 Label=docker-volume-backup.stop-during-backup=true
