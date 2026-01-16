@@ -47,7 +47,9 @@ by default services will not run unless the user is logged in. This allows the s
 > optional for me since I have enabled linger from my kickstart config
 
 ## Quadlet Validation
-`/usr/libexec/podman/quadlet --user --dryrun`
+- `/usr/libexec/podman/quadlet --user --dryrun`
+- `/usr/lib/systemd/system-generators/podman-system-generator --user --dryrun`
+- `systemd-analyze --user --generators=true verify rss.service`
 
 ## Expose Podman socket
 written to `/run/user/1000/podman/podman.sock`
