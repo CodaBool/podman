@@ -41,7 +41,6 @@ echo "UUID=9ad9e322-be33-4f0c-8c7b-eb5a5fb6bb3b /mnt ext4 defaults 0 0" >> /etc/
 mkdir -p /home/codabool/.config/containers/systemd
 cd /home/codabool/.config/containers/systemd
 git clone https://github.com/codabool/podman .
-chown -R 1000:1000 /home/codabool/.config
 
 # enable linger, which allows services to start before login
 # `loginctl enable-linger codabool` did not work for me
@@ -53,11 +52,20 @@ touch /var/lib/systemd/linger/codabool
 # `systemctl --user -M codabool@ enable --now podman.socket` did not work for me
 mkdir -p /home/codabool/.config/systemd/user/default.target.wants
 chmod 0755 /home/codabool/.config/systemd/user
+
+# auto podman socket
 ln -sf /usr/lib/systemd/user/podman.socket /home/codabool/.config/systemd/user/default.target.wants/podman.socket
+# auto root podman updates
+ln -sf /usr/lib/systemd/system/podman-auto-update.timer /etc/systemd/system/timers.target.wants/podman-auto-update.timer
+# auto bootc updates
+ln -sf /usr/lib/systemd/system/bootc-fetch-apply-updates.timer /etc/systemd/system/timers.target.wants/bootc-fetch-apply-updates.timer
+# auto user podman updates
+ln -sf /usr/lib/systemd/user/podman-auto-update.timer /home/codabool/.config/systemd/user/default.target.wants/podman-auto-update.timer
 
 # give the machine a name manually
 # `hostnamectl set-hostname` does not work for me
 echo "mom" > /etc/hostname
+chown -R 1000:1000 /home/codabool/.config
 
 %end
 reboot

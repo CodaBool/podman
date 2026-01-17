@@ -24,14 +24,9 @@ it automatically becomes a systemd service 🪄
 > I have a RAID 1 HDD with this structure
 ```
 └── mnt/
-    ├── volumes/
-    │   ├── container_name
-    │   └── .container_name.env
-    ├── media/
-    │   ├── movies
-    |   ├── tv
-    │   └── downloads
-    └── sync
+    └── volumes/
+        ├── container_name
+        └── .container_name.env
 ```
 
 ## Security
@@ -39,24 +34,29 @@ it automatically becomes a systemd service 🪄
 - CloudFlare WAF blocking non-US traffic
 
 ## Automatic Updates
-> effectively runs `podman auto-update` daily and then `podman image prune -f`. If the container fails to start after auto-update, then it will automatically be rolled back
+> The fedora bootc image ships with auto update timers. These do `podman auto-update` daily and then `podman image prune -f`. If the container fails to start after auto-update, then it will automatically be rolled back.
 
-1. add `AutoUpdate=registry` to your `.Container`
-2. `sudo systemctl enable --now podman-auto-update.timer` (for root)
-3. `systemctl --user enable --now podman-auto-update.timer` (for rootless)
+1. add `AutoUpdate=registry` to your `.Container` file
+2. [optional for me] normally you have to run `systemctl --user enable --now podman-auto-update.timer` but I have this enabled by default from my kickstart config
 
 ## Automatic run on boot
-> by default services will not run unless the user is logged in. This allows the service to run anytime
+by default services will not run unless the user is logged in. This allows the service to run anytime
 
 `loginctl enable-linger $USER`
 
+> optional for me since I have enabled linger from my kickstart config
+
 ## Quadlet Validation
-`/usr/libexec/podman/quadlet --user --dryrun`
+- `/usr/libexec/podman/quadlet --user --dryrun`
+- `/usr/lib/systemd/system-generators/podman-system-generator --user --dryrun`
+- `systemd-analyze --user --generators=true verify rss.service`
 
 ## Expose Podman socket
-> written to `/run/user/1000/podman/podman.sock`
+written to `/run/user/1000/podman/podman.sock`
 
 `systemctl --user enable --now podman.socket`
+
+> optional for me since I have exposed the podman socket in my kickstart config
 
 ## Stats
 - GPU (AMD): `podman run --rm -it --privileged docker.io/joonas/radeontop`
@@ -75,7 +75,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 
 
 # Services
-> I use changedetector to find any changes to the pinned recommended image tags
+> I use changedetector to find any changes to any pinned image tags
 
 ```md
 ├── uptime:latest
