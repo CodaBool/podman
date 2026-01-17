@@ -24,3 +24,16 @@ Restart=always
 # automatic startup
 WantedBy=default.target
 
+### Notes ###
+# media 
+# images 
+# videos 
+# native_video 
+# quote 
+# replies 
+# retweets 
+# nativetweets 
+# tweets?
+
+# filter=f
+# excludes=e
