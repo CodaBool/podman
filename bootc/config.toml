@@ -33,9 +33,12 @@ network --bootproto=static --device=2c:f0:5d:92:b3:51 --ip=192.168.0.25 --gatewa
 # package installation should be done in the Dockerfile
 %post
 
+# comment out root mount since ostree handles this for us
+sed -i -E 's|^([^#].*\s+/\s+.*)$|# \1|' /etc/fstab
 # write mount entry
 # use `sudo fdisk -l` to get partition UUID
 echo "UUID=9ad9e322-be33-4f0c-8c7b-eb5a5fb6bb3b /mnt ext4 defaults 0 0" >> /etc/fstab
+
 
 # setup podman
 mkdir -p /home/codabool/.config/containers/systemd
