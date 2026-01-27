@@ -16,6 +16,12 @@ Environment=CACHE_EXPIRE=300
 #Environment=YOUTUBE_REFRESH_TOKEN=
 # can provide openai token to summarize articles
 
+# I have a script to use nodriver browser to generate a session token
+# this will often become stale and require running the script again
+# I have the repo checked in here: https://github.com/CodaBool/x-session
+# fill the .env file and run the ./automated.sh script
+# I have it under ~/code/vault/nitter/automated.sh
+
 # The following env vars are secret so set them within a .env file
 # - YOUTUBE_KEY=
 EnvironmentFile=/mnt/volumes/.rsshub.env
