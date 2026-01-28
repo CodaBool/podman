@@ -1,6 +1,6 @@
 # Podman Self-Host
 <a href="https://www.youtube.com/watch?v=2H5lqPRPNhA">
-  <img src="https://stargazer.vercel.app/pom.gif" style="height:70px;">
+  <img src="https://github.com/CodaBool/stargazer/blob/main/public/pom.gif?raw=true" style="height:70px;">
 </a>
 
 ```
