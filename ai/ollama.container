@@ -20,12 +20,33 @@ Network=rss-network
 Environment=HIP_VISIBLE_DEVICES=0
 
 # default is 5m
-Environment=OLLAMA_KEEP_ALIVE=1m
+Environment=OLLAMA_KEEP_ALIVE=30s
 
 # default is unlimited
-Environment=OLLAMA_MAX_LOADED_MODELS=3
-Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:7b
+Environment=OLLAMA_MAX_LOADED_MODELS=1
 
+# https://ollama.com/library
+# My GPU has 8Gb VRAM, which means 16b<= models only
+# lower params is faster but less accurate
+# https://aider.chat/docs/leaderboards
+Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:3b
+
+# popular models
+# - qwen
+# - deepseek-r1 [thinking]
+# - deepseek
+# - qwen-coder
+# - deepseek-coder
+
+# there are image models (x/z-image-turbo) coming but are not supporting linux yet
+
+# ollama CLI commands
+# - ollama list
+# - ollama rm qwen3:8b
+# - ollama pull qwen3:8b
+# - ollama run qwen3:8b "say hello"
+
+# if you change the models, have librechat match in ./librechat.yaml
 
 # in bytes limit VRAM
 # Environment=OLLAMA_MAX_VRAM=

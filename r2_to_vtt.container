@@ -2,6 +2,7 @@
 ContainerName=r2_to_vtt
 
 # daily
+#Environment=CRON_SCHEDULE="* * * * *"
 Environment=CRON_SCHEDULE="0 10 * * *"
 
 # notes to sync to known journal page uuids

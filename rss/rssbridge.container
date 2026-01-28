@@ -12,6 +12,7 @@ Volume=/mnt/volumes/rssbridge:/config:Z
 
 # add Reddit API key & postgres URI
 #EnvironmentFile=/mnt/volumes/.rss.env
+Environment=CURL_IMPERSONATE=firefox144
 
 # auto update
 AutoUpdate=registry

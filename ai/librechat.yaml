@@ -1,8 +1,10 @@
 # For more information, see the Configuration Guide:
 # https://docs.librechat.ai/install/configuration/custom_config.html
 
+# https://www.librechat.ai/docs/configuration/librechat_yaml/example
+
 # Configuration version (required)
-version: 1.0.9
+version: 1.2.8
 
 # Cache settings: Set to true to enable caching
 cache: true
@@ -56,13 +58,18 @@ endpoints:
     # https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints/ollama
     - name: "Ollama"
       apiKey: "ollama"
-      # use 'host.docker.internal' instead of localhost if running LibreChat in a docker container
-      baseURL: "http://192.168.0.25:11434/v1/chat/completions"
+      baseURL: "http://192.168.0.25:11434/v1"
       models:
-        default: ["dolphin-mistral:7b"]
-# WORKING with r1
-#        default: ["deepseek-r1:7b"]
-#        default: ["qwen2.5:7b"]
+        default: [
+#          "qwen2.5:14b",
+#          "deepseek-r1:14b", # reasoning
+#          "qwen2.5-coder:14b",
+#          "deepseek-coder-v2:16b",
+#          "qwen3:8b", # reasoning
+#          "qwen2.5:1.5b",
+          "qwen2.5:3b"
+#          "qwen2.5:7b"
+        ]
         fetch: true
       titleConvo: true
       titleModel: "current_model"
