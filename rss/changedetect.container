@@ -10,7 +10,7 @@ Environment=PLAYWRIGHT_DRIVER_URL=ws://rsspuppet:3000
 Environment=TZ=America/New_York
 Image=ghcr.io/dgtlmoon/changedetection.io
 PublishPort=5000:5000
-Volume=/mnt/volumes/changedetect:/datastore:Z
+Volume=/mnt/volumes/changedetect:/datastore:z
 Network=rss-network
 
 # auto update

@@ -5,15 +5,17 @@ ContainerName=backup
 # sudo find . -type d -exec chmod 775 {} + && find . -type f -exec sudo chmod 775 {} +
 
 # these folders seemed to need more permissive settings
-# sudo chmod -R 777 syncthing sonarr radarr jellyfin
+# must be then paired with above +x for tarball
+# sudo chmod -R 744 syncthing sonarr radarr jellyfin
 
 # to run manually use this oneliner
-# podman run --rm --env-file /mnt/volumes/.backup.env -e S3_BUCKET_URL=s3://codabool-backups/ -e TARGET="" -v ./volumes:/data:z,ro ghcr.io/codabool/backup-to-s3 /dobackup.sh
+# podman run --rm --env-file /mnt/volumes/.backup.env -e R2_BUCKET_URL=https://711eb5718fbac6ce40d9482751fdfc64.r2.cloudflarestorage.com -e TARGET="/data/*.conf" -v /mnt/volumes:/data:z,ro ghcr.io/codabool/backup-to-s3 /dobackup.sh
 
-#Environment=CRON_SCHEDULE="0 * * * *"
+#Environment=CRON_SCHEDULE="*/10 * * * *"
 Environment=CRON_SCHEDULE="0 22 * * 1"
-Environment=S3_BUCKET_URL=s3://codabool-backups/
-Environment=TARGET="/data/.*.env /data/*.toml /data/*.conf /data/*.md /data/*.json /data/bazarr /data/changedetect /data/flaresolverr /data/foundry_1 /data/foundry_2 /data/prowlarr /data/qbit /data/radarr /data/rss /data/rssbridge /data/sonarr /data/uptime /data/upvote"
+Environment=R2_BUCKET_URL=https://711eb5718fbac6ce40d9482751fdfc64.r2.cloudflarestorage.com
+# skipping over immich to save on costs
+Environment=TARGET="/data/.*.env /data/*.conf /data/*.md /data/*.jsonl /data/*.json /data/*.toml /data/rssbridge /data/changedetect /data/upvote /data/uptime /data/rss /data/jellyfin /data/foundry_1"
 EnvironmentFile=/mnt/volumes/.backup.env
 
 Image=ghcr.io/codabool/backup-to-s3

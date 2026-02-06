@@ -12,7 +12,7 @@ HealthStartPeriod=30s
 # for major versions, you need to do migration commands
 # here was my last migration chat https://chatgpt.com/c/6955a5c3-b304-8326-9f2e-f09ef3899052
 Image=docker.io/postgres:18
-Volume=/mnt/volumes/rss:/var/lib/postgresql:Z
+Volume=/mnt/volumes/rss:/var/lib/postgresql:z
 EnvironmentFile=/mnt/volumes/.rss.env
 Network=rss-network
 
