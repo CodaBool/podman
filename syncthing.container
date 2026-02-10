@@ -1,0 +1,36 @@
+[Container]
+ContainerName=syncthing
+Environment=PUID=1000
+Environment=PGID=1000
+HealthCmd=curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+Image=docker.io/syncthing/syncthing
+# web ui
+# PublishPort=8384:8384
+# tcp file transfers
+# PublishPort=22000:22000/tcp
+# quic file transfers
+# PublishPort=22000:22000/udp
+# receive local discovery broadcasts
+# PublishPort=21027:21027/udp
+
+
+Network=host
+
+Volume=/mnt/volumes/syncthing:/var/syncthing:Z
+
+# auto update
+AutoUpdate=registry
+
+# selector for backup container to stop with
+Label=docker-volume-backup.stop-during-backup=true
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
