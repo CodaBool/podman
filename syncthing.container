@@ -4,6 +4,7 @@ Environment=PUID=1000
 Environment=PGID=1000
 HealthCmd=curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
 Image=docker.io/syncthing/syncthing
+
 # web ui
 # PublishPort=8384:8384
 # tcp file transfers
@@ -13,10 +14,10 @@ Image=docker.io/syncthing/syncthing
 # receive local discovery broadcasts
 # PublishPort=21027:21027/udp
 
-
 Network=host
 
-Volume=/mnt/volumes/syncthing:/var/syncthing:Z
+#Volume=/mnt/volumes/syncthing:/var/syncthing:z
+Volume=/mnt/volumes/foundry_1/Data:/var/syncthing:z
 
 # auto update
 AutoUpdate=registry
