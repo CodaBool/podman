@@ -106,7 +106,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   └── immich_redis:9 [https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml]
 └── ai/
     ├── librechat:latest
-    ├── meili:v1.12.3 [https://github.com/danny-avila/LibreChat/blob/main/deploy-compose.yml]
+    ├── meili:latest
     ├── mongo:latest
     ├── ollama:rocm
     ├── rag:latest

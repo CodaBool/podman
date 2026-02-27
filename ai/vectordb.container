@@ -8,7 +8,7 @@ ContainerName=vectordb
 # I think ankane suggested to use pgvector/pgvector instead
 # not sure what the compatibility is between these
 #Image=docker.io/pgvector/pgvector:pg17
-Image=docker.io/ankane/pgvector
+Image=docker.io/pgvector/pgvector:0.8.0-pg15-trixie
 
 Environment=POSTGRES_DB=mydatabase
 Environment=POSTGRES_USER=myuser
