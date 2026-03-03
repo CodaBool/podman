@@ -20,9 +20,12 @@ EnvironmentFile=/mnt/volumes/.rss.env
 EnvironmentFile=/mnt/volumes/user_agent.toml
 Environment=RUN_MIGRATIONS=1
 Environment=POLLING_PARSING_ERROR_LIMIT=0
+#Environment=MEDIA_PROXY_MODE=none
 Environment=MEDIA_PROXY_MODE=http-only
 Environment=MEDIA_PROXY_ALLOW_PRIVATE_NETWORKS=1
-#Environment=MEDIA_PROXY_RESOURCE_TYPES=
+Environment=ICON_FETCH_ALLOW_PRIVATE_NETWORKS=1
+Environment=DISABLE_HSTS=true
+Environment=FETCHER_ALLOW_PRIVATE_NETWORKS=1
 
 # allow for LLM to generate
 Environment=HTTP_CLIENT_TIMEOUT=9999
