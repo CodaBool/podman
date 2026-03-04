@@ -1,0 +1,44 @@
+[Container]
+ContainerName=obsidian
+Environment=PUID=1000
+Environment=TZ=America/New_York
+Environment=PGID=1000
+Image=lscr.io/linuxserver/obsidian
+
+# web ui
+PublishPort=8666:3000
+# https port, not needed
+#PublishPort=8667:3001
+
+Volume=/mnt/volumes/obsidian:/config:Z
+ShmSize=1g
+
+# disable gpu acceleration attempts
+Environment=ELECTRON_DISABLE_GPU=1
+Environment=LIBGL_ALWAYS_SOFTWARE=1
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+#LimitNOFILE=1048576
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
+
+
+
+# I ran into file watch errors
+# I was able to resolve them by increasing on the host the inotify limits
+
+#sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null <<'EOF'
+#fs.inotify.max_user_watches=524288
+#fs.inotify.max_user_instances=1024
+#EOF
+#sudo sysctl --system
