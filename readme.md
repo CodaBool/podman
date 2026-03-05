@@ -49,7 +49,7 @@ by default services will not run unless the user is logged in. This allows the s
 ## Quadlet Validation
 - `/usr/libexec/podman/quadlet --user --dryrun`
 - `/usr/lib/systemd/system-generators/podman-system-generator --user --dryrun`
-- `systemd-analyze --user --generators=true verify rss.service`
+- `systemd-analyze --user --generators=true verify rss.service` (usually the most useful)
 
 ## Expose Podman socket
 written to `/run/user/1000/podman/podman.sock`
@@ -82,10 +82,11 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── tunnel:latest
 ├── tools:latest
 ├── pastebin:latest
-├── jellyfin:latest
 ├── foundry_2:latest
 ├── foundry_1:13
 ├── syncthing:latest
+├── obsidian:latest
+├── steam:latest
 ├── r2_to_vtt:latest (custom image, pushed weekly) [https://github.com/CodaBool/r2-to-vtt]
 ├── backup:latest (custom image, pushed weekly) [https://github.com/CodaBool/container-s3-cron-backup]
 ├── rss/
