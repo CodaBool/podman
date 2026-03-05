@@ -1,20 +1,19 @@
 on:
   schedule:
     - cron: "0 21 * * 1" # weekly
-# on: push
+  push:
+    branches: main
 jobs:
   release:
-    # for when set to on: push | skips ci if the commit message contains "[no ci]"
-    # if: "! contains(github.event.commits[0].message, '[no ci]')"
     runs-on: ubuntu-latest
     permissions:
       contents: write # required for github release
       packages: write
     steps:
       # https://github.com/marketplace/actions/checkout
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       # https://github.com/marketplace/actions/docker-setup-docker
-      - uses: docker/setup-docker-action@v4
+      - uses: docker/setup-docker-action@v5
       - name: Check for a new Fedora image
         id: check
         run: |
