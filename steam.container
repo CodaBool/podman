@@ -1,0 +1,45 @@
+[Container]
+ContainerName=steam
+
+Environment=PUID=1000
+Environment=TZ=America/New_York
+Environment=PGID=1000
+Environment=DRINODE=/dev/dri/renderD128
+Environment=DRI_NODE=/dev/dri/renderD128
+Environment=PIXELFLUX_WAYLAND=true
+
+Image=lscr.io/linuxserver/steam
+
+PublishPort=8668:3000
+
+Volume=/mnt/volumes/steam:/config:Z
+
+ShmSize=1g
+SeccompProfile=unconfined
+PodmanArgs=--security-opt apparmor=unconfined --privileged
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
+ 
+
+
+# I ran into file watch errors
+# I was able to resolve them by increasing on the host the inotify limits
+
+#sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null <<'EOF'
+#fs.inotify.max_user_watches=524288
+#fs.inotify.max_user_instances=1024
+#EOF
+#sudo sysctl --system
