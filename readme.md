@@ -86,7 +86,6 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── foundry_1:13
 ├── syncthing:latest
 ├── obsidian:latest
-├── steam:latest
 ├── r2_to_vtt:latest (custom image, pushed weekly) [https://github.com/CodaBool/r2-to-vtt]
 ├── backup:latest (custom image, pushed weekly) [https://github.com/CodaBool/container-s3-cron-backup]
 ├── rss/
