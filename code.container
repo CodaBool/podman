@@ -1,0 +1,27 @@
+[Container]
+ContainerName=code
+Image=docker.io/gitpod/openvscode-server
+PublishPort=3005:3000
+Volume=/mnt/volumes:/home/workspace:z
+
+#Init=true
+#Stdin=true
+#TTY=true
+
+PodmanArgs=--privileged
+UserNS=keep-id
+RunInit=true
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

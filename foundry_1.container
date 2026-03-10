@@ -12,6 +12,9 @@ Image=docker.io/felddy/foundryvtt:13
 PublishPort=30000:30000
 Volume=/mnt/volumes/foundry_1:/data:z
 
+
+UserNS=keep-id
+
 # auto update
 AutoUpdate=registry
 
