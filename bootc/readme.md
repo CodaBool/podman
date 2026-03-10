@@ -58,6 +58,8 @@ alias r="systemctl --user daemon-reload && systemctl --user restart $@"
 alias s="systemctl --user daemon-reload && systemctl --user stop $@"
 alias f="podman logs -f $@"
 alias e="podman logs $@"
+alias debug="systemd-analyze --user --generators=true verify \$@"
+alias valid="systemd-analyze --user --generators=true verify \$@"
 
 p() {
     local DRY=false
