@@ -4,7 +4,7 @@ After=vectordb.service ai-network.service
 
 [Container]
 ContainerName=rag
-Image=ghcr.io/danny-avila/librechat-rag-api-dev-lite
+Image=registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite
 Network=ai-network
 
 # set OPENAI_API_KEY & POSTGRES_PASSWORD

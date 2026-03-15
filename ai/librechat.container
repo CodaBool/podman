@@ -4,7 +4,7 @@ After=ai-network.service
 
 [Container]
 ContainerName=librechat
-Image=ghcr.io/danny-avila/librechat
+Image=registry.librechat.ai/danny-avila/librechat-dev-api
 PublishPort=3080:3080/tcp
 
 #ENDPOINTS=openAI
