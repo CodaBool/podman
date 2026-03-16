@@ -13,6 +13,7 @@ EnvironmentFile=/mnt/volumes/.r2_to_vtt.env
 # https://github.com/CodaBool/r2-to-vtt
 Image=ghcr.io/codabool/r2-to-vtt
 Volume=/mnt/volumes/foundry_1/Data/worlds/redthread/data/journal:/app/journal:z
+User=1000:1000
 
 # auto update
 AutoUpdate=registry
