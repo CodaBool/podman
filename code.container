@@ -3,13 +3,7 @@ ContainerName=code
 Image=docker.io/gitpod/openvscode-server
 PublishPort=3005:3000
 Volume=/mnt/volumes:/home/workspace:z
-
-#Init=true
-#Stdin=true
-#TTY=true
-
-PodmanArgs=--privileged
-UserNS=keep-id
+User=1000:1000
 RunInit=true
 
 # auto update
