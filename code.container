@@ -2,7 +2,7 @@
 ContainerName=code
 Image=docker.io/gitpod/openvscode-server
 PublishPort=3005:3000
-Volume=/mnt/volumes:/home/workspace:z
+Volume=/mnt/volumes:/workspace:z
 User=1000:1000
 RunInit=true
 
@@ -19,3 +19,9 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
+
+
+# mkdir -p /tmp/git-home 
+# export HOME=/tmp/git-home 
+# git config --global --add safe.directory /workspace/foundry_1/Data/modules/custom-foundry 
+# git status

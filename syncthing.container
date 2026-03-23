@@ -2,6 +2,7 @@
 ContainerName=syncthing
 Environment=PUID=1000
 Environment=PGID=1000
+User=1000:1000
 HealthCmd=curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
 Image=docker.io/syncthing/syncthing
 
@@ -21,9 +22,6 @@ Volume=/mnt/volumes/foundry_1/Data:/var/syncthing:z
 
 # auto update
 AutoUpdate=registry
-
-# selector for backup container to stop with
-Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
 
