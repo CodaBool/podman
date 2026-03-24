@@ -5,6 +5,8 @@ After=ai-network.service
 [Container]
 ContainerName=vectordb
 
+# https://github.com/danny-avila/LibreChat/blob/main/docker-compose.yml
+
 # I think ankane suggested to use pgvector/pgvector instead
 # not sure what the compatibility is between these
 #Image=docker.io/pgvector/pgvector:pg17
@@ -15,15 +17,11 @@ Environment=POSTGRES_USER=myuser
 EnvironmentFile=/mnt/volumes/.librechat.env
 #Environment=POSTGRES_PASSWORD=USE_ENV_FILE
 
-#Volume=/mnt/volumes/vectordb:/var/lib/postgresql/data:Z
 Network=ai-network
 HostName=db
 
 # auto update
 AutoUpdate=registry
-
-# selector for backup container to stop with
-Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
 

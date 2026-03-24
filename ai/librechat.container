@@ -4,6 +4,8 @@ After=ai-network.service
 
 [Container]
 ContainerName=librechat
+
+# https://github.com/danny-avila/LibreChat/blob/main/docker-compose.yml
 Image=registry.librechat.ai/danny-avila/librechat-dev-api
 PublishPort=3080:3080/tcp
 
@@ -23,9 +25,6 @@ Network=ai-network
 
 # auto update
 AutoUpdate=registry
-
-# selector for backup container to stop with
-Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
 

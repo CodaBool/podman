@@ -17,9 +17,6 @@ PublishPort=8000:8000/tcp
 # auto update
 AutoUpdate=registry
 
-# selector for backup container to stop with
-Label=docker-volume-backup.stop-during-backup=true
-
 [Service]
 
 # allow time for a new image to download
