@@ -2,7 +2,7 @@
 Requires=immich-network.service
 After=immich-network.service
 
-# update this image to match the example for latest image hashes
+# update this image to match the example for latest image
 # https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml
 
 [Container]
@@ -10,11 +10,10 @@ ContainerName=immich_redis
 HostName=redis
 HealthCmd=redis-cli ping || exit 1
 Image=docker.io/valkey/valkey:9
-#Image=docker.io/redis:6.2-alpine
 Network=immich-network
 
-# do not auto update for a sha pinned tag
-# AutoUpdate=registry
+# auto update
+AutoUpdate=registry
 
 [Service]
 
