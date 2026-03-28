@@ -3,6 +3,7 @@ ContainerName=syncthing
 Environment=PUID=1000
 Environment=PGID=1000
 User=1000:1000
+UserNS=keep-id
 HealthCmd=curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
 Image=docker.io/syncthing/syncthing
 
