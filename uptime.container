@@ -1,6 +1,6 @@
 [Container]
 ContainerName=uptime
-Image=docker.io/louislam/uptime-kuma
+Image=docker.io/louislam/uptime-kuma:2
 PublishPort=3001:3001
 HealthCmd=curl --fail http://localhost:3001 || exit 1
 Volume=/mnt/volumes/uptime:/app/data:Z
@@ -14,9 +14,6 @@ SecurityLabelDisable=true
 
 # auto update
 AutoUpdate=registry
-
-# selector for backup container to stop with
-Label=docker-volume-backup.stop-during-backup=true
 
 [Service]
 

@@ -78,7 +78,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 > I use changedetector to find any changes to any pinned image tags
 
 ```md
-├── uptime:latest
+├── uptime:2
 ├── tunnel:latest
 ├── tools:latest
 ├── code:latest
