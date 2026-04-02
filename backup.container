@@ -15,7 +15,7 @@ ContainerName=backup
 Environment=CRON_SCHEDULE="0 22 * * 1"
 Environment=R2_BUCKET_URL=https://711eb5718fbac6ce40d9482751fdfc64.r2.cloudflarestorage.com
 # skipping over immich to save on costs
-Environment=TARGET="/data/.*.env /data/*.conf /data/*.md /data/*.jsonl /data/*.json /data/*.toml /data/rssbridge /data/changedetect /data/upvote /data/uptime /data/rss /data/jellyfin /data/foundry_1"
+Environment=TARGET="/data/.*.env /data/*.conf /data/*.md /data/*.jsonl /data/*.json /data/*.toml /data/changedetect /data/uptime /data/rss /data/foundry_1"
 EnvironmentFile=/mnt/volumes/.backup.env
 
 Image=ghcr.io/codabool/backup-to-s3
