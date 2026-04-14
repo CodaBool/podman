@@ -5,9 +5,9 @@ After=ai-network.service
 [Container]
 ContainerName=mongo
 Network=ai-network
-Image=docker.io/library/mongo
+Image=docker.io/library/mongo:8.0.20
 Volume=/mnt/volumes/mongo:/data/db:Z
-Exec=mongod --noauth
+Exec=mongod --noauth --bind_ip_all
 
 # auto update
 AutoUpdate=registry
