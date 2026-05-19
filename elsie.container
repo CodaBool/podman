@@ -1,0 +1,28 @@
+[Container]
+ContainerName=elsie
+# https://foundryvtt.com/releases
+Environment=FOUNDRY_VERSION=13.351
+Environment=CONTAINER_PRESERVE_CONFIG=true
+Environment=FOUNDRY_MINIFY_STATIC_FILES=true
+Environment=FOUNDRY_TELEMETRY=false
+#Environment=FOUNDRY_CSS_THEME=scifi
+EnvironmentFile=/mnt/volumes/.foundry.env
+#HealthCmd=curl --fail http://localhost:30000 || exit 1
+Image=docker.io/felddy/foundryvtt:13
+PublishPort=30002:30000
+Volume=/mnt/volumes/elsie:/data:z
+UserNS=keep-id
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
