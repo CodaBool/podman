@@ -61,6 +61,31 @@ alias e="podman logs $@"
 alias debug="systemd-analyze --user --generators=true verify \$@"
 alias valid="systemd-analyze --user --generators=true verify \$@"
 
+podunzip() {
+  local zip_file="$1"
+  local out_dir="$2"
+
+  if [ -z "$zip_file" ] || [ -z "$out_dir" ]; then
+    echo "Usage: podunzip ./file.zip output-folder"
+    return 1
+  fi
+
+  if [ ! -f "$zip_file" ]; then
+    echo "Zip file not found: $zip_file"
+    return 1
+  fi
+
+  mkdir -p "$out_dir"
+
+  podman run --rm \
+    -v "$PWD:/work:rw" \
+    -w /work \
+    --security-opt label=disable \
+    docker.io/library/debian:trixie-slim \
+    sh -c 'apt-get update >/dev/null && apt-get install -y unzip >/dev/null && unzip -o "$1" -d "$2"' \
+    sh "$zip_file" "$out_dir"
+}
+
 p() {
     local DRY=false
     if [[ "$1" == "--dry" ]]; then
