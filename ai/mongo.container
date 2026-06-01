@@ -5,9 +5,12 @@ After=ai-network.service
 [Container]
 ContainerName=mongo
 Network=ai-network
-Image=docker.io/library/mongo:8.0.20
+# https://github.com/danny-avila/LibreChat/blob/main/docker-compose.yml
+Image=docker.io/library/mongo:7
+#Image=docker.io/library/mongo:8.0.20
 Volume=/mnt/volumes/mongo:/data/db:Z
-Exec=mongod --noauth --bind_ip_all
+#Exec=mongod --noauth
+Exec=mongod --noauth --bind_ip_all --wiredTigerCacheSizeGB 1
 
 # auto update
 AutoUpdate=registry

@@ -1,0 +1,63 @@
+[Container]
+ContainerName=steam
+
+Environment=PUID=1000
+Environment=TZ=America/New_York
+Environment=PGID=1000
+Environment=DRINODE=/dev/dri/renderD128
+Environment=DRI_NODE=/dev/dri/renderD128
+Environment=PIXELFLUX_WAYLAND=true
+Environment=SELKIES_GAMEPAD_ENABLED=true
+
+Image=lscr.io/linuxserver/steam
+
+PublishPort=8668:3000
+PublishPort=47990:47990/tcp
+PublishPort=47984:47984/tcp
+PublishPort=47989:47989/tcp
+PublishPort=48010:48010/tcp
+
+PublishPort=47998:47998/udp
+PublishPort=47999:47999/udp
+PublishPort=48000:48000/udp
+PublishPort=48002:48002/udp
+PublishPort=48010:48010/udp
+
+
+Volume=/mnt/volumes/steam:/config:Z
+
+ShmSize=1g
+SeccompProfile=unconfined
+PodmanArgs=--security-opt apparmor=unconfined --privileged --group-add=keep-groups
+
+# gpu
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
+
+# controller
+AddDevice=/dev/input
+AddDevice=/dev/uinput
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
+ 
+
+
+# I ran into file watch errors
+# I was able to resolve them by increasing on the host the inotify limits
+
+#sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null <<'EOF'
+#fs.inotify.max_user_watches=524288
+#fs.inotify.max_user_instances=1024
+#EOF
+#sudo sysctl --system

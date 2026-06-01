@@ -1,0 +1,58 @@
+[Container]
+ContainerName=steam2
+
+Image=docker.io/josh5/steam-headless
+
+PublishPort=8083:8083
+
+Volume=/mnt/volumes/steam2/home:/home/default/:rw
+Volume=/mnt/volumes/steam2/games:/mnt/games/:rw
+Volume=/mnt/volumes/steam2/x11:/tmp/.X11-unix/:rw
+Volume=/mnt/volumes/steam2/pulse/:/tmp/pulse/:rw
+
+EnvironmentFile=/mnt/volumes/.steam2.env
+
+ShmSize=2g
+AddCapability=NET_ADMIN
+AddCapability=SYS_ADMIN
+AddCapability=SYS_NICE
+SecurityLabelDisable=true
+SeccompProfile=unconfined
+Ulimit=nofile=1024:524288
+PodmanArgs=--security-opt apparmor=unconfined --privileged --group-add=keep-groups
+#PodmanArgs=--security-opt apparmor=unconfined --privileged --group-add=keep-groups --device-cgroup-rule='c 13:* rmw'
+
+# gpu
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
+AddDevice=/dev/fuse
+#AddDevice=/dev/dri/card1
+#AddDevice=/dev/dri/renderD128
+
+# controller
+AddDevice=/dev/input
+AddDevice=/dev/uinput
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
+ 
+
+
+# I ran into file watch errors
+# I was able to resolve them by increasing on the host the inotify limits
+
+#sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null <<'EOF'
+#fs.inotify.max_user_watches=524288
+#fs.inotify.max_user_instances=1024
+#EOF
+#sudo sysctl --system

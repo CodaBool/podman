@@ -12,6 +12,8 @@ Volume=/mnt/volumes/rssbridge:/config:Z
 
 # add Reddit API key & postgres URI
 EnvironmentFile=/mnt/volumes/.rss.env
+# broken for reddit due to unauthed json now being blocked 2026
+# https://github.com/RSS-Bridge/rss-bridge/issues/4866#issuecomment-4587277786
 Environment=CURL_IMPERSONATE=tor145
 
 # auto update

@@ -2,7 +2,7 @@
 ContainerName=code
 Image=docker.io/gitpod/openvscode-server
 PublishPort=3005:3000
-Volume=/mnt/volumes:/workspace:z
+Volume=/mnt/volumes/foundry_1/Data/modules:/workspace:z
 User=1000:1000
 RunInit=true
 
