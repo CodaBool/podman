@@ -84,13 +84,14 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── code:latest
 ├── pastebin:latest
 ├── foundry_2:latest
-├── foundry_1:13
+├── foundry_1:14
 ├── syncthing:latest
 ├── obsidian:latest
 ├── r2_to_vtt:latest (custom image, pushed weekly) [https://github.com/CodaBool/r2-to-vtt]
 ├── backup:latest (custom image, pushed weekly) [https://github.com/CodaBool/container-s3-cron-backup]
 ├── rss/
 │   ├── upvote:latest
+│   ├── rssedit:latest (custom image) [https://github.com/CodaBool/rssedit]
 │   ├── rsspuppet:latest
 │   ├── rsshub:chromium-bundled
 │   ├── rssbridge:latest

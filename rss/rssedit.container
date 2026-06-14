@@ -1,0 +1,27 @@
+[Unit]
+Requires=rss-network.service
+After=rss-network.service
+
+[Container]
+ContainerName=rssedit
+Image=ghcr.io/codabool/rssedit
+PublishPort=9933:9933/tcp
+Network=rss-network
+# reddit api key
+EnvironmentFile=/mnt/volumes/.rssedit.env
+Environment=MIN_RATE_IN_SECONDS=86400
+Environment=FILTER_MAX_AGE_IN_DAYS=30
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
