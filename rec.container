@@ -1,0 +1,19 @@
+[Container]
+ContainerName=rec
+Image=ghcr.io/codabool/rec:latest
+PublishPort=8093:8080
+Volume=/mnt/volumes/recordings:/recordings:Z
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
