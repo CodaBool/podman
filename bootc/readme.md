@@ -111,3 +111,6 @@ p() {
     fi
 }
 ```
+
+# General Dev Notes
+- [plasma bigscreen](https://invent.kde.org/plasma/plasma-bigscreen)
