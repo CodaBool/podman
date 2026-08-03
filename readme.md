@@ -109,7 +109,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 └── ai/
     ├── librechat:latest
     ├── meili:latest
-    ├── mongo:latest
+    ├── mongo:8.0.20
     ├── ollama:rocm
     ├── rag:latest
     └── vectordb:latest
