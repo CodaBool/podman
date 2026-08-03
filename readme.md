@@ -98,7 +98,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rss_db:18 [https://miniflux.app/docs/docker.html#docker-compose]
 │   ├── rss:latest (custom image, pushed weekly) [https://github.com/CodaBool/miniflux]
 │   ├── nitter:latest
-│   ├── nitter-redis:6-alpine [https://github.com/zedeus/nitter/blob/master/docker-compose.yml]
+│   ├── nitter-redis:6-alpine [https://github.com/zedeus/nitter/blob/master/compose.yml]
 │   ├── changedetect:latest
 │   └── browserless:latest
 ├── immich/
