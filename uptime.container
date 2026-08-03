@@ -1,5 +1,6 @@
 [Container]
 ContainerName=uptime
+# https://github.com/louislam/uptime-kuma/releases
 Image=docker.io/louislam/uptime-kuma:2
 PublishPort=3001:3001
 HealthCmd=curl --fail http://localhost:3001 || exit 1
