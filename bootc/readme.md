@@ -114,3 +114,26 @@ p() {
 
 # General Dev Notes
 - [plasma bigscreen](https://invent.kde.org/plasma/plasma-bigscreen), buy a intel nuc kit put bazzite on it.
+
+# upgrade guide
+
+```diff
+# ./Dockerfile
+-FROM quay.io/fedora/fedora-bootc:44
++FROM quay.io/fedora/fedora-bootc:45
+```
+
+
+```diff
+# ../.github/workflows/build.yml
+-REMOTE_IMAGE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:44 --format "{{json .Image}}")
++REMOTE_IMAGE=$(docker buildx imagetools inspect quay.io/fedora/fedora-bootc:45 --format "{{json .Image}}")
+```
+
+```sh
+just upload
+mom
+cat /etc/os-release
+sudo bootc upgrade
+# then do a reboot with `sudo reboot`
+```
