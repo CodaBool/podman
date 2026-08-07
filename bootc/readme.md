@@ -113,4 +113,4 @@ p() {
 ```
 
 # General Dev Notes
-- [plasma bigscreen](https://invent.kde.org/plasma/plasma-bigscreen)
+- [plasma bigscreen](https://invent.kde.org/plasma/plasma-bigscreen), buy a intel nuc kit put bazzite on it.
