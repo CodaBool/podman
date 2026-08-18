@@ -1,19 +1,19 @@
 build:
-  docker build -t fedora:latest .
+  podman build -t fedora:latest .
 
 run: build
-  docker run --rm --name fedora fedora tail -f /dev/null
+  podman run --rm --name fedora fedora tail -f /dev/null
 
 exec:
-  docker exec -it fedora bash
+  podman exec -it fedora bash
 
 # assuming you are logged in
 upload:
-  docker build -t ghcr.io/codabool/fedora-bootc:latest .
-  docker push ghcr.io/codabool/fedora-bootc:latest
+  podman build -t ghcr.io/codabool/fedora-bootc:latest .
+  podman push ghcr.io/codabool/fedora-bootc:latest
 
 stop:
-  docker rm -f fedora
+  podman rm -f fedora
 
 # bootc-image-builder always pulls from podman cache
 # but podman run never seems to build correctly
