@@ -83,7 +83,6 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── tools:latest
 ├── code:latest
 ├── pastebin:latest
-├── foundry_2:latest
 ├── foundry_1:14
 ├── syncthing:latest
 ├── obsidian:latest
@@ -110,7 +109,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
     ├── librechat:latest
     ├── meili:latest
     ├── mongo:8.0.20
-    ├── ollama:rocm
+    ├── ollama:latest
     ├── rag:latest
     └── vectordb:latest
 ```

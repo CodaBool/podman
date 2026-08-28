@@ -4,20 +4,18 @@ After=ai-network.service rss-network.service
 
 [Container]
 ContainerName=ollama
-# AMD
-Image=docker.io/ollama/ollama:rocm
+Image=docker.io/ollama/ollama
 Volume=/mnt/volumes/ollama:/root/.ollama:Z
-# AMD
+
+# AMD GPU access
 AddDevice=/dev/kfd
 AddDevice=/dev/dri
+
 PublishPort=11434:11434/tcp
 
 # used by both librechat & upvote-rss
 Network=ai-network
 Network=rss-network
-
-# AMD
-Environment=HIP_VISIBLE_DEVICES=0
 
 # default is 5m
 Environment=OLLAMA_KEEP_ALIVE=30s
@@ -25,11 +23,11 @@ Environment=OLLAMA_KEEP_ALIVE=30s
 # default is unlimited
 Environment=OLLAMA_MAX_LOADED_MODELS=1
 
+# === Notes on picking models ===
 # https://ollama.com/library
 # My GPU has 8Gb VRAM, which means 16b<= models only
 # lower params is faster but less accurate
 # https://aider.chat/docs/leaderboards
-Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:3b
 
 # popular models
 # - qwen
@@ -48,17 +46,8 @@ Environment=OLLAMA_DEFAULT_MODEL=qwen2.5:3b
 
 # if you change the models, have librechat match in ./librechat.yaml
 
-# in bytes limit VRAM
-# Environment=OLLAMA_MAX_VRAM=
-
-# someone said this can reduce memory usage
-# Environment=OLLAMA_KV_CACHE_TYPE=q4_0
-
 # env vars can be found here:
 # https://github.com/ollama/ollama/blob/main/envconfig/config.go
-
-# might be relevant for AMD linux
-# https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/quick-start.html
 
 # auto update
 AutoUpdate=registry

@@ -3,8 +3,10 @@
 
 # https://www.librechat.ai/docs/configuration/librechat_yaml/example
 
+# https://github.com/LibreChat-AI/librechat.ai/blob/main/content/docs/configuration/librechat_yaml/example.mdx
+
 # Configuration version (required)
-version: 1.2.8
+version: 1.3.14
 
 # Cache settings: Set to true to enable caching
 cache: true
@@ -67,7 +69,9 @@ endpoints:
 #          "deepseek-coder-v2:16b",
 #          "qwen3:8b", # reasoning
 #          "qwen2.5:1.5b",
-          "qwen2.5:3b"
+#          "qwen2.5:3b"
+#          "qwen3.5:4b" # reasoning
+          "qwen3.5:2b" # reasoning
 #          "qwen2.5:7b"
         ]
         fetch: true

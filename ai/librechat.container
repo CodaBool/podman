@@ -6,7 +6,7 @@ After=ai-network.service
 ContainerName=librechat
 
 # https://github.com/danny-avila/LibreChat/blob/main/docker-compose.yml
-Image=registry.librechat.ai/danny-avila/librechat-dev-api
+Image=registry.librechat.ai/danny-avila/librechat-dev
 PublishPort=3080:3080/tcp
 
 #ENDPOINTS=openAI
