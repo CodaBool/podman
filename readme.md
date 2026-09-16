@@ -80,10 +80,9 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ```md
 ├── uptime:2
 ├── tunnel:latest
-├── tools:latest
-├── code:latest
-├── pastebin:latest
-├── foundry_1:14
+├── tools:latest (consider replacing)
+├── pastebin:latest (consider replacing)
+├── foundry:14
 ├── syncthing:latest
 ├── obsidian:latest
 ├── r2_to_vtt:latest (custom image, pushed weekly) [https://github.com/CodaBool/r2-to-vtt]
@@ -96,7 +95,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rssbridge:latest
 │   ├── rss_db:18 [https://miniflux.app/docs/docker.html#docker-compose]
 │   ├── rss:latest (custom image, pushed weekly) [https://github.com/CodaBool/miniflux]
-│   ├── nitter:latest
+│   ├── nitter:latest (deprecated)
 │   ├── nitter-redis:6-alpine [https://github.com/zedeus/nitter/blob/master/compose.yml]
 │   ├── changedetect:latest
 │   └── browserless:latest

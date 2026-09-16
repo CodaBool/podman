@@ -20,7 +20,6 @@ Environment=POSTGRES_INITDB_ARGS=--data-checksums
 EnvironmentFile=/mnt/volumes/.immich.env
 # this isn't in the docker-compose but seems to be required
 Exec=postgres -c 'shared_preload_libraries=vchord.so,vectors.so'
-HealthCmd=pg_isready -d postgres || exit 1
 
 # https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml
 Image=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0

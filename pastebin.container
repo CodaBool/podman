@@ -1,5 +1,7 @@
 [Container]
 ContainerName=pastebin
+# it's been 1 year since a release, consider another image
+# microbin is active again = https://github.com/szabodanika/microbin
 Image=docker.io/corentinth/enclosed
 PublishPort=8081:8787
 Volume=/mnt/volumes/pastebin:/app/.data:Z

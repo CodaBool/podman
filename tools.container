@@ -1,6 +1,8 @@
 [Container]
 ContainerName=tools
-HealthCmd=curl --fail http://localhost || exit 1
+
+# been 2 years since a release, consider other images
+# https://github.com/CorentinTh/it-tools/releases
 Image=docker.io/corentinth/it-tools
 
 PublishPort=8082:80

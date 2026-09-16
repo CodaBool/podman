@@ -6,14 +6,9 @@ After=rss-network.service
 ContainerName=browserless
 
 # https://docs.browserless.io/baas/docker/config
-# default 30000 (in ms)
-#Environment=TIMEOUT=10000
-# default 5
-#Environment=QUEUED=5
-# default 5
-#Environment=CONCURRENT=10
 Environment=TOKEN=INSECURE
 
+# https://github.com/browserless/browserless/pkgs/container/chromium
 Image=ghcr.io/browserless/chromium
 Network=rss-network
 HostName=browserless

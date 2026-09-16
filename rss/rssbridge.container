@@ -4,6 +4,8 @@ After=rss-network.service
 
 [Container]
 ContainerName=rssbridge
+
+# https://github.com/RSS-Bridge/rss-bridge/releases
 Image=docker.io/rssbridge/rss-bridge
 PublishPort=8088:80/tcp
 Network=rss-network

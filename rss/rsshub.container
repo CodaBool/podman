@@ -26,7 +26,7 @@ Environment=CACHE_EXPIRE=300
 # - YOUTUBE_KEY=
 EnvironmentFile=/mnt/volumes/.rsshub.env
 
-HealthCmd=curl --fail http://localhost:1200/healthz
+# https://github.com/DIYgod/RSSHub/pkgs/container/rsshub
 Image=docker.io/diygod/rsshub:chromium-bundled
 PublishPort=1200:1200
 Network=rss-network

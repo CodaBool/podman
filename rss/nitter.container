@@ -4,11 +4,13 @@ After=rss-network.service nitter-redis.service
 
 [Container]
 ContainerName=nitter
+
+# deprecated, find a fork when someone wears the mask
 Image=docker.io/zedeus/nitter
 PublishPort=8089:8080/tcp
 Network=rss-network
 Volume=/mnt/volumes/nitter.conf:/src/nitter.conf:Z,ro
-Volume=/mnt/volumes/sessions.jsonl:/src/sessions.jsonl:Z,ro 
+Volume=/mnt/volumes/sessions.jsonl:/src/sessions.jsonl:Z,ro
 
 # auto update
 AutoUpdate=registry
@@ -25,14 +27,14 @@ Restart=always
 WantedBy=default.target
 
 ### Notes ###
-# media 
-# images 
-# videos 
-# native_video 
-# quote 
-# replies 
-# retweets 
-# nativetweets 
+# media
+# images
+# videos
+# native_video
+# quote
+# replies
+# retweets
+# nativetweets
 # tweets?
 
 # filter=f

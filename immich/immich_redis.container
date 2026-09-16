@@ -8,7 +8,6 @@ After=immich-network.service
 [Container]
 ContainerName=immich_redis
 HostName=redis
-HealthCmd=redis-cli ping || exit 1
 Image=docker.io/valkey/valkey:9
 Network=immich-network
 

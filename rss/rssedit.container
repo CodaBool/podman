@@ -4,6 +4,8 @@ After=rss-network.service
 
 [Container]
 ContainerName=rssedit
+
+# https://github.com/codabool/rssedit
 Image=ghcr.io/codabool/rssedit
 PublishPort=9933:9933/tcp
 Network=rss-network

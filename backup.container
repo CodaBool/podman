@@ -11,13 +11,13 @@ ContainerName=backup
 # to run manually use this oneliner
 # podman run --rm --env-file /mnt/volumes/.backup.env -e R2_BUCKET_URL=https://711eb5718fbac6ce40d9482751fdfc64.r2.cloudflarestorage.com -e TARGET="/data/*.conf" -v /mnt/volumes:/data:z,ro ghcr.io/codabool/backup-to-s3 /dobackup.sh
 
-#Environment=CRON_SCHEDULE="*/10 * * * *"
 Environment=CRON_SCHEDULE="0 22 * * 1"
 Environment=R2_BUCKET_URL=https://711eb5718fbac6ce40d9482751fdfc64.r2.cloudflarestorage.com
 # skipping over immich to save on costs
-Environment=TARGET="/data/.*.env /data/*.conf /data/*.md /data/*.jsonl /data/*.json /data/*.toml /data/changedetect /data/uptime /data/rss /data/foundry_1"
+Environment=TARGET="/data/.*.env /data/*.conf /data/*.md /data/*.jsonl /data/*.json /data/*.toml /data/changedetect /data/uptime /data/rss /data/foundry"
 EnvironmentFile=/mnt/volumes/.backup.env
 
+# https://github.com/CodaBool/container-s3-cron-backup
 Image=ghcr.io/codabool/backup-to-s3
 
 Volume=/mnt/volumes:/data:ro,z
@@ -25,7 +25,6 @@ Volume=/mnt/volumes:/data:ro,z
 # auto update
 AutoUpdate=registry
 
-# having permissions issues
 User=root
 PodmanArgs=--privileged
 

@@ -13,8 +13,6 @@ ContainerName=immich_ml
 EnvironmentFile=/mnt/volumes/.immich.env
 Image=ghcr.io/immich-app/immich-machine-learning:release
 HealthCmd=python healthcheck.py
-# test leaving this volume out since its stateless
-#Volume=/mnt/volumes/immich_cache:/cache:Z
 Network=immich-network
 
 # auto update

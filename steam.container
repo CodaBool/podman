@@ -9,6 +9,7 @@ Environment=DRI_NODE=/dev/dri/renderD128
 Environment=PIXELFLUX_WAYLAND=true
 Environment=SELKIES_GAMEPAD_ENABLED=true
 
+# https://github.com/linuxserver/docker-steam/releases
 Image=lscr.io/linuxserver/steam
 
 PublishPort=8668:3000
@@ -50,7 +51,7 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
- 
+
 
 
 # I ran into file watch errors
