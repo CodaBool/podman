@@ -9,7 +9,7 @@ Environment=FOUNDRY_CSS_THEME=scifi
 EnvironmentFile=/mnt/volumes/.foundry.env
 Image=docker.io/felddy/foundryvtt:14
 PublishPort=30000:30000
-Volume=/mnt/volumes/foundry_1:/data:z
+Volume=/mnt/volumes/foundry:/data:z
 
 
 UserNS=keep-id
