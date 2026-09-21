@@ -11,7 +11,7 @@ EnvironmentFile=/mnt/volumes/.r2_to_vtt.env
 # repo
 # https://github.com/CodaBool/r2-to-vtt
 Image=ghcr.io/codabool/r2-to-vtt
-Volume=/mnt/volumes/foundry_1/Data/worlds/the-deep/data/journal:/app/journal:z
+Volume=/mnt/volumes/foundry/Data/worlds/the-deep/data/journal:/app/journal:z
 User=1000:1000
 UserNS=keep-id
 
