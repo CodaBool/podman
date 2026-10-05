@@ -80,7 +80,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ```md
 ├── uptime:2
 ├── tunnel:latest
-├── tools:latest (consider replacing)
+├── tools:latest
 ├── foundry:14
 ├── syncthing:latest
 ├── obsidian:latest
@@ -99,7 +99,8 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── changedetect:latest
 │   └── browserless:latest
 ├── pastebin/
-│   └── yopass:latest
+│   ├── memcached:latest
+│   └── pastebin:latest
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release

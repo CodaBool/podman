@@ -1,11 +1,10 @@
 [Container]
 ContainerName=tools
 
-# been 2 years since a release, consider other images
-# https://github.com/CorentinTh/it-tools/releases
-Image=docker.io/corentinth/it-tools
+# https://github.com/sharevb/it-tools/tree/chore/all-my-stuffs
+Image=docker.io/sharevb/it-tools
 
-PublishPort=8082:80
+PublishPort=8082:8080
 
 # auto update
 AutoUpdate=registry
