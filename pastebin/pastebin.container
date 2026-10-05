@@ -1,0 +1,27 @@
+[Unit]
+Requires=memcached.service
+After=memcached.service
+
+[Container]
+ContainerName=pastebin
+Image=docker.io/jhaals/yopass
+PublishPort=1337:1337
+Network=pastebin.network
+
+Environment=MEMCACHED=memcached:11211
+
+#Exec=--memcached=memcached:11211
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target

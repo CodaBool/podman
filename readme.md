@@ -81,7 +81,6 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── uptime:2
 ├── tunnel:latest
 ├── tools:latest (consider replacing)
-├── pastebin:latest (consider replacing)
 ├── foundry:14
 ├── syncthing:latest
 ├── obsidian:latest
@@ -99,6 +98,8 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── nitter-redis:6-alpine [https://github.com/zedeus/nitter/blob/master/compose.yml]
 │   ├── changedetect:latest
 │   └── browserless:latest
+├── pastebin/
+│   └── yopass:latest
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release

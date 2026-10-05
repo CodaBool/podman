@@ -1,0 +1,18 @@
+[Container]
+ContainerName=memcached
+Image=docker.io/library/memcached
+Network=pastebin.network
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+
+# automatic startup
+WantedBy=default.target
