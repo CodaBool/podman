@@ -12,10 +12,15 @@ PublishPort=8666:3000
 
 Volume=/mnt/volumes/obsidian:/config:Z
 ShmSize=1g
+# --- AMD ---
+AddDevice=/dev/dri:/dev/dri
+GroupAdd=keep-groups
+# Disable SELinux so Mesa GL & Flapak can access DRI nodes
+SecurityLabelDisable=true
 
 # disable gpu acceleration attempts
-Environment=ELECTRON_DISABLE_GPU=1
-Environment=LIBGL_ALWAYS_SOFTWARE=1
+#Environment=ELECTRON_DISABLE_GPU=1
+#Environment=LIBGL_ALWAYS_SOFTWARE=1
 
 # auto update
 AutoUpdate=registry
