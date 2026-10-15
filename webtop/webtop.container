@@ -4,6 +4,7 @@ Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=America/New_York
 Environment=TITLE=Muse
+Environment=SELKIES_UI_TITLE=Muse
 # https://github.com/linuxserver/docker-webtop
 Image=ghcr.io/codabool/webtop
 PublishPort=8669:3000
@@ -53,3 +54,7 @@ WantedBy=default.target
 
 # todo:
 # - get blender working
+
+
+# mcp
+# - claude mcp add godot -- npx @coding-solo/godot-mcp
