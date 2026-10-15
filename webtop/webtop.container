@@ -1,0 +1,54 @@
+[Container]
+ContainerName=webtop
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=America/New_York
+# https://github.com/linuxserver/docker-webtop
+Image=ghcr.io/codabool/webtop
+PublishPort=8669:3000
+
+Volume=/mnt/volumes/webtop:/config:Z
+AddDevice=/dev/dri:/dev/dri
+
+EnvironmentFile=/mnt/volumes/.webtop.env
+# ram cap, not a reservation
+ShmSize=4g
+GroupAdd=keep-groups
+#SeccompProfile=unconfined
+SecurityLabelDisable=true
+
+# auto update
+AutoUpdate=registry
+
+Volume=%h/.config/containers/systemd/webtop/init.sh:/custom-cont-init.d/10-init.sh:ro,Z
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+# automatic startup
+WantedBy=default.target
+
+
+# alt+shift+q = close
+# alt+enter = open terminal
+
+
+# other projects in this space
+#  - https://github.com/langgenius/dify
+#    - more of a nocode ai workflow
+#  - https://github.com/mintplex-labs/anything-llm
+#    - more of an ollama/librechat
+#  - https://github.com/significant-gravitas/autogpt
+#    - muse
+#      - only codex allows oauth, claude needs a e2b integration: mcp, claude code
+#      - seems much of it is enterprise level marketplace resources, its 60% what I need
+#  - https://github.com/EvanZhouDev/openai-oauth
+#    - make subscription into api token
+#  - https://github.com/BerriAI/litellm
+#    - middleman
+
+# todo:
+# - get blender working

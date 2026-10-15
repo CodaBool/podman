@@ -1,0 +1,66 @@
+
+image := "webtop"
+container := "webtop"
+push-image := "ghcr.io/codabool/webtop"
+tag := "latest"
+
+# List commands
+default:
+    @just --list
+
+# Build custom image
+build:
+    podman build -t {{image}} .
+
+# Build from latest base image
+rebuild:
+    podman build --pull=always --no-cache -t {{image}} .
+
+# Run Webtop with persistent config
+run:
+    podman run -d \
+        --name {{container}} \
+        -p 3000:3000 \
+        -p 3001:3001 \
+        -e PUID=1000 \
+        -e PGID=1000 \
+        -e TZ=America/New_York \
+        -v ./config:/config:Z \
+        --shm-size=1g \
+        {{image}}
+
+# Build and run
+up: build
+    -podman rm -f {{container}}
+    just run
+
+# Stop and remove container
+down:
+    -podman rm -f {{container}}
+
+# Open shell inside container
+shell:
+    podman exec -it {{container}} bash
+
+# Follow logs
+logs:
+    podman logs -f {{container}}
+
+# Verify installations
+check:
+    podman exec {{container}} bash -lc 'for app in brave godot blender python node npm claude codex; do command -v "$app" || echo "MISSING: $app"; done'
+
+# Build locally
+webtop-build:
+    podman build -t {{push-image}}:{{tag}} .
+
+# Push to GHCR
+webtop-push:
+    podman push {{push-image}}:{{tag}}
+
+# Build and push
+webtop-publish: webtop-build webtop-push
+
+# Authenticate (requires a GitHub PAT with write:packages)
+webtop-login:
+    podman login ghcr.io -u codabool
