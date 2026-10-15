@@ -51,6 +51,8 @@ export PATH="$HOME/.local/bin:$PATH"
 alias ll='ls -lah'
 EOF
 
+COPY ./rat.png /usr/share/selkies/www/icon.png
+
 # Disable i3 first-run wizard and set Alt as modifier
 RUN mkdir -p /etc/xdg/i3 \
     && sed -e 's/^set \$mod .*/set $mod Mod1/' \

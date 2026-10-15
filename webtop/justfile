@@ -59,7 +59,7 @@ webtop-push:
     podman push {{push-image}}:{{tag}}
 
 # Build and push
-webtop-publish: webtop-build webtop-push
+publish: build webtop-push
 
 # Authenticate (requires a GitHub PAT with write:packages)
 webtop-login:
