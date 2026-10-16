@@ -29,6 +29,8 @@ Commit any code changes as one commit, message referencing the post id. Then clo
 - `Resolved`: the ask is done, with or without code. Questions and chat get answered in the reply. This is the default.
 - `Needs Info`: you can't finish without a decision, detail or hands only the human has. The reply is one specific question.
 
+When you tag it `Resolved` and the human's last message in the post contains `[%]`, run `$RALPH/tokens.sh` right before the ticket tool call and end the reply with its output (your context use, e.g. `42k/150k (28%)`).
+
 Never leave it `Claimed`. If you resolved it, re-tag `Ready` any `Blocked` ticket that was waiting only on this one.
 
 # FINAL RULES
