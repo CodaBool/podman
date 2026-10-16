@@ -1,14 +1,10 @@
 #!/bin/bash
-# One pass over projects.conf: at most one ticket per project. Run every minute by the webtop's svc-ralph s6 service.
+# One pass over projects.conf (lines of <repo path> <channel id> <agent>): at most one ticket per project. Run every minute by the webtop's svc-ralph s6 service.
 dir=$(dirname "$(realpath "$0")")
 conf=$HOME/.config/ralph/projects.conf
 logs=$HOME/.local/state/ralph
-mkdir -p "$(dirname "$conf")" "$logs"
-[ -f "$conf" ] || cat > "$conf" <<'CONF'
-# One project per line: <repo path> <discord forum channel id> <agent>
-# agent is claude for now. Example:
-# /config/code/mygame 123456789012345678 claude
-CONF
+mkdir -p "$logs"
+[ -f "$conf" ] || exit 0  # written by the webtop's init.sh from its projects list
 
 grep -vE '^\s*(#|$)' "$conf" | while read -r repo channel agent; do
   log=$logs/$(basename "$repo").log

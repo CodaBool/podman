@@ -6,7 +6,7 @@ Project-agnostic loop that turns Discord forum posts into commits. Run `once.sh`
 | --- | --- |
 | `once.sh` | One interactive iteration (HITL). Watch it, steer it. |
 | `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. |
-| `tick.sh` | Runs `afk.sh 1` in every project in `~/.config/ralph/projects.conf`. The webtop's `svc-ralph` s6 service calls it every minute. Idle ticks aren't logged. |
+| `tick.sh` | Runs `afk.sh 1` in every project in `~/.config/ralph/projects.conf`, which the webtop's `init.sh` writes (and clones) from its `projects` list on every start. The webtop's `svc-ralph` s6 service calls it every minute. Idle ticks aren't logged. |
 | `discord.sh` | The ticket tracker: `ready`, `tickets`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]` against the forum in `RALPH_CHANNEL`. |
 | `context.sh` | Prints the prompt: last 5 commits, open tickets, `prompt.md`, plus `godot.md` when the repo has a `project.godot`. |
 | `godot-shot.sh` | Renders a Godot scene with Movie Maker (Xvfb when there's no display) and prints a PNG path for `discord.sh attach`. |
