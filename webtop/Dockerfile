@@ -24,6 +24,9 @@ RUN pacman -Syu --noconfirm --needed \
     vulkan-radeon \
     vulkan-swrast \
     wmenu \
+    grim \
+    slurp \
+    chromium \
     && pacman -Scc --noconfirm
 
 # Build Brave from the AUR as a temporary non-root user
@@ -41,11 +44,13 @@ RUN useradd -m builder \
     && pacman -Scc --noconfirm
 
 # Install AI coding agents and MCP servers system-wide
-# godot-mcp is installed rather than npx'd: an npx download on first use outlasts Claude's MCP connect timeout
+# MCP servers are installed rather than npx'd: an npx download on first use outlasts Claude's MCP connect timeout
+# chrome-devtools-mcp bundles puppeteer-core and attaches to the system Chromium (ralph/browser.sh), so no browser download
 RUN npm install -g --allow-scripts=@anthropic-ai/claude-code \
     @anthropic-ai/claude-code \
     @openai/codex \
     @coding-solo/godot-mcp \
+    chrome-devtools-mcp \
     && npm cache clean --force
 
 # System-wide Bash defaults (Arch Linux)

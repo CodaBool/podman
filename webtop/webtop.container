@@ -59,3 +59,4 @@ WantedBy=default.target
 # todo:
 # - get blender working
 # - print used tokens + daily usage + weekly usage
+# - move godot specific things into a folder on the repo and make an agnostic way to read that (skill)
