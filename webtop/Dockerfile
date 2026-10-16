@@ -53,13 +53,6 @@ export PATH="$HOME/.local/bin:$PATH"
 alias ll='ls -lah'
 EOF
 
-# Ralph: Discord-forum ticket loop, ticked every minute by an s6 service (PID 1 is s6, not systemd)
-# Projects are listed in /config/.config/ralph/projects.conf, logs in /config/.local/state/ralph/
-COPY ralph/ /opt/ralph/
-COPY s6/ /etc/s6-overlay/s6-rc.d/
-RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-ralph \
-    && chmod -R a-w,a+rX /opt/ralph \
-    && chmod a+x /opt/ralph/*.sh
 
 # TODO: cant seem to replace icon
 # COPY ./rat.png /usr/share/selkies/www/icon.png
@@ -69,6 +62,14 @@ RUN mkdir -p /etc/xdg/i3 \
     && sed -e 's/^set \$mod .*/set $mod Mod1/' \
            -e '/^exec i3-config-wizard/d' \
        /etc/i3/config > /etc/xdg/i3/config
+
+# Ralph: Discord-forum ticket loop, ticked every minute by an s6 service (PID 1 is s6, not systemd)
+# Projects are listed in /config/.config/ralph/projects.conf, logs in /config/.local/state/ralph/
+COPY ralph/ /opt/ralph/
+COPY s6/ /etc/s6-overlay/s6-rc.d/
+RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-ralph \
+    && chmod -R a-w,a+rX /opt/ralph \
+    && chmod a+x /opt/ralph/*.sh
 
 # Disable the unsafe paste dialog in xfce4-terminal for the default container user (abc) and skel
 # TODO: this didn't seem to work to remove the dialog

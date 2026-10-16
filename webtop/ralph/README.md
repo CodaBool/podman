@@ -19,7 +19,7 @@ One forum post per ticket. Its tag is its state:
 - `Ready`: an agent can finish it without asking anything.
 - `Blocked`: waits on another ticket. Ralph re-tags it `Ready` when it resolves the blocker; you can too.
 - `Claimed`: ralph is working on it. If ralph died mid-ticket (log ends without a reply), re-tag it `Ready`.
-- `Resolved`: done and committed. Ralph replies with what changed.
+- `Resolved`: done, committed if it needed code. Ralph replies with what it did. Questions and chat land here too.
 - `Needs Info`: ralph needs a decision or hands only you have. Its reply is the question. Answer in the post and re-tag `Ready`.
 
 ## Where Matt Pocock's flow fits

@@ -24,13 +24,13 @@ Explore what the ticket touches, use `/tdd` where there is a testable seam, run 
 
 # CLOSING THE TICKET
 
-Commit any code changes as one commit, message referencing the post id. Then reply in the post with a short note for the human (what changed, or what you need) and set its tag to one of:
+Commit any code changes as one commit, message referencing the post id. Then close it with one ticket tool call that sets exactly one tag and replies with a short note for the human:
 
-- `Resolved`: the ticket's acceptance criteria are met.
-- `Needs Info`: blocked on a decision or hands only the human has. The reply is the question.
+- `Resolved`: the ask is done, with or without code. Questions and chat get answered in the reply. This is the default.
+- `Needs Info`: you can't finish without a decision, detail or hands only the human has. The reply is one specific question.
 
-If you resolved it, re-tag `Ready` any `Blocked` ticket that was waiting only on this one.
+Never leave it `Claimed`. If you resolved it, re-tag `Ready` any `Blocked` ticket that was waiting only on this one.
 
 # FINAL RULES
 
-ONLY WORK ON A SINGLE TICKET. Stop after closing it.
+ONLY WORK ON A SINGLE TICKET. After closing it, stop. Your final message goes to a log: one line, `<post id> → <tag>: <what you did>`.
