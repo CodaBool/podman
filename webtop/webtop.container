@@ -10,14 +10,19 @@ Image=ghcr.io/codabool/webtop
 PublishPort=8669:3000
 
 Volume=/mnt/volumes/webtop:/config:Z
-AddDevice=/dev/dri:/dev/dri
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
 
 EnvironmentFile=/mnt/volumes/.webtop.env
 # ram cap, not a reservation
-ShmSize=4g
+ShmSize=16g
 GroupAdd=keep-groups
 #SeccompProfile=unconfined
 SecurityLabelDisable=true
+Environment=DRINODE=/dev/dri/renderD128
+Environment=DRI_NODE=/dev/dri/renderD128
+Environment=PIXELFLUX_WAYLAND=true
+Environment=SELKIES_GAMEPAD_ENABLED=false
 
 # auto update
 AutoUpdate=registry
@@ -32,7 +37,6 @@ Restart=always
 [Install]
 # automatic startup
 WantedBy=default.target
-
 
 # alt+shift+q = close
 # alt+enter = open terminal
@@ -54,3 +58,4 @@ WantedBy=default.target
 
 # todo:
 # - get blender working
+# - print used tokens + daily usage + weekly usage

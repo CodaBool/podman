@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "godot": {
-      "command": "bash",
-      "args": ["-c", "[ -n \"$DISPLAY\" ] && exec godot-mcp || exec xvfb-run -a -s '-screen 0 1920x1080x24' godot-mcp"],
+      "command": "/opt/ralph/display.sh",
+      "args": ["godot-mcp"],
       "env": { "GODOT_PATH": "/usr/bin/godot" }
     }
   }

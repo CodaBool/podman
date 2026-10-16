@@ -25,6 +25,7 @@ run:
         -e PUID=1000 \
         -e PGID=1000 \
         -e TZ=America/New_York \
+        -e PIXELFLUX_WAYLAND=true \
         --env-file .env \
         --device nvidia.com/gpu=all \
         --group-add keep-groups \

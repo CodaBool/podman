@@ -23,6 +23,7 @@ RUN pacman -Syu --noconfirm --needed \
     xorg-server-xvfb \
     vulkan-radeon \
     vulkan-swrast \
+    wmenu \
     && pacman -Scc --noconfirm
 
 # Build Brave from the AUR as a temporary non-root user
@@ -55,6 +56,7 @@ RUN cat >> /etc/bash.bashrc <<'EOF'
 export EDITOR=nano
 export PATH="$HOME/.local/bin:$PATH"
 
+alias log='tail -F ~/.local/state/ralph/animal_island.log'
 alias ll='ls -lah'
 EOF
 
@@ -62,11 +64,13 @@ EOF
 # TODO: cant seem to replace icon
 # COPY ./rat.png /usr/share/selkies/www/icon.png
 
-# Disable i3 first-run wizard and set Alt as modifier
+# Alt as modifier. PIXELFLUX_WAYLAND=true runs sway (/etc/sway/config); i3 is only used without it.
+# sway expands $mod as each binding is read, so it's changed in place rather than overridden from config.d
 RUN mkdir -p /etc/xdg/i3 \
     && sed -e 's/^set \$mod .*/set $mod Mod1/' \
            -e '/^exec i3-config-wizard/d' \
-       /etc/i3/config > /etc/xdg/i3/config
+       /etc/i3/config > /etc/xdg/i3/config \
+    && sed -i 's/^set \$mod .*/set $mod Mod1/' /etc/sway/config
 
 # Ralph: Discord-forum ticket loop, ticked every minute by an s6 service (PID 1 is s6, not systemd)
 # Projects are listed in init.sh, which writes /config/.config/ralph/projects.conf and clones them, logs in /config/.local/state/ralph/
