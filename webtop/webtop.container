@@ -57,5 +57,6 @@ WantedBy=default.target
 #    - middleman
 
 # todo:
+# - get a git workflow working or some way to work as a dev on things
 # - get blender working
 # - move godot specific things into a folder on the repo and make an agnostic way to read that (skill)
