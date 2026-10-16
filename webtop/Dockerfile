@@ -51,10 +51,19 @@ export PATH="$HOME/.local/bin:$PATH"
 alias ll='ls -lah'
 EOF
 
-COPY ./rat.png /usr/share/selkies/www/icon.png
+# TODO: cant seem to replace icon
+# COPY ./rat.png /usr/share/selkies/www/icon.png
 
 # Disable i3 first-run wizard and set Alt as modifier
 RUN mkdir -p /etc/xdg/i3 \
     && sed -e 's/^set \$mod .*/set $mod Mod1/' \
            -e '/^exec i3-config-wizard/d' \
        /etc/i3/config > /etc/xdg/i3/config
+
+# Disable the unsafe paste dialog in xfce4-terminal for the default container user (abc) and skel
+# TODO: this didn't seem to work to remove the dialog
+#RUN mkdir -p /config/.config/xfce4/terminal /etc/skel/.config/xfce4/terminal && \
+#    echo '[Configuration]' >> /config/.config/xfce4/terminal/terminalrc && \
+#    echo 'MiscShowUnsafePasteDialog=FALSE' >> /config/.config/xfce4/terminal/terminalrc && \
+#    cp /config/.config/xfce4/terminal/terminalrc /etc/skel/.config/xfce4/terminal/terminalrc && \
+#    chown -R 1000:1000 /config/.config/xfce4

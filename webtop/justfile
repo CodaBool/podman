@@ -10,7 +10,7 @@ default:
 
 # Build custom image
 build:
-    podman build -t {{image}} .
+    podman build --no-cache -t {{image}} .
 
 # Build from latest base image
 rebuild:
