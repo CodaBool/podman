@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
-# Run ralph's tick as abc every minute. A failing tick just waits for the next one; s6 restarts the loop if it dies.
+# Run ralph's tick as abc every 20 seconds. A failing tick just waits for the next one; s6 restarts the loop if it dies.
 while :; do
   s6-setuidgid abc /opt/ralph/tick.sh
-  sleep 60
+  sleep 20
 done

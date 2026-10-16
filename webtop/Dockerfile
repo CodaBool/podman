@@ -77,7 +77,7 @@ RUN mkdir -p /etc/xdg/i3 \
        /etc/i3/config > /etc/xdg/i3/config \
     && sed -i 's/^set \$mod .*/set $mod Mod1/' /etc/sway/config
 
-# Ralph: Discord-forum ticket loop, ticked every minute by an s6 service (PID 1 is s6, not systemd)
+# Ralph: Discord-forum ticket loop, ticked every 20 seconds by an s6 service (PID 1 is s6, not systemd)
 # Projects are listed in init.sh, which writes /config/.config/ralph/projects.conf and clones them, logs in /config/.local/state/ralph/
 COPY ralph/ /opt/ralph/
 COPY s6/ /etc/s6-overlay/s6-rc.d/

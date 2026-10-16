@@ -1,5 +1,5 @@
 #!/bin/bash
-# One pass over projects.conf (lines of <repo path> <channel id> <agent>): at most one ticket per project. Run every minute by the webtop's svc-ralph s6 service.
+# One pass over projects.conf (lines of <repo path> <channel id> <agent>): at most one ticket per project. Run every 20 seconds by the webtop's svc-ralph s6 service.
 dir=$(dirname "$(realpath "$0")")
 conf=$HOME/.config/ralph/projects.conf
 logs=$HOME/.local/state/ralph
