@@ -18,6 +18,8 @@ RUN pacman -Syu --noconfirm --needed \
     unzip \
     ripgrep \
     tmux \
+    jq \
+    util-linux \
     && pacman -Scc --noconfirm
 
 # Build Brave from the AUR as a temporary non-root user
@@ -35,7 +37,7 @@ RUN useradd -m builder \
     && pacman -Scc --noconfirm
 
 # Install AI coding agents system-wide
-RUN npm install -g \
+RUN npm install -g --allow-scripts=@anthropic-ai/claude-code \
     @anthropic-ai/claude-code \
     @openai/codex \
     && npm cache clean --force
@@ -50,6 +52,14 @@ export PATH="$HOME/.local/bin:$PATH"
 
 alias ll='ls -lah'
 EOF
+
+# Ralph: Discord-forum ticket loop, ticked every minute by an s6 service (PID 1 is s6, not systemd)
+# Projects are listed in /config/.config/ralph/projects.conf, logs in /config/.local/state/ralph/
+COPY ralph/ /opt/ralph/
+COPY s6/ /etc/s6-overlay/s6-rc.d/
+RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-ralph \
+    && chmod -R a-w,a+rX /opt/ralph \
+    && chmod a+x /opt/ralph/*.sh
 
 # TODO: cant seem to replace icon
 # COPY ./rat.png /usr/share/selkies/www/icon.png

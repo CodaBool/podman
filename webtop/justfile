@@ -25,8 +25,13 @@ run:
         -e PUID=1000 \
         -e PGID=1000 \
         -e TZ=America/New_York \
+        --env-file .env \
+        --device nvidia.com/gpu=all \
+        --group-add keep-groups \
+        --security-opt label=disable \
         -v ./config:/config:Z \
-        --shm-size=1g \
+        -v ./init.sh:/custom-cont-init.d/10-init.sh:ro,Z \
+        --shm-size=6g \
         {{image}}
 
 # Build and run
@@ -59,7 +64,7 @@ webtop-push:
     podman push {{push-image}}:{{tag}}
 
 # Build and push
-publish: build webtop-push
+publish: webtop-build webtop-push
 
 # Authenticate (requires a GitHub PAT with write:packages)
 webtop-login:
