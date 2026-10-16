@@ -7,10 +7,12 @@ Project-agnostic loop that turns Discord forum posts into commits. Run `once.sh`
 | `once.sh` | One interactive iteration (HITL). Watch it, steer it. |
 | `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. |
 | `tick.sh` | Runs `afk.sh 1` in every project in `~/.config/ralph/projects.conf`. The webtop's `svc-ralph` s6 service calls it every minute. Idle ticks aren't logged. |
-| `discord.sh` | The ticket tracker: `ready`, `tickets`, `tag <post> <tag> [reply]` against the forum in `RALPH_CHANNEL`. |
-| `context.sh` | Prints the prompt: last 5 commits, open tickets, `prompt.md`. |
+| `discord.sh` | The ticket tracker: `ready`, `tickets`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]` against the forum in `RALPH_CHANNEL`. |
+| `context.sh` | Prints the prompt: last 5 commits, open tickets, `prompt.md`, plus `godot.md` when the repo has a `project.godot`. |
+| `godot-shot.sh` | Renders a Godot scene with Movie Maker (Xvfb when there's no display) and prints a PNG path for `discord.sh attach`. |
+| `mcp.json` | MCP servers `once.sh` and `afk.sh` load: `godot` (godot-mcp, installed in the image). |
 
-Env: `RALPH_CHANNEL` (the project's Discord forum channel id, set by `tick.sh`; export it yourself for `once.sh`), `DISCORD_TOKEN` (bot token). Needs `claude`, `jq`, `curl`, `flock`. The bot needs View Channel, Send Messages in Threads, Read Message History and Manage Threads (to set tags) on the forum.
+Env: `RALPH_CHANNEL` (the project's Discord forum channel id, set by `tick.sh`; export it yourself for `once.sh`), `DISCORD_TOKEN` (bot token). Needs `claude`, `jq`, `curl`, `flock`; `godot-shot.sh` also needs `godot`, `xvfb-run` and `timeout`. The bot needs View Channel, Send Messages in Threads, Read Message History, Manage Threads (to set tags) and Attach Files (for `attach`) on the forum.
 
 ## Ticket lifecycle
 

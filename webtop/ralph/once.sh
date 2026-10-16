@@ -1,3 +1,4 @@
 #!/bin/bash
 # Human-in-the-loop: one interactive iteration you can watch and steer.
-claude --permission-mode acceptEdits "$("$(dirname "$(realpath "$0")")/context.sh")"
+dir=$(dirname "$(realpath "$0")")
+claude --mcp-config "$dir/mcp.json" --permission-mode acceptEdits "$("$dir/context.sh")"

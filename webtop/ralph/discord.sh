@@ -3,6 +3,7 @@
 #   discord.sh ready                    exits 0 when a post is tagged Ready
 #   discord.sh tickets                  prints every post not tagged Resolved, with its messages
 #   discord.sh tag <post> <tag> [reply] sets the post's tag (Ready, Blocked, Needs Info, Claimed, Resolved), then replies
+#   discord.sh attach <post> <file> [message] posts a file (screenshot, log) in the post, up to 10 MB
 set -eo pipefail
 : "${DISCORD_TOKEN:?}" "${RALPH_CHANNEL:?}"
 api() { curl -sSf -H "Authorization: Bot $DISCORD_TOKEN" -H 'Content-Type: application/json' "https://discord.com/api/v10$1" "${@:2}"; }
@@ -27,5 +28,9 @@ case $1 in
     [ -n "$id" ] || { echo "no tag named '$3'"; exit 1; }
     jq -n --arg t "$id" '{archived: false, applied_tags: [$t]}' | api "/channels/$2" -X PATCH -d @- > /dev/null
     [ -z "$4" ] || jq -n --arg c "$4" '{content: $c}' | api "/channels/$2/messages" -d @- > /dev/null ;;
-  *) sed -n '2,5p' "$0"; exit 1 ;;
+  attach)
+    [ -f "$3" ] || { echo "no file '$3'"; exit 1; }
+    curl -sSf -H "Authorization: Bot $DISCORD_TOKEN" -F "payload_json=$(jq -n --arg c "$4" '{content: $c}')" \
+      -F "files[0]=@$3" "https://discord.com/api/v10/channels/$2/messages" > /dev/null ;;
+  *) sed -n '2,6p' "$0"; exit 1 ;;
 esac

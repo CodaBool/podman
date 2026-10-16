@@ -54,7 +54,3 @@ WantedBy=default.target
 
 # todo:
 # - get blender working
-
-
-# mcp
-# - claude mcp add godot -- npx @coding-solo/godot-mcp

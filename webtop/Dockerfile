@@ -20,6 +20,9 @@ RUN pacman -Syu --noconfirm --needed \
     tmux \
     jq \
     util-linux \
+    xorg-server-xvfb \
+    vulkan-radeon \
+    vulkan-swrast \
     && pacman -Scc --noconfirm
 
 # Build Brave from the AUR as a temporary non-root user
@@ -36,10 +39,12 @@ RUN useradd -m builder \
     && userdel -r builder \
     && pacman -Scc --noconfirm
 
-# Install AI coding agents system-wide
+# Install AI coding agents and MCP servers system-wide
+# godot-mcp is installed rather than npx'd: an npx download on first use outlasts Claude's MCP connect timeout
 RUN npm install -g --allow-scripts=@anthropic-ai/claude-code \
     @anthropic-ai/claude-code \
     @openai/codex \
+    @coding-solo/godot-mcp \
     && npm cache clean --force
 
 # System-wide Bash defaults (Arch Linux)
