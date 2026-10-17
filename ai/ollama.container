@@ -27,7 +27,7 @@ Environment=OLLAMA_MAX_LOADED_MODELS=1
 # https://ollama.com/library
 # My GPU has 8Gb VRAM, which means 16b<= models only
 # lower params is faster but less accurate
-# https://aider.chat/docs/leaderboards
+# https://artificialanalysis.ai/leaderboards/models
 
 # popular models
 # - qwen
@@ -35,6 +35,10 @@ Environment=OLLAMA_MAX_LOADED_MODELS=1
 # - deepseek
 # - qwen-coder
 # - deepseek-coder
+
+# heretical models
+# find light hardware models then search heretic
+# - gemma-4:12b-it-qat-heretic-q4_0
 
 # there are image models (x/z-image-turbo) coming but are not supporting linux yet
 
