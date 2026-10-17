@@ -11,6 +11,7 @@ tmpfile=$(mktemp); trap 'rm -f "$tmpfile"' EXIT
 for ((i=1; i<=$1; i++)); do
   "$dir/discord.sh" ready > /dev/null || { echo "No Ready tickets."; break; }
   "$dir/sync.sh" || break
+  export RALPH_SETUP_WARNING; RALPH_SETUP_WARNING=$("$dir/setup.sh")
   export RALPH_EFFORT; RALPH_EFFORT=$("$dir/discord.sh" effort)
   claude --effort "$RALPH_EFFORT" --mcp-config "$dir/mcp.json" --dangerously-skip-permissions --verbose --print --output-format stream-json "$("$dir/context.sh")" \
     | grep --line-buffered '^{' | tee "$tmpfile" | jq --unbuffered -rj "$stream_text"

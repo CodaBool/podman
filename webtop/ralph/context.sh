@@ -10,6 +10,8 @@ echo "Post a file in a ticket: \`$dir/discord.sh attach <post id> <file> [messag
 echo "Open a new ticket: \`$dir/discord.sh create <tag> <title> <body>\`. It prints the new post id."
 echo "Screenshot the whole desktop (any app: Brave, Blender, the Godot editor) with \`$dir/display.sh grim <file>.png\`, or a region with \`grim -g \"x,y wxh\"\`, then attach it."
 sed "s|\$RALPH|$dir|g" "$dir/prompt.md"
+# Set by afk.sh and once.sh from setup.sh when the project's tools/setup.sh failed
+[ -z "$RALPH_SETUP_WARNING" ] || { echo "# PROJECT SETUP"; echo "$RALPH_SETUP_WARNING"; }
 # Set by afk.sh and once.sh from `discord.sh effort`; medium sessions take any ticket
 if [ -n "$RALPH_EFFORT" ] && [ "$RALPH_EFFORT" != medium ]; then
   echo "# EFFORT"

@@ -5,11 +5,12 @@ Project-agnostic loop that turns Discord forum posts into commits. Run `once.sh`
 | Script | What |
 | --- | --- |
 | `once.sh` | One interactive iteration (HITL). Watch it, steer it. |
-| `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. Runs `sync.sh` before each one. |
+| `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. Runs `sync.sh` then `setup.sh` before each one. |
 | `sync.sh` | Rebases the branch onto its upstream so the agent starts from what you pushed. A failed fetch just waits for the next tick; a dirty tree or a conflict is aborted and every `Ready` ticket is tagged `Needs Info` with git's error. Fix it in the webtop, re-tag `Ready`. |
+| `setup.sh` | The project setup hook: runs the repo's executable `tools/setup.sh`, if it has one, from the root before every session (`once.sh` too), capped at 5 minutes. The project owns it: installing deps, building venvs, anything its checks need, using the network so the session needn't. It should be idempotent, fast when nothing changed, and leave only gitignored files behind. Output goes to the log; a failure or timeout doesn't stop the ticket, it adds a `PROJECT SETUP` warning with the last lines to the prompt. |
 | `tick.sh` | Runs `afk.sh 1` in every project in `~/.config/ralph/projects.conf`, which the webtop's `init.sh` writes (and clones) from its `projects` list on every start. The webtop's `svc-ralph` s6 service calls it every 20 seconds. Idle ticks aren't logged. |
 | `discord.sh` | The ticket tracker: `ready` (prints `Ready` post ids), `tickets [--ready-full]`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]`, `create <tag> <title> <body>` (prints the new post id), `effort` (the highest effort the `Ready` posts ask for) against the forum in `RALPH_CHANNEL`. |
-| `context.sh` | Prints the prompt: last 5 commits, open tickets (full threads for `Ready` only, one line for the rest), `prompt.md`, `browser.md`, plus `godot.md` when the repo has a `project.godot`. |
+| `context.sh` | Prints the prompt: last 5 commits, open tickets (full threads for `Ready` only, one line for the rest), `prompt.md`, a `PROJECT SETUP` warning when `setup.sh` failed, `browser.md`, plus `godot.md` when the repo has a `project.godot`. |
 | `tokens.sh` | Prints the calling session's context use as a percent of 150k, like `28%`, from its transcript. Ralph ends a `Resolved` reply with it when your last message in the post contains `[%]`. |
 | `godot-shot.sh` | Renders a Godot scene with Movie Maker and prints a PNG path for `discord.sh attach`. |
 | `display.sh` | Runs a command on the webtop's sway desktop (finds its Wayland and Xwayland sockets, since s6 services don't inherit them), or a private Xvfb when it isn't up. `godot-shot.sh`, the `godot` MCP server and `browser.sh` go through it. |
