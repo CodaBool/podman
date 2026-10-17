@@ -2,6 +2,7 @@
 # Discord forum as the ticket tracker: one post per ticket, its tag is its state. Needs DISCORD_TOKEN and RALPH_CHANNEL.
 #   discord.sh ready                    prints the ids of posts tagged Ready, exits 1 when there are none
 #   discord.sh tickets                  prints every post not tagged Resolved, with its messages
+#   discord.sh tickets --ready-full     same, but only Ready posts get their messages; the rest get one line with any "Depends on" lines from the body
 #   discord.sh tag <post> <tag> [reply] sets the post's tag (Ready, Blocked, Needs Info, Claimed, Resolved), then replies
 #   discord.sh attach <post> <file> [message] posts a file (screenshot, log) in the post, up to 10 MB
 #   discord.sh create <tag> <title> <body> opens a post with that tag and prints its id; title up to 100 chars, body up to 2000
@@ -22,7 +23,14 @@ case $1 in
   ready) posts | jq -er 'select(.tags | index("Ready")).id' ;;
   tickets)
     posts | jq -c 'select(.tags | index("Resolved") | not)' | while read -r p; do
-      jq -r '"## POST \(.id): \(.name) [\(.tags | join(", "))]"' <<< "$p"
+      head=$(jq -r '"## POST \(.id): \(.name) [\(.tags | join(", "))]"' <<< "$p")
+      if [ "$2" = --ready-full ] && ! jq -e '.tags | index("Ready")' <<< "$p" > /dev/null; then
+        # A forum post's starter message shares the post's id
+        deps=$(api "/channels/$(jq -r .id <<< "$p")/messages/$(jq -r .id <<< "$p")" |
+          jq -r '[.content | splits("\n") | select(test("depends on"; "i"))] | join("; ")') || deps=""
+        echo "$head${deps:+ $deps}"; continue
+      fi
+      echo "$head"
       api "/channels/$(jq -r .id <<< "$p")/messages?limit=100" | jq -r 'reverse[] | "\(.author.username): \(.content)\n"'
     done ;;
   tag)
@@ -39,5 +47,5 @@ case $1 in
     [ -n "$4" ] && [ ${#4} -le 2000 ] || { echo "body must be 1-2000 chars"; exit 1; }
     jq -n --arg t "$id" --arg n "$3" --arg c "$4" '{name: $n, applied_tags: [$t], message: {content: $c}}' |
       api "/channels/$RALPH_CHANNEL/threads" -d @- | jq -r .id ;;
-  *) sed -n '2,7p' "$0"; exit 1 ;;
+  *) sed -n '2,8p' "$0"; exit 1 ;;
 esac
