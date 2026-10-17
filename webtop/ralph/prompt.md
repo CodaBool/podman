@@ -31,7 +31,7 @@ Then close it with one ticket tool call that sets exactly one tag and replies wi
 - `Resolved`: the ask is done, with or without code. Questions and chat get answered in the reply. This is the default.
 - `Needs Info`: you can't finish without a decision, detail or hands only the human has. The reply is one specific question.
 
-When you tag it `Resolved` and the human's last message in the post contains `[%]`, run `$RALPH/tokens.sh` right before the ticket tool call and end the reply with its output (your context use, e.g. `42k/150k (28%)`).
+When you tag it `Resolved` and the human's last message in the post has a signal containing `%` (`[%]`, or combined like `[%,high]`), run `$RALPH/tokens.sh` right before the ticket tool call and end the reply with its output (your context use as a percent of 150k, e.g. `28%`).
 
 Never leave it `Claimed`. If you resolved it, re-tag `Ready` any `Blocked` ticket that was waiting only on this one.
 
@@ -39,7 +39,7 @@ Never leave it `Claimed`. If you resolved it, re-tag `Ready` any `Blocked` ticke
 
 Keep your ticket small enough to finish in this session. When it is too big, or you find work outside its scope (a bug you noticed, a refactor it needs, a follow-up), open a ticket for it with the ticket tool instead of doing it, so another agent can take it with a fresh context, possibly in parallel. One ticket per independent piece of work. Its body must stand alone: what to do, why, where in the code, how to tell it's done, and the post id it came from.
 
-Always tag a new ticket `Needs Info`: the human reviews it and re-tags it `Ready`. If it depends on another ticket, name that post id in the body. If it needs a decision only the human can make, end the body with that question.
+Tag a new ticket `Needs Info`, so the human reviews it and re-tags it `Ready`, unless the human's messages in your ticket give it a tag: then use that tag. If it depends on another ticket, name that post id in the body. When the human's tickets refer to each other by their own numbers (e.g. `Depends on #2`), create them in dependency order and write the post ids in place of those numbers. If it needs a decision only the human can make, end the body with that question.
 
 Mention the new post ids in your closing reply. Don't open a ticket that duplicates an open one.
 

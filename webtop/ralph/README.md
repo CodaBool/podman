@@ -8,9 +8,9 @@ Project-agnostic loop that turns Discord forum posts into commits. Run `once.sh`
 | `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. Runs `sync.sh` before each one. |
 | `sync.sh` | Rebases the branch onto its upstream so the agent starts from what you pushed. A failed fetch just waits for the next tick; a dirty tree or a conflict is aborted and every `Ready` ticket is tagged `Needs Info` with git's error. Fix it in the webtop, re-tag `Ready`. |
 | `tick.sh` | Runs `afk.sh 1` in every project in `~/.config/ralph/projects.conf`, which the webtop's `init.sh` writes (and clones) from its `projects` list on every start. The webtop's `svc-ralph` s6 service calls it every 20 seconds. Idle ticks aren't logged. |
-| `discord.sh` | The ticket tracker: `ready` (prints `Ready` post ids), `tickets [--ready-full]`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]`, `create <tag> <title> <body>` (prints the new post id) against the forum in `RALPH_CHANNEL`. |
+| `discord.sh` | The ticket tracker: `ready` (prints `Ready` post ids), `tickets [--ready-full]`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]`, `create <tag> <title> <body>` (prints the new post id), `effort` (the highest effort the `Ready` posts ask for) against the forum in `RALPH_CHANNEL`. |
 | `context.sh` | Prints the prompt: last 5 commits, open tickets (full threads for `Ready` only, one line for the rest), `prompt.md`, `browser.md`, plus `godot.md` when the repo has a `project.godot`. |
-| `tokens.sh` | Prints the calling session's context use, like `42k/150k (28%)`, from its transcript. Ralph ends a `Resolved` reply with it when your last message in the post contains `[%]`. |
+| `tokens.sh` | Prints the calling session's context use as a percent of 150k, like `28%`, from its transcript. Ralph ends a `Resolved` reply with it when your last message in the post contains `[%]`. |
 | `godot-shot.sh` | Renders a Godot scene with Movie Maker and prints a PNG path for `discord.sh attach`. |
 | `display.sh` | Runs a command on the webtop's sway desktop (finds its Wayland and Xwayland sockets, since s6 services don't inherit them), or a private Xvfb when it isn't up. `godot-shot.sh`, the `godot` MCP server and `browser.sh` go through it. |
 | `browser.sh` | Starts the agents' Chromium unless it's already up: own profile (`~/.config/ralph/chromium`, not your Brave one), DevTools on `127.0.0.1:9222`, on the sway desktop so you can watch and share its window, or headless with `BROWSER_HEADLESS=1`. Either way it renders on the GPU. It outlives the session, so tabs and logins carry over. `browser.sh mcp` then runs chrome-devtools-mcp attached to it. Log in `~/.local/state/ralph/browser.log`. |
@@ -23,10 +23,13 @@ Env: `BROWSER_HEADLESS` (set it to start the browser headless; ignored while one
 One forum post per ticket. Its tag is its state:
 
 - `Ready`: an agent can finish it without asking anything.
+
+Signals go in brackets in your last message in a post, comma-separated when combined: `[%,high]`. `%` asks for the context use in the `Resolved` reply. `high`, `xhigh` or `max` sets the effort; without one it's `medium`. Effort is fixed per session, so `afk.sh` and `once.sh` launch at the highest effort any `Ready` post asks for and that session only takes posts asking for it; the rest wait for a later iteration.
+
 - `Blocked`: waits on another ticket. Ralph re-tags it `Ready` when it resolves the blocker; you can too.
 - `Claimed`: ralph is working on it. If ralph died mid-ticket (log ends without a reply), re-tag it `Ready`.
 - `Resolved`: done, committed and pushed to `main` if it needed code (ralph rebases onto whatever was pushed meanwhile and resolves conflicts itself; if it can't, it ends in `Needs Info`). Ralph replies with what it did. Questions and chat land here too.
-- `Needs Info`: ralph needs a decision or hands only you have. Its reply is the question. Answer in the post and re-tag `Ready`.
+- `Needs Info`: ralph needs a decision or hands only you have. Its reply is the question. Answer in the post and re-tag `Ready`. Tickets ralph opens start here too, unless your ticket told it which tag to give them (e.g. a plan file whose tickets each say `**Tag** Blocked`).
 
 ## Where Matt Pocock's flow fits
 

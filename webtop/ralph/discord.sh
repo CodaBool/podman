@@ -6,6 +6,7 @@
 #   discord.sh tag <post> <tag> [reply] sets the post's tag (Ready, Blocked, Needs Info, Claimed, Resolved), then replies
 #   discord.sh attach <post> <file> [message] posts a file (screenshot, log) in the post, up to 10 MB
 #   discord.sh create <tag> <title> <body> opens a post with that tag and prints its id; title up to 100 chars, body up to 2000
+#   discord.sh effort                   prints the highest effort (medium, high, xhigh, max) the Ready posts ask for: a signal like [high] or [%,max] in the human's last message
 set -eo pipefail
 : "${DISCORD_TOKEN:?}" "${RALPH_CHANNEL:?}"
 api() { curl -sSf -H "Authorization: Bot $DISCORD_TOKEN" -H 'Content-Type: application/json' "https://discord.com/api/v10$1" "${@:2}"; }
@@ -47,5 +48,11 @@ case $1 in
     [ -n "$4" ] && [ ${#4} -le 2000 ] || { echo "body must be 1-2000 chars"; exit 1; }
     jq -n --arg t "$id" --arg n "$3" --arg c "$4" '{name: $n, applied_tags: [$t], message: {content: $c}}' |
       api "/channels/$RALPH_CHANNEL/threads" -d @- | jq -r .id ;;
-  *) sed -n '2,8p' "$0"; exit 1 ;;
+  effort)
+    posts | jq -r 'select(.tags | index("Ready")).id' | while read -r id; do
+      api "/channels/$id/messages?limit=100" | jq -r '([.[] | select(.author.bot | not)][0].content // "")
+        | [scan("\\[([^]]*)\\]")[0] | splits(",") | gsub("\\s"; "")] as $s
+        | first(("max", "xhigh", "high") | select(IN($s[]))) // "medium"'
+    done | awk 'BEGIN { r["high"] = 1; r["xhigh"] = 2; r["max"] = 3; best = "medium" } r[$1] > r[best] { best = $1 } END { print best }' ;;
+  *) sed -n '2,9p' "$0"; exit 1 ;;
 esac
