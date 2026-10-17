@@ -24,7 +24,9 @@ Explore what the ticket touches, use `/tdd` where there is a testable seam, run 
 
 # CLOSING THE TICKET
 
-Commit any code changes as one commit, message referencing the post id. Then close it with one ticket tool call that sets exactly one tag and replies with a short note for the human:
+Commit any code changes as one commit on `main`, message referencing the post id, and push it with `git pull --rebase && git push`. Work only on `main`: no branches. The human and other agents push to `main` too, so the rebase can conflict. Resolve the conflict keeping what both sides meant, re-run the checks, then `git rebase --continue` and push. If you can't resolve it with confidence, `git rebase --abort`, leave your commit unpushed, and close as `Needs Info`, asking how to reconcile the conflicting files and commits you name.
+
+Then close it with one ticket tool call that sets exactly one tag and replies with a short note for the human:
 
 - `Resolved`: the ask is done, with or without code. Questions and chat get answered in the reply. This is the default.
 - `Needs Info`: you can't finish without a decision, detail or hands only the human has. The reply is one specific question.

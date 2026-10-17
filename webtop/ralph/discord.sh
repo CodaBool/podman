@@ -1,6 +1,6 @@
 #!/bin/bash
 # Discord forum as the ticket tracker: one post per ticket, its tag is its state. Needs DISCORD_TOKEN and RALPH_CHANNEL.
-#   discord.sh ready                    exits 0 when a post is tagged Ready
+#   discord.sh ready                    prints the ids of posts tagged Ready, exits 1 when there are none
 #   discord.sh tickets                  prints every post not tagged Resolved, with its messages
 #   discord.sh tag <post> <tag> [reply] sets the post's tag (Ready, Blocked, Needs Info, Claimed, Resolved), then replies
 #   discord.sh attach <post> <file> [message] posts a file (screenshot, log) in the post, up to 10 MB
@@ -17,7 +17,7 @@ posts() {
 }
 
 case $1 in
-  ready) posts | jq -e 'select(.tags | index("Ready"))' > /dev/null ;;
+  ready) posts | jq -er 'select(.tags | index("Ready")).id' ;;
   tickets)
     posts | jq -c 'select(.tags | index("Resolved") | not)' | while read -r p; do
       jq -r '"## POST \(.id): \(.name) [\(.tags | join(", "))]"' <<< "$p"

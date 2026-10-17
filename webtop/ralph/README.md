@@ -5,9 +5,10 @@ Project-agnostic loop that turns Discord forum posts into commits. Run `once.sh`
 | Script | What |
 | --- | --- |
 | `once.sh` | One interactive iteration (HITL). Watch it, steer it. |
-| `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. |
+| `afk.sh N` | Up to N headless iterations, one ticket each. Exits early when no post is tagged `Ready`. Lock-protected. Runs `sync.sh` before each one. |
+| `sync.sh` | Rebases the branch onto its upstream so the agent starts from what you pushed. A failed fetch just waits for the next tick; a dirty tree or a conflict is aborted and every `Ready` ticket is tagged `Needs Info` with git's error. Fix it in the webtop, re-tag `Ready`. |
 | `tick.sh` | Runs `afk.sh 1` in every project in `~/.config/ralph/projects.conf`, which the webtop's `init.sh` writes (and clones) from its `projects` list on every start. The webtop's `svc-ralph` s6 service calls it every 20 seconds. Idle ticks aren't logged. |
-| `discord.sh` | The ticket tracker: `ready`, `tickets`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]` against the forum in `RALPH_CHANNEL`. |
+| `discord.sh` | The ticket tracker: `ready` (prints `Ready` post ids), `tickets`, `tag <post> <tag> [reply]`, `attach <post> <file> [message]` against the forum in `RALPH_CHANNEL`. |
 | `context.sh` | Prints the prompt: last 5 commits, open tickets, `prompt.md`, `browser.md`, plus `godot.md` when the repo has a `project.godot`. |
 | `tokens.sh` | Prints the calling session's context use, like `42k/150k (28%)`, from its transcript. Ralph ends a `Resolved` reply with it when your last message in the post contains `[%]`. |
 | `godot-shot.sh` | Renders a Godot scene with Movie Maker and prints a PNG path for `discord.sh attach`. |
@@ -24,7 +25,7 @@ One forum post per ticket. Its tag is its state:
 - `Ready`: an agent can finish it without asking anything.
 - `Blocked`: waits on another ticket. Ralph re-tags it `Ready` when it resolves the blocker; you can too.
 - `Claimed`: ralph is working on it. If ralph died mid-ticket (log ends without a reply), re-tag it `Ready`.
-- `Resolved`: done, committed if it needed code. Ralph replies with what it did. Questions and chat land here too.
+- `Resolved`: done, committed and pushed to `main` if it needed code (ralph rebases onto whatever was pushed meanwhile and resolves conflicts itself; if it can't, it ends in `Needs Info`). Ralph replies with what it did. Questions and chat land here too.
 - `Needs Info`: ralph needs a decision or hands only you have. Its reply is the question. Answer in the post and re-tag `Ready`.
 
 ## Where Matt Pocock's flow fits

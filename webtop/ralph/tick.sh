@@ -10,6 +10,6 @@ grep -vE '^\s*(#|$)' "$conf" | while read -r repo channel agent; do
   log=$logs/$(basename "$repo").log
   [ "$agent" = claude ] || { echo "$(date -Is) skip: agent '$agent' not supported" >> "$log"; continue; }
   export RALPH_CHANNEL=$channel
-  "$dir/discord.sh" ready 2>> "$log" || continue  # keeps idle ticks out of the log
+  "$dir/discord.sh" ready > /dev/null 2>> "$log" || continue  # keeps idle ticks out of the log
   ( echo "=== $(date -Is)"; cd "$repo" && "$dir/afk.sh" 1 ) < /dev/null >> "$log" 2>&1
 done

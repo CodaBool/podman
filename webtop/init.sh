@@ -25,6 +25,7 @@ gc() { s6-setuidgid abc git config --global "$@"; }
 gc user.name > /dev/null || gc user.name CodaBool
 gc user.email > /dev/null || gc user.email CodaBool@pm.me
 gc push.autoSetupRemote true
+gc pull.rebase true  # trunk on main: replay local commits onto what was pushed, never merge commits
 [ -z "$GITHUB_TOKEN" ] || gc credential.https://github.com.helper \
   '!f() { echo username=x-access-token; echo "password=$GITHUB_TOKEN"; }; f'
 
