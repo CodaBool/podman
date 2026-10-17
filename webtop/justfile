@@ -62,6 +62,7 @@ webtop-build:
 
 # Push to GHCR
 webtop-push:
+    sed -n 's#^https://[^:]*:\([^@]*\)@github\.com#\1#p' ~/.git-credentials | podman login ghcr.io -u codabool --password-stdin
     podman push {{push-image}}:{{tag}}
 
 # Build and push
