@@ -60,3 +60,5 @@ WantedBy=default.target
 # - get a git workflow working or some way to work as a dev on things
 # - get blender working
 # - move godot specific things into a folder on the repo and make an agnostic way to read that (skill)
+
+# you can use SKILL.md in your projects inside the webtop to have an idea of how their parent works.
