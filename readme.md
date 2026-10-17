@@ -101,6 +101,8 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── pastebin/
 │   ├── memcached:latest
 │   └── pastebin:latest
+├── webtop/
+│   └── pastebin:latest (custom image, pushed weekly) [this repo]
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release
