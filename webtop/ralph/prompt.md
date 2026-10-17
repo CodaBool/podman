@@ -35,6 +35,14 @@ When you tag it `Resolved` and the human's last message in the post contains `[%
 
 Never leave it `Claimed`. If you resolved it, re-tag `Ready` any `Blocked` ticket that was waiting only on this one.
 
+# NEW TICKETS
+
+Keep your ticket small enough to finish in this session. When it is too big, or you find work outside its scope (a bug you noticed, a refactor it needs, a follow-up), open a ticket for it with the ticket tool instead of doing it, so another agent can take it with a fresh context, possibly in parallel. One ticket per independent piece of work. Its body must stand alone: what to do, why, where in the code, how to tell it's done, and the post id it came from.
+
+Always tag a new ticket `Needs Info`: the human reviews it and re-tags it `Ready`. If it depends on another ticket, name that post id in the body. If it needs a decision only the human can make, end the body with that question.
+
+Mention the new post ids in your closing reply. Don't open a ticket that duplicates an open one.
+
 # FINAL RULES
 
 ONLY WORK ON A SINGLE TICKET. After closing it, stop. Your final message goes to a log: one line, `<post id> → <tag>: <what you did>`.
