@@ -1,0 +1,28 @@
+[Container]
+ContainerName=hermes
+# https://hub.docker.com/r/nousresearch/hermes-agent
+Image=docker.io/nousresearch/hermes-agent
+
+Environment=HERMES_DASHBOARD=1
+#EnvironmentFile=/mnt/volumes/.hermes.env
+Environment=HERMES_DASHBOARD_BASIC_AUTH_USERNAME=admin
+Environment=HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=admin
+
+PublishPort=8642:8642
+PublishPort=9119:9119
+
+Volume=/mnt/volumes/hermes:/opt/data:Z
+
+Exec=gateway run
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+# automatic startup
+WantedBy=default.target
