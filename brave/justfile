@@ -1,0 +1,64 @@
+
+image := "brave"
+container := "brave"
+push-image := "ghcr.io/codabool/brave"
+tag := "latest"
+
+# List commands
+default:
+    @just --list
+
+# Build custom image
+build:
+    podman build --no-cache -t {{image}} .
+
+# Build from latest base image
+rebuild:
+    podman build --pull=always --no-cache -t {{image}} .
+
+# Run Webtop with persistent config
+run:
+    mkdir -p config
+    podman run -d \
+        --name {{container}} \
+        -p 3000:3000 \
+        -p 3001:3001 \
+        -e PUID=1000 \
+        -e PGID=1000 \
+        -e TZ=America/New_York \
+        --env-file .env \
+        --device nvidia.com/gpu=all \
+        --group-add keep-groups \
+        --security-opt label=disable \
+        -v ./config:/config:Z \
+        -v ./init.sh:/custom-cont-init.d/10-init.sh:ro,Z \
+        {{image}}
+
+# Build and run
+up: build
+    -podman rm -f {{container}}
+    just run
+
+# Stop and remove container
+down:
+    -podman rm -f {{container}}
+
+# Open shell inside container
+shell:
+    podman exec -it {{container}} bash
+
+# Follow logs
+logs:
+    podman logs -f {{container}}
+
+# Build locally
+webtop-build:
+    podman build -t {{push-image}}:{{tag}} .
+
+# Push to GHCR
+webtop-push:
+    sed -n 's#^https://[^:]*:\([^@]*\)@github\.com#\1#p' ~/.git-credentials | podman login ghcr.io -u codabool --password-stdin
+    podman push {{push-image}}:{{tag}}
+
+# Build and push
+publish: webtop-build webtop-push

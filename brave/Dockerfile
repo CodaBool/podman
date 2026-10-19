@@ -4,13 +4,10 @@ FROM lscr.io/linuxserver/webtop:fedora-kde
 # Install system packages
 RUN dnf upgrade --refresh -y \
     && dnf install -y \
-    nano \
-    firefox \
-    gimp \
-    nodejs \
-    python3-pip \
-    && dnf clean all
+    unzip \
+  && dnf clean all
 
+# /usr/bin/chromium-browser
 LABEL org.opencontainers.image.source="https://github.com/CodaBool/podman"
 
 # Install Brave Browser

@@ -3,10 +3,21 @@ rm -f ~/.config/BraveSoftware/Brave-Browser/SingletonLock ~/.config/chromium/Sin
 
 # AI CLIs signed in with subscriptions from the env file. Runs as root on every start; /config persists.
 # Claude Code reads CLAUDE_CODE_OAUTH_TOKEN (`claude setup-token`) itself; just skip its first-run wizard.
-if [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ] && [ ! -f ~/.claude.json ]; then
-  echo '{"hasCompletedOnboarding": true}' > ~/.claude.json
-  chown abc:abc ~/.claude.json
-fi
+# Skip Claude Code onboarding without replacing existing config
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+p = Path("/config/.claude.json")
+data = json.loads(p.read_text()) if p.exists() else {}
+
+if data.get("hasCompletedOnboarding") is not True:
+    data["hasCompletedOnboarding"] = True
+    p.write_text(json.dumps(data, indent=2) + "\n")
+PY
+
+chown abc:abc /config/.claude.json
+chmod 600 /config/.claude.json
 
 # Git as abc: push to GitHub over HTTPS with GITHUB_TOKEN, read at push time so it's never stored on disk.
 gc() { s6-setuidgid abc git config --global "$@"; }
