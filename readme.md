@@ -83,7 +83,6 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── tools:latest
 ├── foundry:14
 ├── syncthing:latest
-├── obsidian:latest
 ├── r2_to_vtt:latest (custom image, pushed weekly) [https://github.com/CodaBool/r2-to-vtt]
 ├── backup:latest (custom image, pushed weekly) [https://github.com/CodaBool/container-s3-cron-backup]
 ├── rss/
@@ -101,8 +100,10 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 ├── pastebin/
 │   ├── memcached:latest
 │   └── pastebin:latest
+├── brave/
+│   └── brave:latest (custom image, pushed weekly) [this repo]
 ├── webtop/
-│   └── pastebin:latest (custom image, pushed weekly) [this repo]
+│   └── webtop:latest (custom image, pushed weekly) [this repo]
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release
