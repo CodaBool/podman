@@ -4,6 +4,8 @@ FROM lscr.io/linuxserver/webtop:fedora-kde
 # Install system packages
 RUN dnf upgrade --refresh -y \
     && dnf install -y \
+    nodejs-npm \
+    gimp \
     unzip \
   && dnf clean all
 
@@ -27,3 +29,16 @@ RUN printf '%s\n' \
     > /etc/yum.repos.d/claude-code.repo \
     && dnf install -y claude-code \
     && dnf clean all
+
+# Install latest Obsidian
+RUN set -eux; \
+    VERSION=$(curl -fsSL https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/desktop-releases.json \
+      | python3 -c 'import json,sys; print(json.load(sys.stdin)["latestVersion"])'); \
+    mkdir -p /opt/obsidian; \
+    curl -fsSL \
+      "https://github.com/obsidianmd/obsidian-releases/releases/download/v${VERSION}/obsidian-${VERSION}.tar.gz" \
+      -o /tmp/obsidian.tar.gz; \
+    tar -xzf /tmp/obsidian.tar.gz -C /opt/obsidian --strip-components=1; \
+    rm /tmp/obsidian.tar.gz; \
+    printf '#!/bin/sh\nexec /opt/obsidian/obsidian --no-sandbox "$@"\n' > /usr/local/bin/obsidian; \
+    chmod +x /usr/local/bin/obsidian

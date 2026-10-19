@@ -27,3 +27,18 @@ gc push.autoSetupRemote true
 gc pull.rebase false  # trunk on main: replay local commits onto what was pushed, never merge commits
 [ -z "$GITHUB_TOKEN" ] || gc credential.https://github.com.helper \
   '!f() { echo username=x-access-token; echo "password=$GITHUB_TOKEN"; }; f'
+
+# Disable KDE Wallet for the abc desktop user
+install -d -o abc -g abc /config/.config
+
+runuser -u abc -- env \
+  HOME=/config \
+  XDG_CONFIG_HOME=/config/.config \
+  kwriteconfig6 --file kwalletrc \
+  --group Wallet --key Enabled false
+
+runuser -u abc -- env \
+  HOME=/config \
+  XDG_CONFIG_HOME=/config/.config \
+  kwriteconfig6 --file kwalletrc \
+  --group Wallet --key "First Use" false
