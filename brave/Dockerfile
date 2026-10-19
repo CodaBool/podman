@@ -20,5 +20,13 @@ RUN dnf config-manager addrepo \
     && dnf clean all
 
 # Install Claude Code
-RUN curl -fsSL https://claude.ai/install.sh | bash \
-    && cp /root/.local/bin/claude /usr/local/bin/claude
+RUN printf '%s\n' \
+    '[claude-code]' \
+    'name=Claude Code' \
+    'baseurl=https://downloads.claude.ai/claude-code/rpm/stable' \
+    'enabled=1' \
+    'gpgcheck=1' \
+    'gpgkey=https://downloads.claude.ai/keys/claude-code.asc' \
+    > /etc/yum.repos.d/claude-code.repo \
+    && dnf install -y claude-code \
+    && dnf clean all
