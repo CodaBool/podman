@@ -11,6 +11,8 @@ RUN dnf upgrade --refresh -y \
     python3-pip \
     && dnf clean all
 
+LABEL org.opencontainers.image.source="https://github.com/CodaBool/podman"
+
 # Install Brave Browser
 RUN dnf config-manager addrepo \
     --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \

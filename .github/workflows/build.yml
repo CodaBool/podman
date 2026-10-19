@@ -50,12 +50,13 @@ jobs:
           echo "DATE=$DATE" >> $GITHUB_ENV
           echo "DISTRO_VERSION=$DISTRO_VERSION" >> $GITHUB_ENV
           echo "LINUX_KERNAL=$LINUX_KERNAL" >> $GITHUB_ENV
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u codabool --password-stdin
       - name: Build and push the bootc image
         if: steps.check.outputs.exit != 'true'
         run: |
-          cd bootc
-          docker build -t ghcr.io/codabool/fedora-bootc:latest .
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u codabool --password-stdin
+          docker build -t ghcr.io/codabool/fedora-bootc:latest ./bootc
           docker push ghcr.io/codabool/fedora-bootc:latest
           SHA=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Manifest.Digest}}" | tr -d '"')
           echo "SHA=$SHA" >> $GITHUB_ENV

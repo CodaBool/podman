@@ -65,7 +65,7 @@ alias log='tail -F ~/.local/state/ralph/animal_island.log'
 alias ll='ls -lah'
 EOF
 
-
+LABEL org.opencontainers.image.source="https://github.com/CodaBool/podman"
 # TODO: cant seem to replace icon
 # COPY ./rat.png /usr/share/selkies/www/icon.png
 
