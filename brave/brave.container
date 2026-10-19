@@ -1,0 +1,38 @@
+[Container]
+ContainerName=brave
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=America/New_York
+# Environment=TITLE=Fedora
+Environment=SELKIES_UI_TITLE=Fedora
+# https://github.com/linuxserver/docker-webtop
+Image=ghcr.io/codabool/brave
+PublishPort=8670:3000
+
+Volume=/mnt/volumes/brave:/config:Z
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
+
+EnvironmentFile=/mnt/volumes/.brave.env
+# ram cap, not a reservation
+ShmSize=8g
+GroupAdd=keep-groups
+SecurityLabelDisable=true
+Environment=DRINODE=/dev/dri/renderD128
+Environment=DRI_NODE=/dev/dri/renderD128
+# Environment=PIXELFLUX_WAYLAND=true
+Environment=SELKIES_GAMEPAD_ENABLED=false
+
+# auto update
+AutoUpdate=registry
+
+Volume=%h/.config/containers/systemd/brave/init.sh:/custom-cont-init.d/10-init.sh:ro,Z
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+
+[Install]
+# automatic startup
+WantedBy=default.target

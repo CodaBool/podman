@@ -1,8 +1,8 @@
 on:
   schedule:
     - cron: "0 21 * * 1" # weekly
-  # push:
-  #   branches: main
+  push:
+    branches: ["main"]
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -55,16 +55,18 @@ jobs:
         run: |
           cd bootc
           docker build -t ghcr.io/codabool/fedora-bootc:latest .
-          echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u codabool --password-stdin
           docker push ghcr.io/codabool/fedora-bootc:latest
           SHA=$(docker buildx imagetools inspect ghcr.io/codabool/fedora-bootc:latest --format "{{json .Manifest.Digest}}" | tr -d '"')
           echo "SHA=$SHA" >> $GITHUB_ENV
       - name: Build and push the webtop image
         run: |
-          cd webtop
-          docker build -t ghcr.io/codabool/webtop:latest .
-          echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u codabool --password-stdin
+          docker build -t ghcr.io/codabool/webtop:latest ./webtop
           docker push ghcr.io/codabool/webtop:latest
+      - name: Build and push the brave image
+        run: |
+          docker build -t ghcr.io/codabool/brave:latest ./brave
+          docker push ghcr.io/codabool/brave:latest
 
 
       # There is currently issues with bootc-image-builder
