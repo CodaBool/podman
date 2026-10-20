@@ -46,7 +46,9 @@ runuser -u abc -- env \
 # Hermes state in HERMES_HOME=/config/.hermes (Dockerfile). First start: seed its example config.
 # Credentials come from the env file, which the services inherit.
 install -d -o abc -g abc /config/.hermes
-seed() { [ -e "/config/.hermes/$1" ] || [ ! -f "/opt/hermes-agent/$2" ] || cp "/opt/hermes-agent/$2" "/config/.hermes/$1"; }
+# hermes' packages are in the image (Dockerfile); a real installs/ dir here would shadow them.
+[ -L /config/.hermes/installs ] || { rm -rf /config/.hermes/installs; ln -s /opt/hermes/installs /config/.hermes/installs; }
+seed() { [ -e "/config/.hermes/$1" ] || [ ! -f "/opt/hermes/hermes-agent/$2" ] || cp "/opt/hermes/hermes-agent/$2" "/config/.hermes/$1"; }
 seed config.yaml cli-config.yaml.example
 seed .env .env.example
 seed SOUL.md docker/SOUL.md

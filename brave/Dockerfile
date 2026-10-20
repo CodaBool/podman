@@ -60,11 +60,14 @@ RUN mkdir -p /usr/share/pixmaps \
       'StartupWMClass=obsidian' \
       > /usr/share/applications/obsidian.desktop
 
-# Hermes
+# Hermes, installed in the image under /opt/hermes: its Python in tools/, its packages in installs/.
+# Both default to $HERMES_HOME, which the /config volume would hide, so init.sh links installs/ into it.
+# Owned by abc (PUID 1000): hermes locks and updates its install state on every launch.
+ENV HERMES_RUNTIME_DIR=/opt/hermes/tools
 RUN curl -fsSL https://hermes-agent.nousresearch.com/install.sh \
-    | bash -s -- --non-interactive --dir /opt/hermes-agent \
-    && ln -sf /opt/hermes-agent/venv/bin/hermes /usr/local/bin/hermes \
-    && chmod -R a+rX /opt/hermes-agent
+    | HERMES_HOME=/opt/hermes bash -s -- --non-interactive --dir /opt/hermes/hermes-agent \
+    && ln -sf /opt/hermes/hermes-agent/.hermes/bin/hermes /usr/local/bin/hermes \
+    && chown -R 1000:1000 /opt/hermes
 
 # Hermes gateway and dashboard as s6 services (PID 1 is s6, not systemd), run as abc. Logs go to `podman logs`.
 # State in abc's persistent /config, hermes' default ~/.hermes; init.sh seeds it on first start.
