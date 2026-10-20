@@ -1,4 +1,3 @@
-
 FROM lscr.io/linuxserver/webtop:fedora-kde
 
 # Install system packages
@@ -6,19 +5,22 @@ RUN dnf upgrade --refresh -y \
     && dnf install -y \
     nodejs-npm \
     gimp \
+    kate \
     unzip \
+    dejavu-sans-fonts \
+    google-noto-sans-symbols-fonts \
+    google-noto-symbols2-fonts \
   && dnf clean all
 
-# /usr/bin/chromium-browser
 LABEL org.opencontainers.image.source="https://github.com/CodaBool/podman"
 
-# Install Brave Browser
+# Brave Browser
 RUN dnf config-manager addrepo \
     --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \
     && dnf install -y brave-browser \
     && dnf clean all
 
-# Install Claude Code
+# Claude Code
 RUN printf '%s\n' \
     '[claude-code]' \
     'name=Claude Code' \
@@ -30,7 +32,7 @@ RUN printf '%s\n' \
     && dnf install -y claude-code \
     && dnf clean all
 
-# Install latest Obsidian
+# Obsidian
 RUN set -eux; \
     VERSION=$(curl -fsSL https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/desktop-releases.json \
       | python3 -c 'import json,sys; print(json.load(sys.stdin)["latestVersion"])'); \
@@ -42,3 +44,24 @@ RUN set -eux; \
     rm /tmp/obsidian.tar.gz; \
     printf '#!/bin/sh\nexec /opt/obsidian/obsidian --no-sandbox "$@"\n' > /usr/local/bin/obsidian; \
     chmod +x /usr/local/bin/obsidian
+
+# Obsidian launcher
+RUN mkdir -p /usr/share/pixmaps \
+    && curl -fsSL https://obsidian.md/images/obsidian-logo-gradient.svg \
+      -o /usr/share/pixmaps/obsidian.svg \
+    && printf '%s\n' \
+      '[Desktop Entry]' \
+      'Name=Obsidian' \
+      'Exec=/usr/local/sbin/obsidian %U' \
+      'Icon=/usr/share/pixmaps/obsidian.svg' \
+      'Type=Application' \
+      'Terminal=false' \
+      'Categories=Office;TextEditor;Utility;' \
+      'StartupWMClass=obsidian' \
+      > /usr/share/applications/obsidian.desktop
+
+# Hermes
+RUN curl -fsSL https://hermes-agent.nousresearch.com/install.sh \
+    | bash -s -- --non-interactive --dir /opt/hermes-agent \
+    && ln -sf /opt/hermes-agent/venv/bin/hermes /usr/local/bin/hermes \
+    && chmod -R a+rX /opt/hermes-agent
