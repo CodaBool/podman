@@ -8,6 +8,10 @@ Environment=SELKIES_UI_TITLE=Fedora
 # https://github.com/linuxserver/docker-webtop
 Image=ghcr.io/codabool/brave
 PublishPort=8670:3000
+# hermes dashboard, basic auth from HERMES_DASHBOARD_BASIC_AUTH_USERNAME and _PASSWORD in the env file
+PublishPort=9119:9119
+Environment=HERMES_DASHBOARD=1
+PublishPort=8642:8642
 
 Volume=/mnt/volumes/brave:/config:Z
 AddDevice=/dev/kfd

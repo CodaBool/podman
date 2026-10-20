@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+# Disabled: 125 tells s6 not to restart. Otherwise the gateway's backoff: 10s, unless s6 itself stopped it.
+[ "$HERMES_DASHBOARD" = 1 ] || exit 125
+[ "$1" = 256 ] && [ "$2" = 15 ] || sleep 10

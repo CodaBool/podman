@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+# Hermes gateway as abc, in the foreground so s6 supervises it; ./finish adds the restart backoff.
+# `gateway run`, not `gateway start`: start hands off to a service manager, and here s6 is that manager.
+# with-contenv sets HOME=/root, and hermes keeps gateway-locks under ~/.local/state: use abc's persistent /config.
+exec 2>&1
+export HOME=/config
+cd "$HERMES_HOME"
+exec s6-setuidgid abc hermes gateway run

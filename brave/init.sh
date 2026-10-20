@@ -42,3 +42,15 @@ runuser -u abc -- env \
   XDG_CONFIG_HOME=/config/.config \
   kwriteconfig6 --file kwalletrc \
   --group Wallet --key "First Use" false
+
+# Hermes state in HERMES_HOME=/config/.hermes (Dockerfile). First start: seed its example config.
+# Credentials come from the env file, which the services inherit.
+install -d -o abc -g abc /config/.hermes
+seed() { [ -e "/config/.hermes/$1" ] || [ ! -f "/opt/hermes-agent/$2" ] || cp "/opt/hermes-agent/$2" "/config/.hermes/$1"; }
+seed config.yaml cli-config.yaml.example
+seed .env .env.example
+seed SOUL.md docker/SOUL.md
+chmod 600 /config/.hermes/.env 2>/dev/null
+# Nothing runs yet, so these are a previous container's. Then hand anything root left (the seeds) to abc.
+rm -f /config/.hermes/gateway.pid /config/.hermes/gateway.lock
+find /config/.hermes ! -user abc -exec chown -h abc:abc {} +

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Wait 10s before s6 restarts the gateway, unless s6 itself stopped it (SIGTERM). $1 is the exit code, 256 when signalled; $2 the signal.
+[ "$1" = 256 ] && [ "$2" = 15 ] || sleep 10

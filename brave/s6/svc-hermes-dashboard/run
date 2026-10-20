@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+# Hermes web dashboard on :9119 as abc, only with HERMES_DASHBOARD=1 (./finish then keeps the slot down).
+# Off loopback it refuses to start without HERMES_DASHBOARD_BASIC_AUTH_USERNAME and _PASSWORD.
+exec 2>&1
+[ "$HERMES_DASHBOARD" = 1 ] || exit 0
+export HOME=/config
+cd "$HERMES_HOME"
+exec s6-setuidgid abc hermes dashboard --host 0.0.0.0 --port 9119 --no-open

@@ -9,7 +9,7 @@ RUN dnf upgrade --refresh -y \
     unzip \
     dejavu-sans-fonts \
     google-noto-sans-symbols-fonts \
-    google-noto-symbols2-fonts \
+    google-noto-sans-symbols-2-fonts \
   && dnf clean all
 
 LABEL org.opencontainers.image.source="https://github.com/CodaBool/podman"
@@ -65,3 +65,10 @@ RUN curl -fsSL https://hermes-agent.nousresearch.com/install.sh \
     | bash -s -- --non-interactive --dir /opt/hermes-agent \
     && ln -sf /opt/hermes-agent/venv/bin/hermes /usr/local/bin/hermes \
     && chmod -R a+rX /opt/hermes-agent
+
+# Hermes gateway and dashboard as s6 services (PID 1 is s6, not systemd), run as abc. Logs go to `podman logs`.
+# State in abc's persistent /config, hermes' default ~/.hermes; init.sh seeds it on first start.
+ENV HERMES_HOME=/config/.hermes
+COPY s6/ /etc/s6-overlay/s6-rc.d/
+RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-hermes-gateway \
+          /etc/s6-overlay/s6-rc.d/user/contents.d/svc-hermes-dashboard
