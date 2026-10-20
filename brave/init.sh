@@ -1,5 +1,5 @@
 # remove brave's and the agents' Chromium's safety locks: a new container's hostname makes them look held by another computer
-rm -f ~/.config/BraveSoftware/Brave-Browser/SingletonLock ~/.config/chromium/SingletonLock
+rm -f /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/.config/chromium/Singleton*
 
 # AI CLIs signed in with subscriptions from the env file. Runs as root on every start; /config persists.
 # Claude Code reads CLAUDE_CODE_OAUTH_TOKEN (`claude setup-token`) itself; just skip its first-run wizard.
