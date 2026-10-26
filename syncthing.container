@@ -19,7 +19,7 @@ Image=docker.io/syncthing/syncthing
 
 Network=host
 
-Volume=/mnt/volumes/foundry_1/Data:/var/syncthing:z
+Volume=/mnt/volumes/foundry/Data:/var/syncthing:z
 
 # auto update
 AutoUpdate=registry
