@@ -29,6 +29,12 @@ RUN pacman -Syu --noconfirm --needed \
     chromium \
     && pacman -Scc --noconfirm
 
+# -Syu upgrades nginx past the base image's fancyindex module, so nginx refuses to start
+RUN if [ -f /etc/nginx/modules.d/fancy.conf ]; then \
+      mv /etc/nginx/modules.d/fancy.conf /etc/nginx/modules.d/fancy.conf.disabled; \
+    fi \
+    && nginx -t
+
 # Build Brave from the AUR as a temporary non-root user
 RUN useradd -m builder \
     && echo 'builder ALL=(ALL) NOPASSWD: /usr/bin/pacman' > /etc/sudoers.d/builder \
