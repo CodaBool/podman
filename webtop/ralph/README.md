@@ -21,16 +21,7 @@ Env: `BROWSER_HEADLESS` (set it to start the browser headless; ignored while one
 
 ## Ticket lifecycle
 
-One forum post per ticket. Its tag is its state:
-
-- `Ready`: an agent can finish it without asking anything.
-
-Signals go in brackets in your last message in a post, comma-separated when combined: `[%,high]`. `%` asks for the context use in the `Resolved` reply. `high`, `xhigh` or `max` sets the effort; without one it's `medium`. Effort is fixed per session, so `afk.sh` and `once.sh` launch at the highest effort any `Ready` post asks for and that session only takes posts asking for it; the rest wait for a later iteration.
-
-- `Blocked`: waits on another ticket. Ralph re-tags it `Ready` when it resolves the blocker; you can too.
-- `Claimed`: ralph is working on it. If ralph died mid-ticket (log ends without a reply), re-tag it `Ready`.
-- `Resolved`: done, committed and pushed to `main` if it needed code (ralph rebases onto whatever was pushed meanwhile and resolves conflicts itself; if it can't, it ends in `Needs Info`). Ralph replies with what it did. Questions and chat land here too.
-- `Needs Info`: ralph needs a decision or hands only you have. Its reply is the question. Answer in the post and re-tag `Ready`. Tickets ralph opens start here too, unless your ticket told it which tag to give them (e.g. a plan file whose tickets each say `**Tag** Blocked`).
+The tags, signals and how to write a ticket live in [`../SKILL.md`](../SKILL.md), the skill other repos install to file tickets for ralph.
 
 ## Where Matt Pocock's flow fits
 

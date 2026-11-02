@@ -7,7 +7,7 @@ description: How ralph, the AFK agent loop that works animal_island tickets from
 
 Ralph is an unattended Claude Code loop. It runs inside the user's **webtop**, a podman container with a desktop, Godot, Blender and a browser. It turns Discord forum posts into commits on `main` of this repo. You run in a different place: a local checkout of `animal_island` on the host. Ralph has its own clone inside the container. The two of you share only GitHub `main` and the Discord forum.
 
-Ralph's source lives in the user's `podman` repo at `~/code/vault/podman/webtop/ralph/`. You don't need to read it. This file covers what you need.
+Ralph's source lives in the user's `podman` repo at `~/code/podman/webtop/ralph/`. You don't need to read it. This file covers what you need.
 
 ## How a ticket gets worked
 
@@ -30,21 +30,21 @@ The ticket tracker is a Discord **forum channel**, one per project. For animal_i
 | `Ready` | An agent can finish it without asking anything. This is the only tag ralph picks up. | The user (or you, when asked) |
 | `Blocked` | Waiting on another ticket, named by post id. Ralph re-tags it `Ready` once that ticket resolves. | Ralph or the user |
 | `Claimed` | Ralph is working on it right now. If it stays stuck here, ralph died; re-tag it `Ready`. | Ralph |
-| `Resolved` | Done. Ralph's reply says what it did. Questions and chat also end up here, answered. | Ralph |
-| `Needs Info` | Ralph needs a decision, or hands only the user has. Its reply is the question. The user answers in the post and re-tags it `Ready`. Tickets ralph files itself also start here. | Ralph |
+| `Resolved` | Done, and committed and pushed to `main` if it needed code. Ralph's reply says what it did. Questions and chat also end up here, answered. | Ralph |
+| `Needs Info` | Ralph needs a decision, or hands only the user has. Its reply is the question. The user answers in the post and re-tags it `Ready`. Tickets ralph files itself also start here, unless your ticket told it which tag to give them (e.g. a plan whose tickets each say `**Tag** Blocked`). A push conflict ralph can't resolve also lands here. | Ralph |
 
 The loop works like this: the user or you writes a ticket and tags it `Ready`. Ralph claims it, then tags it `Resolved` or `Needs Info`. A `Needs Info` ticket goes back to the user, who answers and re-tags it `Ready`.
 
-Special case: if the user's last message in a post contains `[%]`, ralph ends its `Resolved` reply with its context usage, for example `42k/150k (28%)`.
+**Signals** go in brackets in the user's last message in a post, comma-separated when combined: `[%,high]`. `%` makes ralph end its `Resolved` reply with its context use as a percent of 150k, like `28%`. `high`, `xhigh` or `max` sets the session's effort; without one it's `medium`. Effort is fixed per session, so a session takes only the `Ready` posts asking for its effort, and the rest wait for a later one.
 
 ## The ticket tool
 
 Use ralph's own script. It needs two env vars, `DISCORD_TOKEN` and `RALPH_CHANNEL`. The token is in the webtop's `.env`. Load only that one line, never the whole file, because the file holds other secrets:
 
 ```bash
-R=~/code/vault/podman/webtop/ralph
+R=~/code/podman/webtop/ralph
 export RALPH_CHANNEL=1560465755219427348
-export DISCORD_TOKEN=$(grep '^DISCORD_TOKEN=' ~/code/vault/podman/webtop/.env | cut -d= -f2-)
+export DISCORD_TOKEN=$(grep '^DISCORD_TOKEN=' ~/code/podman/webtop/.env | cut -d= -f2-)
 
 $R/discord.sh tickets                       # every open (not Resolved) ticket with its messages: check before filing
 $R/discord.sh ready                         # ids of Ready posts (exits non-zero if none)
