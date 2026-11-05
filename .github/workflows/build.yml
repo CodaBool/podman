@@ -39,11 +39,13 @@ jobs:
           echo "latest Fedora: $LATEST_STABLE"
           echo "current Fedora: $CURRENT_VERSION"
 
-          if [ "$latest_unix" -eq "$current_unix" ]; then
-            echo "The latest stable version matches the current version. Nothing to do."
-            echo "exit=true" >> $GITHUB_OUTPUT
-            exit 0
-          fi
+          # TODO: re-enable after testing the release step. while disabled, every run
+          # rebuilds and pushes bootc; the release step skips tags that already exist.
+          # if [ "$latest_unix" -eq "$current_unix" ]; then
+          #   echo "The latest stable version matches the current version. Nothing to do."
+          #   echo "exit=true" >> $GITHUB_OUTPUT
+          #   exit 0
+          # fi
 
           # set env vars for release
           LINUX_KERNAL=$(echo "$REMOTE_IMAGE" | jq -r '.Labels["ostree.linux"]')
@@ -62,6 +64,36 @@ jobs:
           podman push ghcr.io/codabool/fedora-bootc:latest
           SHA=$($SKOPEO inspect --format '{{.Digest}}' docker://ghcr.io/codabool/fedora-bootc:latest)
           echo "SHA=$SHA" >> $GITHUB_ENV
+      - name: Create GitHub release
+        if: steps.check.outputs.exit != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          API="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
+          AUTH=(-H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28")
+
+          # a re-run after a successful release would otherwise fail with 422
+          if curl -fsS -o /dev/null "${AUTH[@]}" "${API}/tags/${DISTRO_VERSION}"; then
+            echo "release ${DISTRO_VERSION} already exists, skipping"
+            exit 0
+          fi
+
+          BODY=$(cat <<EOF
+          Fedora Distro: ${DISTRO_VERSION}
+          Linux Kernel: ${LINUX_KERNAL}
+          Date Created: ${DATE}
+
+          [actions](https://github.com/CodaBool/podman/actions)
+
+          [${SHA}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions)
+
+          [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
+          EOF
+          )
+
+          jq -n --arg tag "$DISTRO_VERSION" --arg sha "$GITHUB_SHA" --arg body "$BODY" \
+            '{tag_name: $tag, target_commitish: $sha, name: "Fedora \($tag)", body: $body, make_latest: "true"}' \
+          | curl -fsS "${AUTH[@]}" -X POST "$API" --data @- | jq -r '.html_url'
       - name: Build and push the webtop image
         run: |
           podman build -t ghcr.io/codabool/webtop:latest ./webtop
@@ -119,33 +151,3 @@ jobs:
       # # ===================================
       # [ISO Download Link]({{ steps.artifact.outputs.artifact-url }})
       # This is an ISO which runs the kickstart file from `bootc/config.toml` and boots from the bootable container Image from `bootc/Dockerfile`
-      - name: Create GitHub release
-        if: steps.check.outputs.exit != 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          API="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
-          AUTH=(-H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28")
-
-          # a re-run after a successful release would otherwise fail with 422
-          if curl -fsS -o /dev/null "${AUTH[@]}" "${API}/tags/${DISTRO_VERSION}"; then
-            echo "release ${DISTRO_VERSION} already exists, skipping"
-            exit 0
-          fi
-
-          BODY=$(cat <<EOF
-          Fedora Distro: ${DISTRO_VERSION}
-          Linux Kernel: ${LINUX_KERNAL}
-          Date Created: ${DATE}
-
-          [actions](https://github.com/CodaBool/podman/actions)
-
-          [${SHA}](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc/versions)
-
-          [Package Link](https://github.com/CodaBool/podman/pkgs/container/fedora-bootc)
-          EOF
-          )
-
-          jq -n --arg tag "$DISTRO_VERSION" --arg sha "$GITHUB_SHA" --arg body "$BODY" \
-            '{tag_name: $tag, target_commitish: $sha, name: "Fedora \($tag)", body: $body, make_latest: "true"}' \
-          | curl -fsS "${AUTH[@]}" -X POST "$API" --data @- | jq -r '.html_url'
