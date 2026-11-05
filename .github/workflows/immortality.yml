@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # https://github.com/PhrozenByte/gh-workflow-immortality
-      - uses: PhrozenByte/gh-workflow-immortality@39378c27dcacbc17e6fbf83057d1fc40c574000d # v1
+      - uses: PhrozenByte/gh-workflow-immortality@39378c27dcacbc17e6fbf83057d1fc40c574000d # v1.2.0
         with:
           secret: ${{ secrets.GH_TOKEN }}
           repos: |
