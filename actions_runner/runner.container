@@ -16,8 +16,21 @@ Exec=/entrypoint.sh
 # other LAN devices are still reachable.
 Network=pasta:--no-map-gw,--map-guest-addr,none
 
+# allow runner to build and push images
+Volume=%t/podman/podman.sock:/run/podman/podman.sock
+Environment=CONTAINER_HOST=unix:///run/podman/podman.sock
+Environment=PODMAN_VERSION=5.8.9
+# map host uid 1000 (socket owner) to the image's runner user (1001)
+UserNS=keep-id:uid=1001,gid=1001
+# access podman.sock
+SecurityLabelDisable=true
+
 # auto update
 AutoUpdate=registry
+
+[Unit]
+Requires=podman.socket
+After=podman.socket
 
 [Service]
 # allow time for a new image to download
