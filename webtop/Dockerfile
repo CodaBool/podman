@@ -29,11 +29,14 @@ RUN pacman -Syu --noconfirm --needed \
     chromium \
     && pacman -Scc --noconfirm
 
-# -Syu upgrades nginx past the base image's fancyindex module, so nginx refuses to start
+# -Syu upgrades nginx past the base image's fancyindex module, so nginx refuses to start.
+# nginx-mod-fancyindex is not in the Arch repos, so -Syu can't upgrade it alongside nginx.
+# nginx -t also binds the listen ports, which a rootless build can't do for port 80;
+# a module mismatch fails before "syntax is ok", so check for that line instead.
 RUN if [ -f /etc/nginx/modules.d/fancy.conf ]; then \
       mv /etc/nginx/modules.d/fancy.conf /etc/nginx/modules.d/fancy.conf.disabled; \
     fi \
-    && nginx -t
+    && nginx -t 2>&1 | tee /dev/stderr | grep -q 'syntax is ok'
 
 # Build Brave from the AUR as a temporary non-root user
 RUN useradd -m builder \
