@@ -1,0 +1,30 @@
+[Container]
+ContainerName=runner
+# https://github.com/actions/runner/pkgs/container/actions-runner
+Image=ghcr.io/actions/actions-runner
+
+# env has
+# GH_PAT=   fine-grained PAT, only CodaBool/podman, "Administration: Read and write"
+EnvironmentFile=/mnt/volumes/.actions_runner.env
+Environment=GH_REPO=CodaBool/podman
+# target with: runs-on: self-hosted
+
+Volume=%h/.config/containers/systemd/actions_runner/entrypoint.sh:/entrypoint.sh:ro,Z
+Entrypoint=/bin/bash
+Exec=/entrypoint.sh
+
+# other LAN devices are still reachable.
+Network=pasta:--no-map-gw,--map-guest-addr,none
+
+# auto update
+AutoUpdate=registry
+
+[Service]
+# allow time for a new image to download
+TimeoutStartSec=900
+Restart=always
+RestartSec=10
+
+[Install]
+# automatic startup
+WantedBy=default.target
