@@ -7,18 +7,41 @@ Environment=PGID=1000
 Environment=DRINODE=/dev/dri/renderD128
 Environment=DRI_NODE=/dev/dri/renderD128
 Environment=PIXELFLUX_WAYLAND=true
+Environment=SELKIES_GAMEPAD_ENABLED=true
 
+# https://github.com/linuxserver/docker-steam/releases
 Image=lscr.io/linuxserver/steam
 
 PublishPort=8668:3000
+PublishPort=47990:47990/tcp
+PublishPort=47984:47984/tcp
+PublishPort=47989:47989/tcp
+PublishPort=48010:48010/tcp
+
+PublishPort=47998:47998/udp
+PublishPort=47999:47999/udp
+PublishPort=48000:48000/udp
+PublishPort=48002:48002/udp
+PublishPort=48010:48010/udp
+
 
 Volume=/mnt/volumes/steam:/config:Z
 
 ShmSize=1g
+# bwrap needs namespaces for games, https://github.com/linuxserver/docker-steam#parameters
+# apparmor=unconfined is dropped since Fedora uses SELinux, and --privileged is only for Docker-in-Docker
 SeccompProfile=unconfined
-PodmanArgs=--security-opt apparmor=unconfined --privileged
+GroupAdd=keep-groups
+# GPU and input devices, same as webtop
+SecurityLabelDisable=true
+
+# gpu
 AddDevice=/dev/kfd
 AddDevice=/dev/dri
+
+# controller
+AddDevice=/dev/input
+AddDevice=/dev/uinput
 
 # auto update
 AutoUpdate=registry
@@ -32,7 +55,7 @@ Restart=always
 
 # automatic startup
 WantedBy=default.target
- 
+
 
 
 # I ran into file watch errors

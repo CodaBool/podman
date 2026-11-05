@@ -20,13 +20,14 @@ EnvironmentFile=/mnt/volumes/.backup.env
 # https://github.com/CodaBool/container-s3-cron-backup
 Image=ghcr.io/codabool/backup-to-s3
 
-Volume=/mnt/volumes:/data:ro,z
+Volume=/mnt/volumes:/data:ro
+SecurityLabelDisable=true
 
 # auto update
 AutoUpdate=registry
 
+# root in a rootless container is host uid 1000; its DAC_OVERRIDE reads files owned by other containers' sub-uids
 User=root
-PodmanArgs=--privileged
 
 [Service]
 

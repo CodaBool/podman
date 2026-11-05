@@ -4,7 +4,6 @@ ContainerName=uptime
 Image=docker.io/louislam/uptime-kuma:2
 PublishPort=3001:3001
 Volume=/mnt/volumes/uptime:/app/data:Z
-Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:z,ro
 
 # allows for uptime to reach other containers
 Network=host

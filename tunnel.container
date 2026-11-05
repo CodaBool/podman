@@ -1,7 +1,7 @@
 # tunnel.container
 [Container]
 ContainerName=tunnel
-Environment=TUNNEL_METRICS=0.0.0.0:60123
+Environment=TUNNEL_METRICS=127.0.0.1:60123
 
 # env has
 # TUNNEL_TOKEN=

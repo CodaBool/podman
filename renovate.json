@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigestsToSemver"],
+  "enabledManagers": ["github-actions"],
+  "minimumReleaseAge": "7 days",
+  "automerge": true,
+  "automergeType": "branch",
+  "ignoreTests": true,
+  "packageRules": [
+    {
+      "description": "A digest change without a new version means a tag was moved, as in the tj-actions attack. Review it by hand.",
+      "matchUpdateTypes": ["digest"],
+      "automerge": false
+    }
+  ]
+}
