@@ -14,9 +14,8 @@ RUN dnf upgrade --refresh -y \
 
 LABEL org.opencontainers.image.source="https://github.com/CodaBool/podman"
 
-# Brave Browser Repo & Install (with dnf-plugins-core installed first)
-RUN dnf install -y dnf-plugins-core \
-    && dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \
+# Brave Browser Repo & Install (Using native modern DNF syntax)
+RUN dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \
     && rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc \
     && dnf install -y brave-browser \
     && dnf clean all
@@ -46,7 +45,7 @@ RUN set -eux; \
     printf '#!/bin/sh\nexec /opt/obsidian/obsidian --no-sandbox "$@"\n' > /usr/local/bin/obsidian; \
     chmod +x /usr/local/bin/obsidian
 
-# Obsidian launcher (Surgical fix: Exec points to /usr/local/bin/obsidian)
+# Obsidian launcher
 RUN mkdir -p /usr/share/pixmaps \
     && curl -fsSL https://obsidian.md/images/obsidian-logo-gradient.svg \
       -o /usr/share/pixmaps/obsidian.svg \
