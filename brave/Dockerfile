@@ -1,8 +1,7 @@
 FROM lscr.io/linuxserver/webtop:fedora-kde
 
 # Install system packages
-RUN dnf upgrade --refresh -y \
-    && dnf install -y \
+RUN dnf install -y \
     nodejs-npm \
     gimp \
     kate \
