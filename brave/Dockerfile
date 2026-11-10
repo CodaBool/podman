@@ -6,6 +6,7 @@ RUN dnf install -y \
     gimp \
     kate \
     unzip \
+    nano \
     dejavu-sans-fonts \
     google-noto-sans-symbols-fonts \
     google-noto-sans-symbols-2-fonts \
@@ -58,6 +59,12 @@ RUN mkdir -p /usr/share/pixmaps \
       'Categories=Office;TextEditor;Utility;' \
       'StartupWMClass=obsidian' \
       > /usr/share/applications/obsidian.desktop
+
+# Zed
+RUN curl -f https://zed.dev/install.sh | sh
+RUN mkdir -p /opt/zed && \
+    cp -r /root/.local/zed.app /opt/zed/app && \
+    ln -sf /opt/zed/app/bin/zed /usr/local/bin/zed
 
 # Hermes Runtime Setup
 ENV HERMES_RUNTIME_DIR=/opt/hermes/tools

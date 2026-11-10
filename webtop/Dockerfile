@@ -56,10 +56,10 @@ RUN useradd -m builder \
 # MCP servers are installed rather than npx'd: an npx download on first use outlasts Claude's MCP connect timeout
 # chrome-devtools-mcp bundles puppeteer-core and attaches to the system Chromium (ralph/browser.sh), so no browser download
 RUN npm install -g --allow-scripts=@anthropic-ai/claude-code \
-    @anthropic-ai/claude-code \
-    @openai/codex \
-    @coding-solo/godot-mcp \
-    chrome-devtools-mcp \
+    @anthropic-ai/claude-code@2.1.322 \
+    @openai/codex@0.167.0 \
+    @coding-solo/godot-mcp@0.1.1 \
+    chrome-devtools-mcp@1.12.0 \
     && npm cache clean --force
 
 # System-wide Bash defaults (Arch Linux)

@@ -8,7 +8,8 @@ Environment=TUNNEL_METRICS=127.0.0.1:60123
 
 EnvironmentFile=/mnt/volumes/.tunnel.env
 Exec=tunnel run
-Image=docker.io/cloudflare/cloudflared
+# pinned: Renovate bumps the tag after a 7 day wait
+Image=docker.io/cloudflare/cloudflared:2026.10.7
 Network=host
 
 # auto update

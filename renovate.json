@@ -1,16 +1,35 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", "helpers:pinGitHubActionDigestsToSemver"],
-  "enabledManagers": ["github-actions"],
+  "enabledManagers": ["github-actions", "quadlet", "custom.regex"],
   "minimumReleaseAge": "7 days",
   "automerge": true,
   "automergeType": "branch",
   "ignoreTests": true,
+  "customManagers": [
+    {
+      "description": "npm packages pinned in a Dockerfile RUN npm install -g, one name@version per line",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
+      "matchStrings": ["\\n\\s+(?<depName>@?[\\w.-]+(?:/[\\w.-]+)?)@(?<currentValue>\\d[\\w.-]*)(?: \\\\)?(?=\\n|$)"],
+      "datasourceTemplate": "npm"
+    }
+  ],
   "packageRules": [
     {
       "description": "A digest change without a new version means a tag was moved, as in the tj-actions attack. Review it by hand.",
       "matchUpdateTypes": ["digest"],
       "automerge": false
+    },
+    {
+      "description": "Only the images deliberately pinned to a version get bumped. The rest float on :latest through podman auto-update.",
+      "matchDatasources": ["docker"],
+      "enabled": false
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/(^|/)cloudflare/cloudflared$/", "/(^|/)syncthing/syncthing$/", "/(^|/)louislam/uptime-kuma$/"],
+      "enabled": true
     }
   ]
 }
