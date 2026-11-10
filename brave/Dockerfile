@@ -62,8 +62,10 @@ RUN mkdir -p /usr/share/pixmaps \
 
 # Zed
 RUN curl -f https://zed.dev/install.sh | sh
+# the base image sets HOME=/config, which the runtime volume hides, so copy out of $HOME to /opt
 RUN mkdir -p /opt/zed && \
-    cp -r /root/.local/zed.app /opt/zed/app && \
+    cp -r "$HOME/.local/zed.app" /opt/zed/app && \
+    rm -rf "$HOME/.local/zed.app" "$HOME/.local/bin/zed" && \
     ln -sf /opt/zed/app/bin/zed /usr/local/bin/zed
 
 # Hermes Runtime Setup
