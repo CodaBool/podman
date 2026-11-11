@@ -15,4 +15,3 @@ jobs:
             CodaBool/caffine
             CodaBool/miniflux
             CodaBool/container-s3-cron-backup
-            
