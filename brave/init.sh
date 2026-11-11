@@ -53,6 +53,8 @@ seed config.yaml cli-config.yaml.example
 seed .env .env.example
 seed SOUL.md docker/SOUL.md
 chmod 600 /config/.hermes/.env 2>/dev/null
+# No "gateway restarted" ping in Discord. The CLI's path for it is the top-level discord.* key.
+s6-setuidgid abc hermes config set discord.gateway_restart_notification false > /dev/null
 # Nothing runs yet, so these are a previous container's. Then hand anything root left (the seeds) to abc.
 rm -f /config/.hermes/gateway.pid /config/.hermes/gateway.lock
 find /config/.hermes ! -user abc -exec chown -h abc:abc {} +
