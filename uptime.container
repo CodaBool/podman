@@ -1,7 +1,8 @@
 [Container]
 ContainerName=uptime
 # https://github.com/louislam/uptime-kuma/releases
-Image=docker.io/louislam/uptime-kuma:2
+# pinned: has the podman socket, so Renovate bumps it after a 7 day wait instead of floating
+Image=docker.io/louislam/uptime-kuma:2.5.9
 PublishPort=3001:3001
 Volume=/mnt/volumes/uptime:/app/data:Z
 Volume=/run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:z,ro

@@ -29,11 +29,14 @@ RUN pacman -Syu --noconfirm --needed \
     chromium \
     && pacman -Scc --noconfirm
 
-# -Syu upgrades nginx past the base image's fancyindex module, so nginx refuses to start
+# -Syu upgrades nginx past the base image's fancyindex module, so nginx refuses to start.
+# nginx-mod-fancyindex is not in the Arch repos, so -Syu can't upgrade it alongside nginx.
+# nginx -t also binds the listen ports, which a rootless build can't do for port 80;
+# a module mismatch fails before "syntax is ok", so check for that line instead.
 RUN if [ -f /etc/nginx/modules.d/fancy.conf ]; then \
       mv /etc/nginx/modules.d/fancy.conf /etc/nginx/modules.d/fancy.conf.disabled; \
     fi \
-    && nginx -t
+    && nginx -t 2>&1 | tee /dev/stderr | grep -q 'syntax is ok'
 
 # Build Brave from the AUR as a temporary non-root user
 RUN useradd -m builder \
@@ -53,10 +56,10 @@ RUN useradd -m builder \
 # MCP servers are installed rather than npx'd: an npx download on first use outlasts Claude's MCP connect timeout
 # chrome-devtools-mcp bundles puppeteer-core and attaches to the system Chromium (ralph/browser.sh), so no browser download
 RUN npm install -g --allow-scripts=@anthropic-ai/claude-code \
-    @anthropic-ai/claude-code \
-    @openai/codex \
-    @coding-solo/godot-mcp \
-    chrome-devtools-mcp \
+    @anthropic-ai/claude-code@2.1.322 \
+    @openai/codex@0.167.0 \
+    @coding-solo/godot-mcp@0.1.1 \
+    chrome-devtools-mcp@1.12.0 \
     && npm cache clean --force
 
 # System-wide Bash defaults (Arch Linux)

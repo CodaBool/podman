@@ -6,18 +6,15 @@ User=1000:1000
 UserNS=keep-id
 
 # https://github.com/syncthing/syncthing/releases
-Image=docker.io/syncthing/syncthing
+Image=docker.io/syncthing/syncthing:2.1.7
 
-# web ui
-# PublishPort=8384:8384
-# tcp file transfers
-# PublishPort=22000:22000/tcp
+# web ui, loopback only
+PublishPort=127.0.0.1:8384:8384
+# tcp file transfers (port forward this on the router)
+PublishPort=22000:22000/tcp
 # quic file transfers
-# PublishPort=22000:22000/udp
-# receive local discovery broadcasts
-# PublishPort=21027:21027/udp
-
-Network=host
+PublishPort=22000:22000/udp
+# local discovery (21027/udp) can't broadcast from a container, global discovery and relays still work
 
 Volume=/mnt/volumes/foundry/Data:/var/syncthing:z
 

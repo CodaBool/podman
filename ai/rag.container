@@ -12,7 +12,7 @@ EnvironmentFile=/mnt/volumes/.librechat.env
 
 # default mongodb://127.0.0.1:27018/LibreChat
 Environment=ATLAS_MONGO_DB_URI=mongodb://mongo:27018/LibreChat
-PublishPort=8000:8000/tcp
+PublishPort=127.0.0.1:8000:8000/tcp
 
 # auto update
 AutoUpdate=registry

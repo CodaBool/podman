@@ -78,11 +78,11 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 > I use changedetector to find any changes to any pinned image tags
 
 ```md
-├── uptime:2
-├── tunnel:latest
+├── uptime:2.5.9 (maintained by renovate)
+├── tunnel:2026.10.7 (maintained by renovate)
 ├── tools:latest
 ├── foundry:14
-├── syncthing:latest
+├── syncthing:2.1.7 (maintained by renovate)
 ├── r2_to_vtt:latest (custom image, pushed weekly) [https://github.com/CodaBool/r2-to-vtt]
 ├── backup:latest (custom image, pushed weekly) [https://github.com/CodaBool/container-s3-cron-backup]
 ├── rss/
@@ -93,7 +93,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   ├── rssbridge:latest
 │   ├── rss_db:18 [https://miniflux.app/docs/docker.html#docker-compose]
 │   ├── rss:latest (custom image, pushed weekly) [https://github.com/CodaBool/miniflux]
-│   ├── nitter:latest (deprecated)
+│   ├── nitter:latest  ⚠️ DEPRECATED
 │   ├── nitter-redis:6-alpine [https://github.com/zedeus/nitter/blob/master/compose.yml]
 │   ├── changedetect:latest
 │   └── browserless:latest
@@ -104,6 +104,8 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 │   └── brave:latest (custom image, pushed weekly) [this repo]
 ├── webtop/
 │   └── webtop:latest (custom image, pushed weekly) [this repo]
+├── actions_runner/
+│   └── runner:latest
 ├── immich/
 │   ├── immich:release
 │   ├── immich_ml:release
@@ -112,7 +114,7 @@ You can also use `strace -p <pid> --decode-fds=all` on the process to observe ex
 └── ai/
     ├── librechat:latest
     ├── meili:latest
-    ├── mongo:8.0.20
+    ├── mongo:8.0.20  ⚠️ DEPRECATED
     ├── ollama:latest
     ├── rag:latest
     └── vectordb:latest

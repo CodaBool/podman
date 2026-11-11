@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths: [".github/workflows/runner-test.yml"]
+jobs:
+  smoke:
+    # only trusted events reach the self-hosted runner
+    if: github.event_name != 'pull_request'
+    runs-on: self-hosted
+    permissions:
+      contents: read
+    steps:
+      - name: Runner info
+        run: |
+          echo "runner: $RUNNER_NAME"
+          whoami; uname -a; nproc; free -h
+      - name: Internet reachable
+        run: curl -fsS -o /dev/null -w "api.github.com %{http_code}\n" https://api.github.com
+      - name: Host not reachable
+        run: |
+          if curl -s -m 5 -o /dev/null http://host.containers.internal:3001; then
+            echo "host.containers.internal reachable, isolation broken"; exit 1
+          fi
+          if curl -s -m 5 -o /dev/null http://169.254.1.2:3001; then
+            echo "169.254.1.2 reachable, isolation broken"; exit 1
+          fi
+          echo "host blocked"
